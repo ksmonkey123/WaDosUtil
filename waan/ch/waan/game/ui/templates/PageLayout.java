@@ -1,19 +1,17 @@
 /*
- * AwaeGameAPI - easy to use 2D game API
- * Copyright (C) 2015 Andreas Waelchli
+ * AwaeGameAPI - easy to use 2D game API Copyright (C) 2015 Andreas Waelchli
  * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or any later version.
  * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package ch.waan.game.ui.templates;
 
@@ -66,18 +64,17 @@ import ch.waan.game.ui.UIContainer;
  * if no sub-component of the page layout covers it.
  * </p>
  * 
- * @author Andreas Waelchli
+ * @author Andreas Wälchli
  * @version 1.2, 2015-03-08
- * @since AwaeGameAPI 0.2 (0.1)
  */
 public final class PageLayout implements UIComponent {
 
-	private int head, foot, left, right;
+	private int						head, foot, left, right;
 
-	private @NonNull Dimension dimension;
-	private final @NonNull Point position;
+	private @NonNull Dimension		dimension;
+	private final @NonNull Point	position;
 
-	private final @NonNull UIPane assistLayer, header, footer, leftSide,
+	private final @NonNull UIPane	assistLayer, header, footer, leftSide,
 			rightSide, mainPane;
 
 	/**
@@ -97,12 +94,11 @@ public final class PageLayout implements UIComponent {
 	 * @throws IllegalArgumentException
 	 *             if any parameter is negative
 	 */
-	public PageLayout(final int head, final int foot, final int left,
-			final int right) {
+	public PageLayout(final int head, final int foot, final int left, final int right) {
 		if (head < 0 || foot < 0 || left < 0 || right < 0)
 			throw new IllegalArgumentException(
-					"all arguments must be positive. values were: (" + head
-							+ ", " + foot + ", " + left + ", " + right + ")");
+					"all arguments must be positive. values were: (" + head + ", "
+							+ foot + ", " + left + ", " + right + ")");
 		final Point ZERO = Point.get(0, 0);
 		final Dimension TEMP_D = Dimension.get(0, 0);
 		this.head = head;
@@ -261,8 +257,7 @@ public final class PageLayout implements UIComponent {
 	public void setLeft(final int left) {
 		if (left < 0)
 			throw new IllegalArgumentException(
-					"left side width may not be negative. received value "
-							+ left);
+					"left side width may not be negative. received value " + left);
 		this.left = left;
 		this.updateComponents();
 	}
@@ -278,8 +273,7 @@ public final class PageLayout implements UIComponent {
 	public void setRight(final int right) {
 		if (right < 0)
 			throw new IllegalArgumentException(
-					"right side width may not be negative. received value "
-							+ right);
+					"right side width may not be negative. received value " + right);
 		this.right = right;
 		this.updateComponents();
 	}
@@ -288,19 +282,17 @@ public final class PageLayout implements UIComponent {
 	 * updates the component sizes
 	 */
 	private void updateComponents() {
-		final int pageW = Math.max(this.dimension.width() - this.left
-				- this.right, 0);
-		final int pageH = Math.max(this.dimension.height() - this.head
-				- this.foot, 0);
+		final int pageW = Math.max(this.dimension.width() - this.left - this.right,
+				0);
+		final int pageH = Math.max(this.dimension.height() - this.head - this.foot,
+				0);
 		this.assistLayer.setDimension(this.dimension);
 		// header
-		this.header.setDimension(Dimension.get(this.dimension.width(),
-				this.head));
+		this.header.setDimension(Dimension.get(this.dimension.width(), this.head));
 		this.header.setPosition(Point.get(0,
 				(this.head - this.dimension.height()) / 2));
 		// footer
-		this.footer.setDimension(Dimension.get(this.dimension.width(),
-				this.foot));
+		this.footer.setDimension(Dimension.get(this.dimension.width(), this.foot));
 		this.footer.setPosition(Point.get(0,
 				(this.dimension.height() - this.foot) / 2));
 		// left side

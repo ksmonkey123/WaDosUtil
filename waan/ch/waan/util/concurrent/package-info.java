@@ -1,8 +1,8 @@
 /**
  * This package contains a collection of utilities for concurrency handling and
- * multithreaded programming.
+ * multi-threaded programming.
  *
- * @author Andreas Waelchli (andreas.waelchli@me.com)
- * @since Util 1.0
+ * @author Andreas Wälchli
+ * @version 1.1, 2015-05-09
  */
 package ch.waan.util.concurrent;

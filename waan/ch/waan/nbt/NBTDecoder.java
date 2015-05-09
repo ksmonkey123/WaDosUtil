@@ -4,6 +4,7 @@ package ch.waan.nbt;
  * Decoder for parsing raw NBT tag headers
  * 
  * @author Andreas Wälchli
+ * @version 1.1, 2015-05-09
  */
 public class NBTDecoder {
 

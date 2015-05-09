@@ -1,20 +1,3 @@
-/*
- * AwaeGameAPI - easy to use 2D game API
- * Copyright (C) 2015 Andreas Waelchli
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package ch.waan.game.ui.templates;
 
 import java.awt.Graphics2D;
@@ -37,14 +20,13 @@ import ch.waan.game.ui.UIResizableContainer;
  * 
  * @author Andreas Wälchli
  * @version 1.1, 2015-02-23
- * @since AwaeGameAPI 0.1
  */
 public class UIPane implements UIResizableContainer<UIComponent> {
 
-	private @NonNull Point position;
-	private @NonNull Dimension dimension;
-	private @Nullable UIComponent mouseOwner = null;
-	private final List<UIComponent> components = new ArrayList<>();
+	private @NonNull Point			position;
+	private @NonNull Dimension		dimension;
+	private @Nullable UIComponent	mouseOwner	= null;
+	private final List<UIComponent>	components	= new ArrayList<>();
 
 	/**
 	 * Creates a new Pane instance
@@ -54,8 +36,7 @@ public class UIPane implements UIResizableContainer<UIComponent> {
 	 * @param dimension
 	 *            the dimension of the pane
 	 */
-	public UIPane(final @NonNull Point position,
-			final @NonNull Dimension dimension) {
+	public UIPane(final @NonNull Point position, final @NonNull Dimension dimension) {
 		this.position = position;
 		this.dimension = dimension;
 	}
@@ -93,8 +74,7 @@ public class UIPane implements UIResizableContainer<UIComponent> {
 		this.components.add(component);
 		component.parentUpdated(this);
 		// invariant check (at most one occurrence of a component)
-		if (this.components.indexOf(component) != this.components
-				.lastIndexOf(component))
+		if (this.components.indexOf(component) != this.components.lastIndexOf(component))
 			throw new ConcurrentModificationException();
 	}
 
@@ -127,8 +107,9 @@ public class UIPane implements UIResizableContainer<UIComponent> {
 			// draw component
 			final Graphics2D g2 = (Graphics2D) g.create();
 			g2.translate(p.x(), p.y());
-			g2.clipRect(d.topLeft().x(), d.topLeft().y(), d.width() + 1,
-					d.height() + 1);
+			g2.clipRect(d.topLeft()
+					.x(), d.topLeft()
+					.y(), d.width() + 1, d.height() + 1);
 			c.render(g2);
 		}
 	}
@@ -143,12 +124,15 @@ public class UIPane implements UIResizableContainer<UIComponent> {
 	 * @default simple bounding rectangle collision check
 	 */
 	protected boolean isVisibleOnScreen(final @NonNull UIComponent comp) {
-		int dx = comp.getPosition().x();
-		int dy = comp.getPosition().y();
+		int dx = comp.getPosition()
+				.x();
+		int dy = comp.getPosition()
+				.y();
 		dx = dx < 0 ? -dx : dx;
 		dy = dy < 0 ? -dy : dy;
-		return !(2 * dx > comp.getDimension().width() + this.dimension.width() || 2 * dy > comp
-				.getDimension().height() + this.dimension.height());
+		return !(2 * dx > comp.getDimension()
+				.width() + this.dimension.width() || 2 * dy > comp.getDimension()
+				.height() + this.dimension.height());
 	}
 
 	@Override
@@ -170,7 +154,8 @@ public class UIPane implements UIResizableContainer<UIComponent> {
 	 */
 	protected boolean hasChildCollision(final @NonNull Point point) {
 		for (UIComponent c : this.components) {
-			if (c.collides(point.translate(c.getPosition().scale(-1))))
+			if (c.collides(point.translate(c.getPosition()
+					.scale(-1))))
 				return true;
 		}
 		return false;
@@ -187,7 +172,8 @@ public class UIPane implements UIResizableContainer<UIComponent> {
 	protected @Nullable UIComponent childAt(final @NonNull Point point) {
 		UIComponent child = null;
 		for (UIComponent c : this.components)
-			if (c.collides(point.translate(c.getPosition().scale(-1))))
+			if (c.collides(point.translate(c.getPosition()
+					.scale(-1))))
 				child = c;
 		return child;
 	}

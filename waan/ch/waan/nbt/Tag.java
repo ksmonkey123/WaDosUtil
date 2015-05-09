@@ -7,7 +7,8 @@ import java.io.OutputStream;
 /**
  * Base NBT-Tag
  * 
- * @author andreas
+ * @author Andreas Wälchli
+ * @version 1.1, 2015-05-09
  *
  * @param <T>
  *            tag type
@@ -20,7 +21,7 @@ public interface Tag<T> {
 	 * @param name
 	 *            the name
 	 */
-	public void setName(String name);
+	void setName(String name);
 
 	/**
 	 * Sets the value of the tag
@@ -28,21 +29,21 @@ public interface Tag<T> {
 	 * @param value
 	 *            the value
 	 */
-	public void setValue(T value);
+	void setValue(T value);
 
 	/**
 	 * Gets the name of the tag
 	 * 
 	 * @return the name
 	 */
-	public String getName();
+	String getName();
 
 	/**
 	 * Gets the value of the tag
 	 * 
 	 * @return the value
 	 */
-	public T getValue();
+	T getValue();
 
 	/**
 	 * reads the tag content from the stream
@@ -52,7 +53,7 @@ public interface Tag<T> {
 	 * @throws IOException
 	 *             if any i/o-exception occurs
 	 */
-	public void read(InputStream stream) throws IOException;
+	void read(InputStream stream) throws IOException;
 
 	/**
 	 * writes the tag content to the stream
@@ -62,13 +63,13 @@ public interface Tag<T> {
 	 * @throws IOException
 	 *             if any i/o-exception occurs
 	 */
-	public void write(OutputStream stream) throws IOException;
+	void write(OutputStream stream) throws IOException;
 
 	/**
 	 * returns the tag byte id
 	 * 
 	 * @return the tag id
 	 */
-	public byte getTagID();
+	byte getTagID();
 
 }

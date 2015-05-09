@@ -1,22 +1,3 @@
-/*
- * Copyright (C) 2014 Andreas Wälchli (andreas.waelchli@me.com)
- * 
- * This file is part of AwaeUtil.
- * 
- * AwaeUtil is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation, either version 3 of the License, or any later version.
- * 
- * AwaeUtil is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * AwaeUtil. If not, see <http://www.gnu.org/licenses/>.
- * 
- * Note: This Library is only compatible with Java 8 or newer. (developed under
- * Java 1.8.0_25)
- */
 package ch.waan.util;
 
 import java.util.ArrayList;
@@ -28,9 +9,8 @@ import java.util.TreeMap;
  * This class serves as a wrapper for the Java-side Shutdown handlers with the
  * added option to define the shutdown order.
  *
- * @author Andreas Waelchli (andreas.waelchli@me.com)
+ * @author Andreas Wälchli
  * @version 1.2, 2014-11-17
- * @since Util 1.0
  */
 public class Shutdown {
 
@@ -39,7 +19,6 @@ public class Shutdown {
 	 *
 	 * @see #add(Runnable)
 	 * @see #add(Runnable, int)
-	 * @since Util 1.0
 	 */
 	public static final int			DEFAULT			= 0;
 
@@ -48,7 +27,6 @@ public class Shutdown {
 	 * in the sequence.
 	 *
 	 * @see #add(Runnable, int)
-	 * @since Util 1.0
 	 */
 	public static final int			EARLIER			= 10000;
 
@@ -57,7 +35,6 @@ public class Shutdown {
 	 * in the sequence.
 	 *
 	 * @see #add(Runnable, int)
-	 * @since Util 1.0
 	 */
 	public static final int			EARLY			= 1000;
 
@@ -66,7 +43,6 @@ public class Shutdown {
 	 * has to be performed strictly first.
 	 *
 	 * @see #add(Runnable, int)
-	 * @since Util 1.0
 	 */
 	public static final int			FIRST			= Integer.MAX_VALUE;
 
@@ -75,7 +51,6 @@ public class Shutdown {
 	 * has to be performed strictly last.
 	 *
 	 * @see #add(Runnable, int)
-	 * @since Util 1.0
 	 */
 	public static final int			LAST			= Integer.MIN_VALUE;
 
@@ -84,7 +59,6 @@ public class Shutdown {
 	 * in the sequence.
 	 *
 	 * @see #add(Runnable, int)
-	 * @since Util 1.0
 	 */
 	public static final int			LATE			= -1000;
 
@@ -93,7 +67,6 @@ public class Shutdown {
 	 * the sequence.
 	 *
 	 * @see #add(Runnable, int)
-	 * @since Util 1.0
 	 */
 	public static final int			LATER			= -10000;
 
@@ -102,8 +75,7 @@ public class Shutdown {
 	/**
 	 * Provides a global Shutdown handler.
 	 *
-	 * @return the global Shutdown handler.
-	 * @since Util 1.0
+	 * @return the global Shutdown handler
 	 */
 	public static Shutdown getDefaultShutdown() {
 		return Shutdown.defaultShutdown;
@@ -136,7 +108,6 @@ public class Shutdown {
 	 * @throws NullPointerException
 	 *             if the {@code r} argument is {@code null}
 	 * @see #add(Runnable, int)
-	 * @since Util 1.0
 	 */
 	public void add(Runnable r) {
 		this.add(r, Shutdown.DEFAULT);
@@ -152,7 +123,6 @@ public class Shutdown {
 	 *            the priority of the runnable
 	 * @throws NullPointerException
 	 *             if the {@code r} argument is {@code null}
-	 * @since Util 1.0
 	 */
 	public void add(Runnable r, int priority) {
 		if (r == null)

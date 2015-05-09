@@ -1,20 +1,3 @@
-/*
- * AwaeGameAPI - easy to use 2D game API
- * Copyright (C) 2015 Andreas Waelchli
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package ch.waan.game;
 
 import java.awt.Color;
@@ -49,9 +32,8 @@ import ch.waan.game.ui.templates.UIPane;
 /**
  * GUI implementation
  * 
- * @author Andreas Waelchli
+ * @author Andreas Wälchli
  * @version 1.1, 2015-02-27
- * @since AwaeGameAPI 0.1
  */
 class GUIImpl implements GUI {
 
@@ -63,19 +45,18 @@ class GUIImpl implements GUI {
 		return dev;
 	}
 
-	private boolean fullscreen = false;
+	private boolean														fullscreen	= false;
 
-	private @NonNull GraphicsDevice gdevice = getDefaultGraphicsDevice();
-	private final @NonNull JFrame frame;
-	private final @NonNull UIResizableContainer<UIComponent> uiRoot;
-	private final @NonNull BufferStrategy buffer;
-	private final @NonNull ConcurrentLinkedQueue<@Nullable MouseAction> mouseActions;
-	private final @NonNull Keyboard keyboard;
+	private @NonNull GraphicsDevice										gdevice		= getDefaultGraphicsDevice();
+	private final @NonNull JFrame										frame;
+	private final @NonNull UIResizableContainer<UIComponent>			uiRoot;
+	private final @NonNull BufferStrategy								buffer;
+	private final @NonNull ConcurrentLinkedQueue<@Nullable MouseAction>	mouseActions;
+	private final @NonNull Keyboard										keyboard;
 
-	private final @NonNull Insets windowInset;
+	private final @NonNull Insets										windowInset;
 
-	private GUIImpl(
-			final @NonNull JFrame frame,
+	private GUIImpl(final @NonNull JFrame frame,
 			final @NonNull UIResizableContainer<UIComponent> uiRoot,
 			final @NonNull ConcurrentLinkedQueue<@Nullable MouseAction> mouseQueue,
 			final @NonNull Keyboard keyboard) {
@@ -139,13 +120,14 @@ class GUIImpl implements GUI {
 		this.frame.setTitle(title);
 	}
 
-	private @NonNull Insets insets;
+	private @NonNull Insets	insets;
 
 	@Override
 	public void render() {
 		// show last frame at beginning to ensure constant frame-rate
 		this.buffer.show();
-		Toolkit.getDefaultToolkit().sync();
+		Toolkit.getDefaultToolkit()
+				.sync();
 		// update mouse position
 		updateMouse();
 		// draw next frame
@@ -154,12 +136,14 @@ class GUIImpl implements GUI {
 		Dimension d = this.uiRoot.getDimension();
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, d.width(), d.height());
-		g.translate(d.bottomRight().x(), d.bottomRight().y());
+		g.translate(d.bottomRight()
+				.x(), d.bottomRight()
+				.y());
 		this.uiRoot.render(g);
 		g.dispose();
 	}
 
-	private boolean hasMouse = false;
+	private boolean	hasMouse	= false;
 
 	private void updateMouse() {
 
@@ -173,8 +157,9 @@ class GUIImpl implements GUI {
 			}
 		} else {
 			Point mouse = Point.get(mousePoint.x - this.insets.left,
-					mousePoint.y - this.insets.top).translate(
-					this.uiRoot.getDimension().topLeft());
+					mousePoint.y - this.insets.top)
+					.translate(this.uiRoot.getDimension()
+							.topLeft());
 			if (this.uiRoot.collides(mouse)) {
 				if (!this.hasMouse) {
 					this.hasMouse = true;
@@ -220,9 +205,9 @@ class GUIImpl implements GUI {
 
 	private static class MouseAction {
 
-		private final @Nullable MouseButton button;
-		private final boolean isDown;
-		private final double scroll;
+		private final @Nullable MouseButton	button;
+		private final boolean				isDown;
+		private final double				scroll;
 
 		MouseAction(final @NonNull MouseButton button, final boolean isDown) {
 			this.button = button;
@@ -250,15 +235,13 @@ class GUIImpl implements GUI {
 		MouseButton getButton() {
 			MouseButton btn = this.button;
 			if (btn == null)
-				throw new IllegalStateException(
-						"Mouse Action is a scroll action");
+				throw new IllegalStateException("Mouse Action is a scroll action");
 			return btn;
 		}
 
 		double getScroll() {
 			if (this.button != null)
-				throw new IllegalStateException(
-						"Mouse Action is a button action");
+				throw new IllegalStateException("Mouse Action is a button action");
 			return this.scroll;
 		}
 	}
@@ -298,16 +281,14 @@ class GUIImpl implements GUI {
 			public void mouseReleased(MouseEvent e) {
 				if (e == null)
 					throw new AssertionError(); // should never happen
-				queue.add(new MouseAction(MouseButton.getButtonForEvent(e),
-						false));
+				queue.add(new MouseAction(MouseButton.getButtonForEvent(e), false));
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (e == null)
 					throw new AssertionError(); // should never happen
-				queue.add(new MouseAction(MouseButton.getButtonForEvent(e),
-						true));
+				queue.add(new MouseAction(MouseButton.getButtonForEvent(e), true));
 			}
 
 			@Override
@@ -362,6 +343,7 @@ class GUIImpl implements GUI {
 
 	@Override
 	public boolean isEmpty() {
-		return this.uiRoot.getComponents().isEmpty();
+		return this.uiRoot.getComponents()
+				.isEmpty();
 	}
 }

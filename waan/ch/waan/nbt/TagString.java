@@ -5,10 +5,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
+ * String Tag
  * 
  * @author Andreas Wälchli
  * @version 1.1, 2015-05-09
- *
  */
 public class TagString implements Tag<String> {
 

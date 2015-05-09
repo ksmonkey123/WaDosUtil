@@ -12,7 +12,6 @@
  * documentation should be consulted
  * </p>
  * 
- * @author Andreas Waelchli
- * @since AwaeGameAPI 0.1
+ * @author Andreas Wälchli
  */
 package ch.waan.game.ui.templates;

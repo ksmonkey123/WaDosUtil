@@ -8,6 +8,7 @@ import java.io.OutputStream;
  * IO handler for NBT data
  * 
  * @author Andreas Wälchli
+ * @version 1.1, 2015-05-09
  */
 public class NBTIO {
 

@@ -1,20 +1,3 @@
-/*
- * AwaeGameAPI - easy to use 2D game API
- * Copyright (C) 2015 Andreas Waelchli
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package ch.waan.game;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -40,14 +23,13 @@ import ch.waan.game.ui.UIContainer;
  * principle allows for a simpler state handling.
  * </p>
  * 
- * @author Andreas Waelchli
+ * @author Andreas Wälchli
  * @version 1.4, 2015-03-19
- * @since AwaeGameAPI 0.2
  */
 public abstract class SceneController {
 
-	private @Nullable GUI theGui;
-	private @Nullable Game theLogic;
+	private @Nullable GUI	theGui;
+	private @Nullable Game	theLogic;
 
 	void loadController(final @NonNull GUI gui, final @NonNull Game logic) {
 		if (!gui.isEmpty())
@@ -93,8 +75,7 @@ public abstract class SceneController {
 	protected final void transitionTo(final @NonNull SceneController newScene) {
 		assertLoaded();
 		if (newScene == this)
-			throw new IllegalArgumentException(
-					"Scene cannot transition to itself!");
+			throw new IllegalArgumentException("Scene cannot transition to itself!");
 		assert this.theLogic != null;
 		this.theLogic.loadScene(newScene);
 		this.theLogic = null;
@@ -283,20 +264,23 @@ public abstract class SceneController {
 	 * @implSpec the current implementation stops all internal clocks and
 	 *           gracefully disposes the UI.
 	 */
-	protected final static @NonNull SceneController TERMINATOR_SCENE = new SceneController() {
+	protected final static @NonNull SceneController	TERMINATOR_SCENE	= new SceneController() {
 
-		@Override
-		protected void tick(int passedTime) {
-			// no action
-		}
+																			@Override
+																			protected void tick(
+																					int passedTime) {
+																				// no
+																				// action
+																			}
 
-		@Override
-		protected void load(UIContainer<UIComponent> root) {
-			terminate();
-			// System.exit(0);
-		}
+																			@Override
+																			protected void load(
+																					UIContainer<UIComponent> root) {
+																				terminate();
+																				// System.exit(0);
+																			}
 
-	};
+																		};
 
 	/**
 	 * Is Invoked whenever the close button of the game window is pressed.

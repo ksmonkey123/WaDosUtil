@@ -14,7 +14,6 @@
  * initialisation based off the single initial state.
  * </p>
  * 
- * @author Andreas Waelchli (main author)
- * @version AwaeGameAPI 0.2
+ * @author Andreas Wälchli
  */
 package ch.waan.game;

@@ -1,20 +1,3 @@
-/*
- * AwaeGameAPI - easy to use 2D game API
- * Copyright (C) 2015 Andreas Waelchli
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package ch.waan.game;
 
 import java.util.WeakHashMap;
@@ -30,15 +13,14 @@ import org.eclipse.jdt.annotation.Nullable;
  * enforced by this class. Therefore it is possible to check for content
  * equality through instance reference equality ({@code ==}).
  * 
- * @author Andreas Waelchli
+ * @author Andreas Wälchli
  * @version 1.1, 2015-02-22
- * @since AwaeGameAPI 0.1
  */
 public final class Point {
 
 	// == STATIC FACTORY METHODS ==
 
-	private static final WeakHashMap<@NonNull Long, @Nullable Point> references = new WeakHashMap<>();
+	private static final WeakHashMap<@NonNull Long, @Nullable Point>	references	= new WeakHashMap<>();
 
 	/**
 	 * provides the point instance for the given x and y coordinates.
@@ -65,7 +47,7 @@ public final class Point {
 
 	// == INSTANCE ==
 
-	private final int x, y;
+	private final int	x, y;
 
 	private Point(int x, int y) {
 		this.x = x;
@@ -183,7 +165,7 @@ public final class Point {
 	 */
 	public final static class Builder {
 
-		private double x, y;
+		private double	x, y;
 
 		/**
 		 * Creates a new Builder for the given point.

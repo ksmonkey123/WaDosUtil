@@ -1,20 +1,3 @@
-/*
- * AwaeGameAPI - easy to use 2D game API
- * Copyright (C) 2015 Andreas Waelchli
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package ch.waan.game;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -25,16 +8,15 @@ import ch.waan.game.ui.UIContainer;
 /**
  * High-level game manager.
  * 
- * @author Andreas Waelchli
+ * @author Andreas Wälchli
  * @version 1.2, 2015-03-19
- * @since AwaeGameAPI 0.2
  */
 public final class Game {
 
-	private @NonNull SceneController controller;
-	private @NonNull final GUI gui;
-	private @NonNull final HighPrecisionClock frameClock;
-	private @NonNull final HighPrecisionClock tickClock;
+	private @NonNull SceneController			controller;
+	private @NonNull final GUI					gui;
+	private @NonNull final HighPrecisionClock	frameClock;
+	private @NonNull final HighPrecisionClock	tickClock;
 
 	private Game(int width, int height, @NonNull SceneController controller,
 			int tickRate, int frameRate) {
@@ -55,7 +37,8 @@ public final class Game {
 		// unload old stuff
 		UIContainer<UIComponent> c = this.gui.getRootContainer();
 		while (!this.gui.isEmpty()) {
-			c.removeComponent(c.getComponents().get(0));
+			c.removeComponent(c.getComponents()
+					.get(0));
 		}
 		// load new stuff
 		this.controller = controller;
@@ -103,8 +86,7 @@ public final class Game {
 	 *            the initial scene
 	 * @return the game instance
 	 */
-	public static @NonNull Game initializeGame(
-			@NonNull SceneController initialScene) {
+	public static @NonNull Game initializeGame(@NonNull SceneController initialScene) {
 		return new Game(800, 600, initialScene, 20, 50);
 	}
 }

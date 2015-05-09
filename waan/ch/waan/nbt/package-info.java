@@ -6,7 +6,6 @@
  * For example an additional Boolean-Array Tag has been introduced to allow for
  * 1-bit-per-boolean encoding instead of the default 8-bit-per-boolean solution.
  * 
- * @author Andreas Wälchli (andreas.waelchli@me.com)
- * @since Util 1.0
+ * @author Andreas Wälchli
  */
 package ch.waan.nbt;

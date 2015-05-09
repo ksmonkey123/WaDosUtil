@@ -9,7 +9,6 @@ import java.io.OutputStream;
  * 
  * @author Andreas Wälchli
  * @version 1.1, 2015-05-09
- *
  */
 public class TagByteArray implements Tag<Byte[]> {
 

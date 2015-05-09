@@ -9,6 +9,7 @@ import java.util.HashMap;
  * Compound Tag
  * 
  * @author Andreas Wälchli
+ * @version 1.1, 2015-05-09
  */
 @SuppressWarnings({ "hiding", "javadoc" })
 public class TagCompound implements Tag<HashMap<String, Tag<?>>> {

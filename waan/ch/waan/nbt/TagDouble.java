@@ -9,6 +9,7 @@ import java.io.OutputStream;
  * 
  * @author Andreas Wälchli
  * @version 1.1, 2015-05-09
+ * @version 1.1, 2015-05-09
  *
  */
 public class TagDouble implements Tag<Double> {

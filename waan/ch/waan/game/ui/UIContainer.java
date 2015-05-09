@@ -1,20 +1,3 @@
-/*
- * AwaeGameAPI - easy to use 2D game API
- * Copyright (C) 2015 Andreas Waelchli
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package ch.waan.game.ui;
 
 import java.util.List;
@@ -30,15 +13,13 @@ import org.eclipse.jdt.annotation.NonNull;
  * certain subset of those components.
  * </p>
  * 
- * @author Andreas Waelchli
+ * @author Andreas Wälchli
  * @version 1.1, 2014-02-22
- * @since AwaeGameAPI 0.1
  * 
  * @param <E>
  *            the component type allowed in the container
  */
-public interface UIContainer<@NonNull E extends UIComponent> extends
-		UIComponent {
+public interface UIContainer<@NonNull E extends UIComponent> extends UIComponent {
 
 	/**
 	 * Adds the given component to the container. The component must be added as

@@ -1,22 +1,3 @@
-/*
- * Copyright (C) 2014 Andreas Wälchli (andreas.waelchli@me.com)
- * 
- * This file is part of AwaeUtil.
- * 
- * AwaeUtil is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation, either version 3 of the License, or any later version.
- * 
- * AwaeUtil is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * AwaeUtil. If not, see <http://www.gnu.org/licenses/>.
- * 
- * Note: This Library is only compatible with Java 8 or newer. (developed under
- * Java 1.8.0_25)
- */
 package ch.waan.util.id;
 
 import java.util.function.Function;
@@ -25,9 +6,8 @@ import java.util.function.Function;
  * This is the bottom level implementation for the IDProvider system. it holds a
  * total of 256 addresses arranged in a 16-element 16-bit array.
  *
- * @author Andreas Waelchli (andreas.waelchli@me.com)
+ * @author Andreas Wälchli
  * @version 1.1, 2014-10-21
- * @since Util 1.0
  */
 class BaseIDProvider implements IDProvider {
 
