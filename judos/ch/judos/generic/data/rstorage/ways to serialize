@@ -1,0 +1,14 @@
+todo:
+
+- escape sequence for custom serialization (escape all brackets, otherwise tagged
+  object can't be distinguished from serialized non-tagged)
+
+different cases for RStorage:
+
+- your class implements RStorableManual2 (define manually how to serialize)
+
+future:
+
+- easy methods to use for RStorableManual2 (basically serialize anything)
+- your own class implements RStorable2 (gets serialized automatically)
+- you define some other class as RStorable2 (gets serialized automatically)
