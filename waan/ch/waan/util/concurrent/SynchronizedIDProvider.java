@@ -21,7 +21,7 @@
  */
 package ch.waan.util.concurrent;
 
-import ch.waan.util.IDProvider;
+import ch.waan.util.id.IDProvider;
 
 /**
  * This IDProvider Implementation provides a synchronisation layer for the

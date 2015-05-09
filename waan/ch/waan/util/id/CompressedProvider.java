@@ -19,7 +19,7 @@
  * Note: This Library is only compatible with Java 8 or newer.
  *  (developed under Java 1.8.0_25)
  */
-package ch.waan.util;
+package ch.waan.util.id;
 
 /**
  * Empty Placeholder for the CompositeIDProvider Arrays
