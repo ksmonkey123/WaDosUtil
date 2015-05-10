@@ -5,14 +5,15 @@ import java.lang.reflect.Constructor;
 import sun.reflect.ReflectionFactory;
 
 /**
- * This factory allows for the generation of empty constructors.
+ * This factory allows for the generation of empty constructors that bypass any
+ * init blocks.
  *
  * <b>This feature should be used with care!</b>
  *
  * @author Andreas Wälchli
  * @version 1.1, 2014-11-21
  */
-public class SerializationConstructorFactory {
+public final class SerializationConstructorFactory {
 
 	/**
 	 * Creates a serialisation constructor for a class. This constructor will

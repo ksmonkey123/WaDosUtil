@@ -21,7 +21,7 @@ import ch.waan.collection.PriorityQueue;
  * @param <V>
  *            the vertex type of the pathfinder
  */
-public class DijkstraPathfinder<V extends Vertex<V>> implements Pathfinder<V> {
+public final class DijkstraPathfinder<V extends Vertex<V>> implements Pathfinder<V> {
 
 	@Override
 	public List<V> findPath(V from, V to) {

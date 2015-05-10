@@ -1,5 +1,9 @@
 package ch.waan.util.concurrent;
 
+import java.util.Objects;
+
+import org.eclipse.jdt.annotation.NonNull;
+
 import ch.waan.util.id.IDProvider;
 
 /**
@@ -9,9 +13,9 @@ import ch.waan.util.id.IDProvider;
  * provider through this class will always be synchronised.
  *
  * @author Andreas Wälchli
- * @version 1.1, 2014-11-24s
+ * @version 1.2, 2015-05-10
  */
-public class SynchronizedIDProvider implements IDProvider {
+public final class SynchronizedIDProvider implements IDProvider {
 
 	private IDProvider	backer;
 
@@ -24,9 +28,8 @@ public class SynchronizedIDProvider implements IDProvider {
 	 * @throws NullPointerException
 	 *             if the backer is {@code null}
 	 */
-	public SynchronizedIDProvider(IDProvider backer) {
-		if (backer == null)
-			throw new NullPointerException("backer may not be null");
+	public SynchronizedIDProvider(@NonNull IDProvider backer) {
+		Objects.requireNonNull(backer, "backing provider may not be null");
 		this.backer = backer;
 	}
 

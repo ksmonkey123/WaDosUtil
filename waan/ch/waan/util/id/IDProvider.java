@@ -5,7 +5,7 @@ package ch.waan.util.id;
  * unused, check if a number is used and provide a new unused number with a
  * length of up to 32 bit. The implementation and the generated number sequence
  * do not have to satisfy any further conditions, however the data volume must
- * should be considered.
+ * be considered in any implementation.
  * 
  * @author Andreas Wälchli
  * @version 1.1, 2014-10-21
@@ -16,7 +16,6 @@ public interface IDProvider {
 	 * indicates if the Provider has exhausted its ID range.
 	 * 
 	 * @return {@code true} if the Provider has no free IDs
-	 * @since Util 1.0
 	 */
 	boolean isFull();
 
@@ -28,7 +27,6 @@ public interface IDProvider {
 	 *            the {@code id} to check for.
 	 * @return {@code true} if the given{@code id} is used, {@code false}
 	 *         otherwise.
-	 * @since Util 1.0
 	 */
 	boolean isUsed(int id);
 
@@ -38,9 +36,8 @@ public interface IDProvider {
 	 * @param id
 	 *            the {@code id} to register. A provider is allowed to only
 	 *            respect selected bits of the {@code id}.
-	 * @return {@code true} if the ID actually was set. This is used internally
-	 *         to optimize compression cycles.
-	 * @since Util 1.0
+	 * @return {@code true} if the ID actually was set. This can be used
+	 *         internally to optimise compression cycles.
 	 */
 	boolean set(int id);
 
@@ -50,7 +47,7 @@ public interface IDProvider {
 	 * @param id
 	 *            the {@code id} to unregister. A provider is allowed to only
 	 *            respect selected bits of the {@code id}.
-	 * @return {@code true} if the ID actually was freed. This is used
+	 * @return {@code true} if the ID actually was freed. This can be used
 	 *         internally to optimise compression cycles.
 	 */
 	boolean free(int id);

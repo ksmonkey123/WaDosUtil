@@ -13,12 +13,12 @@ import org.eclipse.jdt.annotation.Nullable;
  * synchronisation.
  *
  * @author Andreas Wälchli
- * @version 1.1, 2014-11-21
+ * @version 1.2, 2015-05-10
  * 
  * @param <E>
  *            the element type for this queue
  */
-public class LinkedQueue<@Nullable E> implements Queue<E> {
+public final class LinkedQueue<@Nullable E> implements Queue<E> {
 
 	private class Node<T> {
 		T		item;

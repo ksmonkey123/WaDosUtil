@@ -10,7 +10,7 @@ import java.io.OutputStream;
  * @author Andreas Wälchli
  * @version 1.1, 2015-05-09
  */
-public class TagString implements Tag<String> {
+public final class TagString implements Tag<String> {
 
 	private String	value;
 	private String	name;

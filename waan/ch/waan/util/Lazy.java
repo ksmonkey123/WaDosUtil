@@ -13,12 +13,12 @@ import org.eclipse.jdt.annotation.NonNull;
  * therefore.
  * 
  * @author Andreas Wälchli
- * @version 1.1, 2015-05-09
+ * @version 1.2, 2015-05-09
  *
  * @param <T>
  *            The Content type
  */
-public class Lazy<T> {
+public final class Lazy<T> {
 
 	private boolean						needsInit	= false;
 	private T							value;

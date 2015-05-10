@@ -12,7 +12,7 @@ import java.util.HashMap;
  * @version 1.1, 2015-05-09
  */
 @SuppressWarnings({ "hiding", "javadoc" })
-public class TagCompound implements Tag<HashMap<String, Tag<?>>> {
+public final class TagCompound implements Tag<HashMap<String, Tag<?>>> {
 
 	@Override
 	public byte getTagID() {
@@ -113,6 +113,7 @@ public class TagCompound implements Tag<HashMap<String, Tag<?>>> {
 		Byte[] arr = new Byte[value.length];
 		for (int i = 0; i < value.length; i++)
 			arr[i] = value[i];
+		this.addTag(new TagByteArray(name, arr));
 	}
 
 	public byte[] getByteArray(String name) {

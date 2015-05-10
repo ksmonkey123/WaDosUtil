@@ -10,7 +10,7 @@ import java.io.OutputStream;
  * @author Andreas Wälchli
  * @version 1.1, 2015-05-09
  */
-public class TagShort implements Tag<Short> {
+public final class TagShort implements Tag<Short> {
 
 	private Short	value;
 	private String	name;

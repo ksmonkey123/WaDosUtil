@@ -12,7 +12,7 @@ import java.io.OutputStream;
  * @version 1.1, 2015-05-09
  *
  */
-public class TagDouble implements Tag<Double> {
+public final class TagDouble implements Tag<Double> {
 
 	private Double	value;
 	private String	name;

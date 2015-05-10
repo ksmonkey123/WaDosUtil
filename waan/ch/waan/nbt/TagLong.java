@@ -11,7 +11,7 @@ import java.io.OutputStream;
  * @version 1.1, 2015-05-09
  *
  */
-public class TagLong implements Tag<Long> {
+public final class TagLong implements Tag<Long> {
 
 	private Long	value;
 	private String	name;

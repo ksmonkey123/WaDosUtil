@@ -11,7 +11,7 @@ import java.io.OutputStream;
  * @version 1.1, 2015-05-09
  *
  */
-public class TagByte implements Tag<Byte> {
+public final class TagByte implements Tag<Byte> {
 
 	private Byte	value;
 	private String	name;

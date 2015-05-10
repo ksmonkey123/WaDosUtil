@@ -11,7 +11,7 @@ import java.io.OutputStream;
  * @version 1.1, 2015-05-09
  *
  */
-public class TagFloat implements Tag<Float> {
+public final class TagFloat implements Tag<Float> {
 
 	private String	name;
 	private Float	value;

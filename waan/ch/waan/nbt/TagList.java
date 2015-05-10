@@ -16,7 +16,7 @@ import ch.waan.util.SerializationConstructorFactory;
  * @version 1.1, 2015-05-09
  *
  */
-public class TagList implements Tag<ArrayList<Tag<?>>> {
+public final class TagList implements Tag<ArrayList<Tag<?>>> {
 
 	private String				name;
 	private ArrayList<Tag<?>>	value;

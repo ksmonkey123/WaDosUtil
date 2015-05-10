@@ -7,7 +7,7 @@ package ch.waan.util.id;
  * @author Andreas Wälchli
  * @version 1.1, 2014-10-21
  */
-public class IDProviderFactory {
+public final class IDProviderFactory {
 
 	/**
 	 * generates and returns an {@link IDProvider IDProvider} able to hold the

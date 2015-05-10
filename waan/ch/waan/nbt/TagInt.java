@@ -11,7 +11,7 @@ import java.io.OutputStream;
  * @version 1.1, 2015-05-09
  *
  */
-public class TagInt implements Tag<Integer> {
+public final class TagInt implements Tag<Integer> {
 
 	private String	name;
 	private Integer	value;

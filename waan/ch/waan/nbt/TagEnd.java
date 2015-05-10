@@ -10,7 +10,7 @@ import java.io.OutputStream;
  * @version 1.1, 2015-05-09
  *
  */
-public class TagEnd implements Tag<Void> {
+public final class TagEnd implements Tag<Void> {
 
 	@Override
 	public byte getTagID() {

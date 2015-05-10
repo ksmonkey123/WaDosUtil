@@ -10,7 +10,7 @@ import java.io.OutputStream;
  * @author Andreas Wälchli
  * @version 1.1, 2015-05-09
  */
-public class TagByteArray implements Tag<Byte[]> {
+public final class TagByteArray implements Tag<Byte[]> {
 
 	private Byte[]	value;
 	private String	name;
