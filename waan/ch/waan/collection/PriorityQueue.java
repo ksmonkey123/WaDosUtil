@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * @param <E>
  *            the element type
  */
-public final class PriorityQueue<E> implements Queue<E> {
+public class PriorityQueue<E> implements Queue<E> {
 
 	private class QueueElement implements Comparable<QueueElement> {
 
@@ -90,7 +90,14 @@ public final class PriorityQueue<E> implements Queue<E> {
 		this(true);
 	}
 
-	private PriorityQueue(boolean isMinQueue) {
+	/**
+	 * instantiates a new priority queue
+	 * 
+	 * @param isMinQueue
+	 *            {@code true} if the queue should be a min queue, {@code false}
+	 *            if it should be a max queue
+	 */
+	protected PriorityQueue(boolean isMinQueue) {
 		this.isMinQueue = isMinQueue;
 		this.backer = new java.util.PriorityQueue<>();
 	}

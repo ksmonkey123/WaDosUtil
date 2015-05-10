@@ -13,7 +13,17 @@ import ch.waan.collection.PriorityQueue;
  * @author Andreas Wälchli
  * @version 1.3, 2015-05-10
  */
-public class Shutdown {
+public final class Shutdown extends PriorityQueue<@NonNull Runnable> {
+
+	/**
+	 * Creates a new Shutdown instance. On instantiation the shutdown instance
+	 * is automatically registered to the global shutdown handling.
+	 */
+	public Shutdown() {
+		super(false);
+		Runtime.getRuntime()
+				.addShutdownHook(new Thread(this::runShutdown));
+	}
 
 	/**
 	 * The default priority.
@@ -82,32 +92,34 @@ public class Shutdown {
 		return Shutdown.defaultShutdown;
 	}
 
-	// private final TreeMap<Integer, ArrayList<Runnable>> map = new
-	// TreeMap<>();
-	private final PriorityQueue<Runnable>	queue	= PriorityQueue.maxQueue();
-
-	{
-		Runtime.getRuntime()
-				.addShutdownHook(new Thread(this::runShutdown));
+	/**
+	 * adds a {@link Runnable} with default priority ({@code 0}) to the shutdown
+	 * system.<br/>
+	 * {@inheritDoc}
+	 *
+	 * @throws NullPointerException
+	 *             if the {@code r} argument is {@code null}
+	 */
+	@Override
+	public boolean add(@NonNull Runnable r) {
+		Objects.requireNonNull(r, "no null runnable allowed");
+		super.add(r, DEFAULT);
+		return true;
 	}
 
 	/**
-	 * adds a {@link Runnable} with default priority ({@code 0}) to the shutdown
-	 * system. This is a convenience method for {@link #add(Runnable, int)}.
-	 *
-	 * @param r
-	 *            the runnable to add
 	 * @throws NullPointerException
 	 *             if the {@code r} argument is {@code null}
-	 * @see #add(Runnable, int)
+	 * @since 1.3
 	 */
-	public void add(@NonNull Runnable r) {
-		this.add(r, Shutdown.DEFAULT);
+	@Override
+	public void add(@NonNull Runnable r, double priority) {
+		Objects.requireNonNull(r, "no null runnable allowed");
+		super.add(r, priority);
 	}
 
 	/**
 	 * adds a {@link Runnable} with a defined priority to the shutdown system.
-	 * There currently is no way to remove a handler once it has been added.
 	 *
 	 * @param r
 	 *            the runnable to add
@@ -115,15 +127,18 @@ public class Shutdown {
 	 *            the priority of the runnable
 	 * @throws NullPointerException
 	 *             if the {@code r} argument is {@code null}
+	 * @deprecated since 1.3 - use {@link Shutdown#add(Runnable, double)}
+	 *             instead
 	 */
+	@Deprecated
 	public void add(@NonNull Runnable r, int priority) {
 		Objects.requireNonNull(r, "no null runnable allowed");
-		this.queue.add(r, priority);
+		super.add(r, priority);
 	}
 
 	private final void runShutdown() {
-		while (!this.queue.isEmpty()) {
-			this.queue.element()
+		while (!this.isEmpty()) {
+			this.element()
 					.run();
 		}
 	}
