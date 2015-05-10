@@ -8,17 +8,21 @@ import java.util.Queue;
 import java.util.stream.Collectors;
 
 /**
- * min-priority queue
+ * a priority queue implementation where each element has a defined priority.
+ * 
+ * It can either be used as a min-queue or as a max-queue. In a min-queue the
+ * first element is always the one with the lowest priority value, in a
+ * max-queue it is the element with the highest priority value
  * 
  * @author Andreas Wälchli
- * @version 1.1, 2015-05-09
+ * @version 1.2, 2015-05-10
  *
  * @param <E>
  *            the element type
  */
-public class PriorityQueue<E> implements Queue<E> {
+public final class PriorityQueue<E> implements Queue<E> {
 
-	private static class QueueElement implements Comparable<QueueElement> {
+	private class QueueElement implements Comparable<QueueElement> {
 
 		Object	element;
 		double	priority;
@@ -29,36 +33,114 @@ public class PriorityQueue<E> implements Queue<E> {
 		}
 
 		@Override
+		public int compareTo(QueueElement o) {
+			return (PriorityQueue.this.isMinQueue ? 1 : -1)
+					* Double.compare(this.priority, o.priority);
+		}
+
+		@Override
 		public boolean equals(Object obj) {
-			if (!(obj instanceof QueueElement))
+			if (!(obj instanceof PriorityQueue.QueueElement))
 				return false;
-			return Objects.equals(this.element, ((QueueElement) obj).element);
+			return Objects.equals(this.element,
+					((PriorityQueue<?>.QueueElement) obj).element);
 		}
 
 		@Override
 		public int hashCode() {
 			return Objects.hash(this.element);
 		}
+	}
 
-		@Override
-		public int compareTo(QueueElement o) {
-			return Double.compare(this.priority, o.priority);
-		}
+	/**
+	 * creates a new max-priority-queue
+	 * 
+	 * @param <T>
+	 *            the type of the queue
+	 * @return the created queue
+	 * @since 1.2
+	 */
+	public static <T> PriorityQueue<T> maxQueue() {
+		return new PriorityQueue<>(false);
+	}
 
+	/**
+	 * creates a new min-priority-queue
+	 * 
+	 * @param <T>
+	 *            the type of the queue
+	 * @return the created queue
+	 * @since 1.2
+	 */
+	public static <T> PriorityQueue<T> minQueue() {
+		return new PriorityQueue<>(true);
 	}
 
 	private java.util.PriorityQueue<QueueElement>	backer;
 
+	final boolean									isMinQueue;
+
 	/**
 	 * Creates a new min-priority-queue instance
+	 * 
+	 * @deprecated since 1.2 - use factory methods instead
 	 */
+	@Deprecated
 	public PriorityQueue() {
+		this(true);
+	}
+
+	private PriorityQueue(boolean isMinQueue) {
+		this.isMinQueue = isMinQueue;
 		this.backer = new java.util.PriorityQueue<>();
 	}
 
 	@Override
-	public int size() {
-		return this.backer.size();
+	public boolean add(E e) {
+		return this.backer.add(new QueueElement(e,
+				this.isMinQueue ? Double.MAX_VALUE : Double.MIN_VALUE));
+	}
+
+	/**
+	 * Adds a new element with a defined priority
+	 * 
+	 * @param element
+	 *            the element
+	 * @param priority
+	 *            the priority
+	 */
+	public void add(E element, double priority) {
+		this.backer.add(new QueueElement(element, priority));
+	}
+
+	@SuppressWarnings("null")
+	@Override
+	public boolean addAll(Collection<? extends E> c) {
+		return c.stream()
+				.map(this::add)
+				.reduce(false, (a, b) -> a || b);
+	}
+
+	@Override
+	public void clear() {
+		this.backer.clear();
+	}
+
+	@Override
+	public boolean contains(Object o) {
+		return this.backer.contains(new QueueElement(o, 0));
+	}
+
+	@Override
+	public boolean containsAll(Collection<?> c) {
+		return c.stream()
+				.allMatch(this::contains);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public E element() {
+		return (E) this.backer.element().element;
 	}
 
 	@Override
@@ -66,9 +148,24 @@ public class PriorityQueue<E> implements Queue<E> {
 		return this.backer.isEmpty();
 	}
 
-	@Override
-	public boolean contains(Object o) {
-		return this.backer.contains(new QueueElement(o, 0));
+	/**
+	 * indicates if the queue has a max-queue configuration
+	 * 
+	 * @return {@code true} iff the queue is a max-queue
+	 * @since 1.2
+	 */
+	public boolean isMaxQueue() {
+		return !this.isMinQueue;
+	}
+
+	/**
+	 * indicates if the queue has a min-queue configuration
+	 * 
+	 * @return {@code true} iff the queue is a min-queue
+	 * @since 1.2
+	 */
+	public boolean isMinQueue() {
+		return this.isMinQueue;
 	}
 
 	@Override
@@ -92,35 +189,31 @@ public class PriorityQueue<E> implements Queue<E> {
 	}
 
 	@Override
-	public Object[] toArray() {
-		return this.backer.stream()
-				.map(e -> e.element)
-				.toArray();
+	public boolean offer(E e) {
+		return this.backer.offer(new QueueElement(e, 0));
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T[] toArray(T[] a) {
-		return (T[]) Arrays.copyOf(this.toArray(), this.size(), a.getClass());
+	public E peek() {
+		return (E) this.backer.peek().element;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public E poll() {
+		return (E) this.backer.poll().element;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public E remove() {
+		return (E) this.backer.remove().element;
 	}
 
 	@Override
 	public boolean remove(Object o) {
 		return this.backer.remove(new QueueElement(o, 0));
-	}
-
-	@Override
-	public boolean containsAll(Collection<?> c) {
-		return c.stream()
-				.allMatch(this::contains);
-	}
-
-	@SuppressWarnings("null")
-	@Override
-	public boolean addAll(Collection<? extends E> c) {
-		return c.stream()
-				.map(this::add)
-				.reduce(false, (a, b) -> a || b);
 	}
 
 	@Override
@@ -137,45 +230,6 @@ public class PriorityQueue<E> implements Queue<E> {
 				.collect(Collectors.toList()));
 	}
 
-	@Override
-	public void clear() {
-		this.backer.clear();
-	}
-
-	@Override
-	public boolean add(E e) {
-		return this.backer.add(new QueueElement(e, Double.MAX_VALUE));
-	}
-
-	@Override
-	public boolean offer(E e) {
-		return this.backer.offer(new QueueElement(e, 0));
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public E remove() {
-		return (E) this.backer.remove().element;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public E poll() {
-		return (E) this.backer.poll().element;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public E element() {
-		return (E) this.backer.element().element;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public E peek() {
-		return (E) this.backer.peek().element;
-	}
-
 	/**
 	 * Sets the priority of an element in the queue
 	 * 
@@ -190,16 +244,22 @@ public class PriorityQueue<E> implements Queue<E> {
 		this.backer.add(e);
 	}
 
-	/**
-	 * Adds a new element with a defined priority
-	 * 
-	 * @param element
-	 *            the element
-	 * @param priority
-	 *            the priority
-	 */
-	public void add(E element, double priority) {
-		this.backer.add(new QueueElement(element, priority));
+	@Override
+	public int size() {
+		return this.backer.size();
+	}
+
+	@Override
+	public Object[] toArray() {
+		return this.backer.stream()
+				.map(e -> e.element)
+				.toArray();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> T[] toArray(T[] a) {
+		return (T[]) Arrays.copyOf(this.toArray(), this.size(), a.getClass());
 	}
 
 }

@@ -1,16 +1,17 @@
 package ch.waan.util;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.TreeMap;
+import java.util.Objects;
+
+import org.eclipse.jdt.annotation.NonNull;
+
+import ch.waan.collection.PriorityQueue;
 
 /**
  * This class serves as a wrapper for the Java-side Shutdown handlers with the
  * added option to define the shutdown order.
  *
  * @author Andreas Wälchli
- * @version 1.2, 2014-11-17
+ * @version 1.3, 2015-05-10
  */
 public class Shutdown {
 
@@ -21,6 +22,8 @@ public class Shutdown {
 	 * @see #add(Runnable, int)
 	 */
 	public static final int			DEFAULT			= 0;
+
+	private static final Shutdown	defaultShutdown	= new Shutdown();
 
 	/**
 	 * The default priority for operations that should be performed very early
@@ -70,8 +73,6 @@ public class Shutdown {
 	 */
 	public static final int			LATER			= -10000;
 
-	private static final Shutdown	defaultShutdown	= new Shutdown();
-
 	/**
 	 * Provides a global Shutdown handler.
 	 *
@@ -81,22 +82,13 @@ public class Shutdown {
 		return Shutdown.defaultShutdown;
 	}
 
-	private final TreeMap<Integer, ArrayList<Runnable>>	map	= new TreeMap<>();
+	// private final TreeMap<Integer, ArrayList<Runnable>> map = new
+	// TreeMap<>();
+	private final PriorityQueue<Runnable>	queue	= PriorityQueue.maxQueue();
 
 	{
 		Runtime.getRuntime()
 				.addShutdownHook(new Thread(this::runShutdown));
-	}
-
-	private final void runShutdown() {
-		Collection<ArrayList<Runnable>> c = this.map.descendingMap()
-				.values();
-		for (Iterator<ArrayList<Runnable>> iterator = c.iterator(); iterator.hasNext();) {
-			ArrayList<Runnable> arrayList = iterator.next();
-			for (Runnable r : arrayList) {
-				r.run();
-			}
-		}
 	}
 
 	/**
@@ -109,7 +101,7 @@ public class Shutdown {
 	 *             if the {@code r} argument is {@code null}
 	 * @see #add(Runnable, int)
 	 */
-	public void add(Runnable r) {
+	public void add(@NonNull Runnable r) {
 		this.add(r, Shutdown.DEFAULT);
 	}
 
@@ -124,13 +116,16 @@ public class Shutdown {
 	 * @throws NullPointerException
 	 *             if the {@code r} argument is {@code null}
 	 */
-	public void add(Runnable r, int priority) {
-		if (r == null)
-			throw new NullPointerException("no null runnables supported");
-		if (!this.map.containsKey(priority))
-			this.map.put(priority, new ArrayList<>());
-		this.map.get(priority)
-				.add(r);
+	public void add(@NonNull Runnable r, int priority) {
+		Objects.requireNonNull(r, "no null runnable allowed");
+		this.queue.add(r, priority);
+	}
+
+	private final void runShutdown() {
+		while (!this.queue.isEmpty()) {
+			this.queue.element()
+					.run();
+		}
 	}
 
 }

@@ -30,7 +30,7 @@ public class DijkstraPathfinder<V extends Vertex<V>> implements Pathfinder<V> {
 
 		Map<V, Double> distances = new HashMap<>();
 		Map<V, V> backsteps = new HashMap<>();
-		PriorityQueue<V> queue = new PriorityQueue<>();
+		PriorityQueue<V> queue = PriorityQueue.minQueue();
 
 		distances.put(from, Double.valueOf(0.0));
 		queue.add(from, 0);
