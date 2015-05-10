@@ -1,4 +1,4 @@
-package ch.waan.collection;
+package ch.waan.collection.mutable;
 
 import java.lang.reflect.Array;
 import java.util.Collection;

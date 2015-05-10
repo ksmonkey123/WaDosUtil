@@ -1,10 +1,8 @@
-package ch.waan.util.concurrent;
+package ch.waan.util.id;
 
 import java.util.Objects;
 
 import org.eclipse.jdt.annotation.NonNull;
-
-import ch.waan.util.id.IDProvider;
 
 /**
  * This IDProvider Implementation provides a synchronisation layer for the

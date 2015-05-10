@@ -1,10 +1,17 @@
-package ch.waan.util.concurrent;
+package ch.waan.concurrent;
 
 /**
- * This premade Runnable implementation allows for a very simple implementation.
+ * This prebuilt Runnable implementation allows for a very simple
+ * implementation. It consists of an infinite loop with a user provided step
+ * implementation. Before the first step a start handler is called.According to
+ * indication of the step implementation the base loop can be terminated. If the
+ * step yields an interrupt, the loop is terminated as well. After loop
+ * termination a termination handling method is called, after an interrupt
+ * handler has been run in case of an interrupt being the reason for the loop
+ * termination.
  *
  * @author Andreas Wälchli
- * @version 1.1, 2014-11-24
+ * @version 1.2, 2015-05-10
  */
 public abstract class IterativeRunner implements Runnable {
 

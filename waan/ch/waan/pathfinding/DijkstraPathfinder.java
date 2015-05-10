@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import ch.waan.collection.PriorityQueue;
+import ch.waan.collection.mutable.PriorityQueue;
 
 /**
  * Pathfinder based on the Dijkstra algorithm.

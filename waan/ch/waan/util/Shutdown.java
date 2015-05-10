@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-import ch.waan.collection.PriorityQueue;
+import ch.waan.collection.mutable.PriorityQueue;
 
 /**
  * This class serves as a wrapper for the Java-side Shutdown handlers with the
