@@ -5,7 +5,7 @@ import java.net.URL;
 
 import ch.waan.util.Result;
 
-final class URLSource extends AStreamSource {
+final class URLSource extends Source {
 
 	private final String	url;
 
@@ -14,9 +14,15 @@ final class URLSource extends AStreamSource {
 	}
 
 	@Override
-	protected Result<InputStream> getStream() {
+	public Result<InputStream> mkStream() {
 		return Result.of(this.url)
 				.map(URL::new)
 				.map(URL::openStream);
 	}
+
+	@Override
+	public String toString() {
+		return "URL Source ( " + this.url + " )";
+	}
+
 }

@@ -4,7 +4,7 @@ import java.io.InputStream;
 
 import ch.waan.util.Result;
 
-class StreamSource extends AStreamSource {
+class StreamSource extends Source {
 
 	private final InputStream	stream;
 
@@ -13,8 +13,8 @@ class StreamSource extends AStreamSource {
 	}
 
 	@Override
-	protected Result<InputStream> getStream() {
-		return Result.of(this.stream);
+	public Result<InputStream> mkStream() {
+		return Result.ofNullable(this.stream);
 	}
 
 }

@@ -1,14 +1,10 @@
 package ch.waan.util;
 
 import java.util.NoSuchElementException;
-import java.util.function.Function;
 
 import ch.waan.function.ErrableFunction;
 
-class NoneResult<T> implements Result<T> {
-
-	NoneResult() {
-	}
+class EmptyResult<T> extends Result<T> {
 
 	@Override
 	public T get() {
@@ -37,22 +33,22 @@ class NoneResult<T> implements Result<T> {
 
 	@Override
 	public <E> Result<E> map(ErrableFunction<T, E> mapper) {
-		return new NoneResult<>();
+		return new EmptyResult<>();
 	}
 
 	@Override
-	public <E> Result<E> flatMap(Function<T, Result<E>> mapper) {
-		return new NoneResult<>();
+	public <E> Result<E> flatMap(ErrableFunction<T, Result<E>> mapper) {
+		return new EmptyResult<>();
 	}
 
 	@Override
 	public Result<T> mapException(ErrableFunction<Exception, T> mapper) {
-		return new NoneResult<>();
+		return new EmptyResult<>();
 	}
 
 	@Override
-	public Result<T> flatMapException(Function<Exception, Result<T>> mapper) {
-		return new NoneResult<>();
+	public Result<T> flatMapException(ErrableFunction<Exception, Result<T>> mapper) {
+		return new EmptyResult<>();
 	}
 
 	@Override

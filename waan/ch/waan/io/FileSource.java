@@ -5,7 +5,7 @@ import java.io.InputStream;
 
 import ch.waan.util.Result;
 
-final class FileSource extends AStreamSource {
+final class FileSource extends Source {
 
 	private final String	filename;
 
@@ -14,8 +14,13 @@ final class FileSource extends AStreamSource {
 	}
 
 	@Override
-	protected Result<InputStream> getStream() {
+	public Result<InputStream> mkStream() {
 		return Result.eval(() -> new FileInputStream(this.filename));
+	}
+
+	@Override
+	public String toString() {
+		return "File Source ( " + this.filename + " )";
 	}
 
 }

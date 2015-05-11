@@ -11,9 +11,12 @@ package ch.waan.io;
 public class SourceTest {
 
 	public static void main(String[] args) {
+		sourceTest(Source.fromFile(".project"));
+		sourceTest(Source.fromURL("http://google.com"));
+	}
 
-		System.out.println(Source.fromFile(".project")
-				.mkString());
-
+	private static void sourceTest(Source s) {
+		System.out.println(s);
+		System.out.println(s.mkString());
 	}
 }
