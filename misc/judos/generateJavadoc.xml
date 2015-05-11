@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="main">
+
+	<target name="main" depends="clean,javadoc,zipToJar,clean2" />
+
+	<target name="clean">
+		<delete dir="javadoc" />
+	</target>
+
+	<target name="javadoc">
+		<javadoc access="protected" author="true" classpath="libs/junit3.8.1/junit.jar" destdir="javadoc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="ch.judos.generic.network.udp.interfaces,ch.judos.generic.swing,ch.judos.generic.data.date,ch.judos.generic.games.unitCoordination,ch.judos.generic.data.xml,ch.judos.generic.math.operators,ch.judos.generic.games.pathsearch,ch.judos.generic.network.udp.model,ch.judos.generic.gui,ch.judos.generic.control,ch.judos.generic.data.language,ch.judos.generic.graphics,ch.judos.generic.sound,ch.judos.generic.reflection,ch.judos.generic.data.format,ch.judos.generic.network.udp.model.reachability,ch.judos.generic.algorithm,ch.judos.generic.test,ch.judos.generic.dropFilesOntoApp,ch.judos.generic.files.config,ch.judos.generic.files.openImageDialog,ch.judos.generic.graphics.fullscreen" source="1.7" sourcefiles="src/ch/judos/generic/games/Scroll.java,src/ch/judos/generic/data/Serializer.java,src/ch/judos/generic/network/udp/FileReceiver.java,src/ch/judos/generic/data/parse/ComposedFormat.java,src/ch/judos/generic/data/TupleR.java,src/ch/judos/generic/files/FileUtils.java,src/ch/judos/generic/data/parse/DateTimeFormat.java,src/ch/judos/generic/network/udp/Udp2.java,src/ch/judos/generic/network/upnp/GatewayDeviceHandler.java,src/ch/judos/generic/network/IP.java,src/ch/judos/generic/data/parse/TimeHM.java,src/ch/judos/generic/data/Map.java,src/ch/judos/generic/data/parse/WordFormat.java,src/ch/judos/generic/network/upnp/UdpPortForwarder.java,src/ch/judos/generic/network/upnp/LogUtils.java,src/ch/judos/generic/data/parse/ConstantFormat.java,src/ch/judos/generic/network/udp/UdpConfig.java,src/ch/judos/generic/data/Progress.java,src/ch/judos/generic/data/parse/SimpleFormat.java,src/ch/judos/generic/data/parse/TimeFormat.java,src/ch/judos/generic/data/ArraysJS.java,src/ch/judos/generic/network/udp/ConnectionIssueListener.java,src/ch/judos/generic/network/udp/Udp0Sender.java,src/ch/judos/generic/data/StringUtils.java,src/ch/judos/generic/network/udp/Udp3.java,src/ch/judos/generic/data/parse/DateFormat.java,src/ch/judos/generic/network/udp/Udp1.java,src/ch/judos/generic/data/parse/Format.java,src/ch/judos/generic/data/CloneableJS.java,src/ch/judos/generic/data/HashMapR.java,src/ch/judos/generic/data/Cloner.java,src/ch/judos/generic/data/ProgressIterable.java,src/ch/judos/generic/data/MutableInteger.java,src/ch/judos/generic/data/csv/CSVFile.java,src/ch/judos/generic/network/udp/Udp2Monitor.java,src/ch/judos/generic/data/DuplicateFilter.java,src/ch/judos/generic/network/udp/Udp4.java,src/ch/judos/generic/data/parse/NumberFormat.java,src/ch/judos/generic/network/upnp/GatewayDiscover.java,src/ch/judos/generic/data/TripleW.java,src/ch/judos/generic/games/GraphicsSpaceGridMap.java,src/ch/judos/generic/data/NaturalOrderComparator.java,src/ch/judos/generic/data/parse/ChoiceFormat.java,src/ch/judos/generic/data/HashMap2.java,src/ch/judos/generic/data/parse/IntervallFormat.java,src/ch/judos/generic/data/RandomJS.java,src/ch/judos/generic/data/DynamicList.java,src/ch/judos/generic/network/udp/Udp0Reader.java,src/ch/judos/generic/network/upnp/GatewayDevice.java,src/ch/judos/generic/math/MathJS.java,src/ch/judos/generic/network/udp/UdpLib.java,src/ch/judos/generic/math/ConvertNumber.java,src/ch/judos/generic/data/TupleW.java,src/ch/judos/generic/files/OpenFileDialog.java,src/ch/judos/generic/data/csv/CSVFileWriter.java,src/ch/judos/generic/data/Warning.java,src/ch/judos/generic/network/upnp/PortMappingEntry.java,src/ch/judos/generic/network/udp/FileSender.java,src/ch/judos/generic/network/upnp/NameValueHandler.java,src/ch/judos/generic/data/parse/TimeHMS.java,src/ch/judos/generic/data/SerializerException.java,src/ch/judos/generic/network/udp/Udp4Forwarded.java,src/ch/judos/generic/data/csv/CSVFileReader.java" sourcepath="tests;src" splitindex="true" use="true" version="true" />
+	</target>
+
+	<target name="zipToJar">
+		<zip destfile="RessourcesJava-src+javadoc.jar">
+			<zipfileset dir="src/" prefix="src/" />
+			<zipfileset dir="javadoc/" prefix="javadoc/" />
+		</zip>
+	</target>
+	
+	<target name="clean2">
+		<antcall target="clean" />
+	</target>
+</project>
