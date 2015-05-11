@@ -1,6 +1,12 @@
 package ch.waan.io;
 
 import java.io.InputStream;
+import java.io.StringReader;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
 import ch.waan.util.Result;
 
@@ -80,5 +86,20 @@ public abstract class Source {
 						return sb.toString();
 
 					});
+	}
+
+	/**
+	 * reads the source into an XML document
+	 * 
+	 * @return a result holding the XML
+	 */
+	public Result<Document> mkXML() {
+		return this.mkString()
+				.map(StringReader::new)
+				.map(InputSource::new)
+				.map(reader -> DocumentBuilderFactory.newInstance()
+						.newDocumentBuilder()
+						.parse(reader));
+
 	}
 }
