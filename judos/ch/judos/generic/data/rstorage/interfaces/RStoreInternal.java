@@ -1,9 +1,9 @@
 package ch.judos.generic.data.rstorage.interfaces;
 
 import java.io.IOException;
-import java.io.Writer;
 
 import ch.judos.generic.data.rstorage.helper.CheckReader2;
+import ch.judos.generic.data.rstorage.helper.RuntimeWriter2;
 
 /**
  * @since 03.05.2015
@@ -24,7 +24,7 @@ public interface RStoreInternal {
 	 * @param storeType
 	 * @throws IOException
 	 */
-	public void store(Object o, final Writer w, boolean storeType) throws IOException;
+	public void store(Object o, final RuntimeWriter2 w, boolean storeType) throws IOException;
 
 	public Object read(CheckReader2 r, Class<?> assumeType) throws IOException;
 }

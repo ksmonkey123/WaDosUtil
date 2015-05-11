@@ -1,10 +1,10 @@
 package ch.judos.generic.data.rstorage.types;
 
 import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 
 import ch.judos.generic.data.rstorage.helper.CheckReader2;
+import ch.judos.generic.data.rstorage.helper.RuntimeWriter2;
 import ch.judos.generic.data.rstorage.interfaces.RStorableWrapper;
 import ch.judos.generic.data.rstorage.interfaces.RStoreInternal;
 
@@ -45,7 +45,7 @@ public class RStorableArray2 implements RStorableWrapper {
 	}
 
 	@Override
-	public void store(Writer wr, RStoreInternal storage) throws IOException {
+	public void store(RuntimeWriter2 wr, RStoreInternal storage) throws IOException {
 		Class<?> contentClass = this.array.getClass().getComponentType();
 		wr.write("{");
 		boolean firstEntry = true;
