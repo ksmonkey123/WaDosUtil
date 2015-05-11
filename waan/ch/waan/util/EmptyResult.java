@@ -43,12 +43,12 @@ class EmptyResult<T> extends Result<T> {
 
 	@Override
 	public Result<T> mapException(ErrableFunction<Exception, T> mapper) {
-		return new EmptyResult<>();
+		return this;
 	}
 
 	@Override
 	public Result<T> flatMapException(ErrableFunction<Exception, Result<T>> mapper) {
-		return new EmptyResult<>();
+		return this;
 	}
 
 	@Override
