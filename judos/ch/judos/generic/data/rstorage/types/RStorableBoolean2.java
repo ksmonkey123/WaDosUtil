@@ -1,9 +1,9 @@
 package ch.judos.generic.data.rstorage.types;
 
 import java.io.IOException;
-import java.io.Writer;
 
 import ch.judos.generic.data.rstorage.helper.CheckReader2;
+import ch.judos.generic.data.rstorage.helper.RuntimeWriter2;
 import ch.judos.generic.data.rstorage.interfaces.RStorableWrapper;
 import ch.judos.generic.data.rstorage.interfaces.RStoreInternal;
 
@@ -31,7 +31,7 @@ public class RStorableBoolean2 implements RStorableWrapper {
 	}
 
 	@Override
-	public void store(Writer w, RStoreInternal storage) throws IOException {
+	public void store(RuntimeWriter2 w, RStoreInternal storage) throws IOException {
 		w.write(String.valueOf(this.c));
 	}
 
