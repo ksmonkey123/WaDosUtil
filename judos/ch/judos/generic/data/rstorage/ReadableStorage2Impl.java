@@ -14,6 +14,7 @@ import ch.judos.generic.data.rstorage.helper.RSerializerException.Type;
 import ch.judos.generic.data.rstorage.interfaces.RStorableManual2;
 import ch.judos.generic.data.rstorage.interfaces.RStorableWrapper;
 import ch.judos.generic.data.rstorage.interfaces.RStoreInternal;
+import ch.judos.generic.data.rstorage.model.DynEscapeSeq;
 import ch.judos.generic.data.rstorage.model.DynamicTag;
 import ch.judos.generic.data.rstorage.model.Tag;
 import ch.judos.generic.data.rstorage.types.*;
@@ -98,7 +99,7 @@ public class ReadableStorage2Impl implements ReadableStorage2 {
 			return result;
 		}
 		catch (IOException e) {
-			throw new RSerializerException("Could not read from stream", e, Type.IO);
+			throw new RSerializerException("", e, Type.IO);
 		}
 	}
 	private Object initializeByClassId(String classId) throws RSerializerException {
@@ -128,17 +129,18 @@ public class ReadableStorage2Impl implements ReadableStorage2 {
 				"Could not close and flush stream after writing object " + object, e, Type.IO);
 		}
 	}
-	protected void storeWithTags(Object object, Writer wr, boolean storeType)
+	protected void storeWithTags(Object object, RuntimeWriter2 wr, boolean storeType)
 		throws RSerializerException {
 		// get serializer impl for this object
 		RStorableWrapper store = getStorableForObject(object);
 
 		try {
 			Tag tag = DynamicTag.createTag(store, objectTracker.get(), storeType);
-			((RuntimeWriter2) wr).write(tag);
+			wr.write(tag);
 			if (tag.hasGetReference())
 				return;
 
+			wr.write(new DynEscapeSeq(() -> tag.toString().equals(""), wr));
 			store.store(wr, getInternal());
 		}
 		catch (IOException e) {
@@ -185,7 +187,7 @@ public class ReadableStorage2Impl implements ReadableStorage2 {
 	}
 
 	protected void rethrowI(String msg, Exception e) throws IOException {
-		IOException ex = new IOException(msg, e);
+		IOException ex = new IOException(msg + e.getMessage(), e);
 		ex.setStackTrace(e.getStackTrace());
 		throw ex;
 	}

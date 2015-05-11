@@ -1,9 +1,9 @@
 package ch.judos.generic.data.rstorage.interfaces;
 
 import java.io.IOException;
-import java.io.Writer;
 
 import ch.judos.generic.data.rstorage.helper.CheckReader2;
+import ch.judos.generic.data.rstorage.helper.RuntimeWriter2;
 
 /**
  * import this interface to manually overwrite the RSerialization.<br>
@@ -25,6 +25,6 @@ public interface RStorableManual2 {
 	public boolean showOnOneLine();
 
 	public void read(CheckReader2 r, RStoreInternal storage) throws IOException;
-	public void store(final Writer w, RStoreInternal storage) throws IOException;
+	public void store(final RuntimeWriter2 w, RStoreInternal storage) throws IOException;
 
 }

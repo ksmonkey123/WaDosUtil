@@ -13,10 +13,12 @@ public class RuntimeWriter2 extends Writer {
 
 	protected BufferedWriter	redirectTo;
 	private ArrayList<Object>	content;
+	protected boolean				escaped;
 
 	public RuntimeWriter2(BufferedWriter redirectTo) {
 		this.redirectTo = redirectTo;
 		this.content = new ArrayList<Object>();
+		this.escaped = false;
 	}
 
 	@Override
@@ -49,5 +51,9 @@ public class RuntimeWriter2 extends Writer {
 	@Override
 	public void flush() throws IOException {
 		// not intended to be called
+	}
+
+	public void setEscaped(boolean b) {
+		this.escaped = b;
 	}
 }
