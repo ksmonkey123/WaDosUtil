@@ -20,7 +20,7 @@ public final class Game {
 
 	private Game(int width, int height, @NonNull SceneController controller,
 			int tickRate, int frameRate) {
-		this.gui = GUIFactory.createGUI(width, height, this::close);
+		this.gui = GUIImpl.newInstance(width, height, this::close);
 		this.controller = controller;
 		this.frameClock = new HighPrecisionClock(frameRate, this::render);
 		this.tickClock = new HighPrecisionClock(tickRate, this::tick);
@@ -86,7 +86,8 @@ public final class Game {
 	 *            the initial scene
 	 * @return the game instance
 	 */
-	public static @NonNull Game initializeGame(@NonNull SceneController initialScene) {
+	public static @NonNull Game
+			initializeGame(@NonNull SceneController initialScene) {
 		return new Game(800, 600, initialScene, 20, 50);
 	}
 }

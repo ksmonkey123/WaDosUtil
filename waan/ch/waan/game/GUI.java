@@ -117,4 +117,5 @@ public interface GUI {
 	 *         otherwise.
 	 */
 	boolean isEmpty();
+
 }

@@ -12,10 +12,8 @@ public class SourceTest {
 
 	public static void main(String[] args) {
 
-		String s = Source.fromFile(".project")
-				.toString();
-
-		System.out.println(s);
+		System.out.println(Source.fromFile(".project")
+				.mkString());
 
 	}
 }

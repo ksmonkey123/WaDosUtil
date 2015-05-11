@@ -16,6 +16,7 @@ import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.swing.JFrame;
@@ -248,6 +249,13 @@ class GUIImpl implements GUI {
 
 	static @NonNull GUI newInstance(final int width, final int height,
 			Runnable closeAction) {
+		if (width <= 0)
+			throw new IllegalArgumentException(
+					"GUI width must be positive. value was " + width);
+		if (height <= 0)
+			throw new IllegalArgumentException(
+					"GUI height must be positive. value was " + height);
+		Objects.requireNonNull(closeAction, "null exit handler not allowed");
 		if (GraphicsEnvironment.isHeadless())
 			throw new HeadlessException();
 		JFrame frame = new JFrame();
@@ -346,4 +354,5 @@ class GUIImpl implements GUI {
 		return this.uiRoot.getComponents()
 				.isEmpty();
 	}
+
 }
