@@ -1,7 +1,6 @@
 package ch.judos.generic.data.rstorage.helper;
 
 import java.io.IOException;
-import java.io.Writer;
 
 import ch.judos.generic.data.rstorage.interfaces.RStorableManual2;
 import ch.judos.generic.data.rstorage.interfaces.RStorableWrapper;
@@ -35,7 +34,7 @@ public class NoWrapperWrapper implements RStorableWrapper {
 	}
 
 	@Override
-	public void store(Writer w, RStoreInternal storage) throws IOException {
+	public void store(RuntimeWriter2 w, RStoreInternal storage) throws IOException {
 		this.obj.store(w, storage);
 	}
 

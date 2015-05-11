@@ -1,10 +1,10 @@
 package ch.judos.generic.data.rstorage;
 
 import java.io.IOException;
-import java.io.Writer;
 
 import ch.judos.generic.data.rstorage.helper.CheckReader2;
 import ch.judos.generic.data.rstorage.helper.RSerializerException;
+import ch.judos.generic.data.rstorage.helper.RuntimeWriter2;
 import ch.judos.generic.data.rstorage.interfaces.RStoreInternal;
 
 /**
@@ -20,7 +20,7 @@ public class RInternalImpl implements RStoreInternal {
 	}
 
 	@Override
-	public void store(Object o, Writer w, boolean storeType) throws IOException {
+	public void store(Object o, RuntimeWriter2 w, boolean storeType) throws IOException {
 		try {
 			this.rstorage.storeWithTags(o, w, storeType);
 		}

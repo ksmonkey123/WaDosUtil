@@ -94,4 +94,5 @@ public class Tag {
 	public boolean hasGetReference() {
 		return this.hasGetReference;
 	}
+
 }
