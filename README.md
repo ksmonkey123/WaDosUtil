@@ -1,2 +1,4 @@
 # WaDosUtil
-Collaborative Java Utility Collection
+Collaborative Java Utility Collection by
+  - Andreas Wälchli (ksmonkey123)
+  - Julian Schelker (judos)
