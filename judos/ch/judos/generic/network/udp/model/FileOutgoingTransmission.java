@@ -57,7 +57,7 @@ public class FileOutgoingTransmission {
 		this.to = to;
 		this.fileListener = fileListener;
 		this.status = Status.WAITING_FOR_ACCEPTANCE;
-		this.missing = new LinkedList<Integer>();
+		this.missing = new LinkedList<>();
 		this.speed = UdpConfig.SEND_SPEED_PACKETS;
 		this.currentPos = 0;
 		this.rFile = new RandomAccessFile(file, "r");
@@ -78,15 +78,15 @@ public class FileOutgoingTransmission {
 	}
 
 	public FileDescription getFileDescription() {
-		return new FileDescription(file.length(), parts, file.getAbsolutePath(),
-			description);
+		return new FileDescription(this.file.length(), this.parts, this.file.getAbsolutePath(),
+			this.description);
 	}
 
 	private byte[] getPart(int partNr) throws IOException {
-		this.rFile.seek((long) partNr * packetSize);
-		int size = packetSize;
+		this.rFile.seek((long) partNr * this.packetSize);
+		int size = this.packetSize;
 		if (partNr == this.parts - 1)
-			size = (int) (file.length() % packetSize);
+			size = (int) (this.file.length() % this.packetSize);
 
 		byte[] data = new byte[size];
 		this.rFile.readFully(data, 0, size);

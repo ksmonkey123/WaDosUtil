@@ -32,18 +32,18 @@ public class DuplicateFilter {
 	 */
 	public void cleanup() {
 		int used = 0;
-		int i = groupStart;
-		while (gMaster.f[i] || gMaster.g[i] != null) {
+		int i = this.groupStart;
+		while (this.gMaster.f[i] || this.gMaster.g[i] != null) {
 			used++;
 			i++;
 		}
 		int cleanGroups = used - 10;
 		for (int j = 0; j < cleanGroups; j++) {
-			int cleanIndex = groupStart + j;
-			if (gMaster.f[cleanIndex])
-				gMaster.finished--;
-			gMaster.f[cleanIndex] = false;
-			gMaster.g[cleanIndex] = null;
+			int cleanIndex = this.groupStart + j;
+			if (this.gMaster.f[cleanIndex])
+				this.gMaster.finished--;
+			this.gMaster.f[cleanIndex] = false;
+			this.gMaster.g[cleanIndex] = null;
 		}
 	}
 
@@ -78,19 +78,19 @@ public class DuplicateFilter {
 		}
 
 		public boolean check(int index) {
-			if (lvl == 0)
+			if (this.lvl == 0)
 				return !this.f[index];
 
-			int gIndex = index / div;
-			if (lvl == 3) // since integers start at -2^31
+			int gIndex = index / this.div;
+			if (this.lvl == 3) // since integers start at -2^31
 				gIndex += 128;
-			if (f[gIndex]) // if whole group is already marked as hit/finished
+			if (this.f[gIndex]) // if whole group is already marked as hit/finished
 				return false;
-			if (g[gIndex] == null) // if group doesn't exist yet
+			if (this.g[gIndex] == null) // if group doesn't exist yet
 				return true;
 
-			int lowerIndex = index % div;
-			return g[gIndex].check(lowerIndex);
+			int lowerIndex = index % this.div;
+			return this.g[gIndex].check(lowerIndex);
 		}
 
 		private boolean finished() {
@@ -98,7 +98,7 @@ public class DuplicateFilter {
 		}
 
 		public boolean hit(int index) {
-			if (lvl == 0) {
+			if (this.lvl == 0) {
 				boolean unhitBefore = !this.f[index];
 				if (unhitBefore) {
 					this.finished++;
@@ -106,19 +106,19 @@ public class DuplicateFilter {
 				}
 				return unhitBefore;
 			}
-			int gIndex = index / div;
-			if (lvl == 3) // since integers start at -2^31
+			int gIndex = index / this.div;
+			if (this.lvl == 3) // since integers start at -2^31
 				gIndex += 128;
-			if (f[gIndex]) // if whole group is already marked as hit/finished
+			if (this.f[gIndex]) // if whole group is already marked as hit/finished
 				return false;
 
-			int lowerIndex = index % div;
-			if (g[gIndex] == null)
-				g[gIndex] = new Group(lvl - 1);
-			boolean unhitBefore = g[gIndex].hit(lowerIndex);
-			if (g[gIndex].finished()) {
-				g[gIndex] = null;
-				f[gIndex] = true;
+			int lowerIndex = index % this.div;
+			if (this.g[gIndex] == null)
+				this.g[gIndex] = new Group(this.lvl - 1);
+			boolean unhitBefore = this.g[gIndex].hit(lowerIndex);
+			if (this.g[gIndex].finished()) {
+				this.g[gIndex] = null;
+				this.f[gIndex] = true;
 				this.finished++;
 			}
 			return unhitBefore;

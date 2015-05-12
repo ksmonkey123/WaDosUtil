@@ -24,6 +24,7 @@ public class Example {
 
 		new FileDrop(System.out, text, /* dragBorder, */
 		new FileDrop.Listener() {
+			@Override
 			public void filesDropped(java.io.File[] files) {
 				for (int i = 0; i < files.length; i++) {
 					try {

@@ -39,7 +39,7 @@ public abstract class Packet2A extends Packet2Hash implements Comparable<Packet2
 		if (i != 0)
 			return i;
 
-		return dest.hashCode() - p2.dest.hashCode();
+		return this.dest.hashCode() - p2.dest.hashCode();
 	}
 
 	@Override
@@ -48,8 +48,8 @@ public abstract class Packet2A extends Packet2Hash implements Comparable<Packet2
 			return super.equals(obj);
 
 		Packet2A p2 = (Packet2A) obj;
-		return super.equals(p2) && type == p2.type
-			&& sendData.length == p2.sendData.length;
+		return super.equals(p2) && this.type == p2.type
+			&& this.sendData.length == p2.sendData.length;
 	}
 
 	public int getNr() {
@@ -60,21 +60,21 @@ public abstract class Packet2A extends Packet2Hash implements Comparable<Packet2
 	 * @return the resendOn
 	 */
 	public long getResendOn() {
-		return resendOn;
+		return this.resendOn;
 	}
 
 	/**
 	 * @return the sendData
 	 */
 	public byte[] getSendData() {
-		return sendData;
+		return this.sendData;
 	}
 
 	/**
 	 * @return the type
 	 */
 	public int getType() {
-		return type;
+		return this.type;
 	}
 
 	protected void resendIn(long timeout) {

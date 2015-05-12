@@ -19,7 +19,7 @@ public class WaterFieldChecker extends FreeFieldCheckAdapter {
 
 	@Override
 	public boolean isFree(WayPoint p) {
-		return gMap.floor[p.getX()][p.getY()] instanceof Water && gMap.isFree(p);
+		return this.gMap.floor[p.getX()][p.getY()] instanceof Water && this.gMap.isFree(p);
 	}
 
 }

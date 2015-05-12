@@ -250,7 +250,7 @@ public class FileUtils extends File {
 	}
 
 	public static ArrayList<String> readFileContent(BufferedReader reader) throws IOException {
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<>();
 		String line;
 		while ((line = reader.readLine()) != null)
 			result.add(line);
@@ -330,13 +330,9 @@ public class FileUtils extends File {
 
 			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			chooser.setAcceptAllFileFilterUsed(false);
-			if (chooser.showOpenDialog(parent) == JFileChooser.APPROVE_OPTION) {
-
+			if (chooser.showOpenDialog(parent) == JFileChooser.APPROVE_OPTION)
 				return chooser.getSelectedFile();
-			}
-			else {
-				return null;
-			}
+			return null;
 		}
 		finally {
 			chooser.setEnabled(false);
@@ -370,11 +366,9 @@ public class FileUtils extends File {
 	public static File requestFile() {
 		JFileChooser chooser = new JFileChooser();
 		int returnVal = chooser.showOpenDialog(null);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
+		if (returnVal == JFileChooser.APPROVE_OPTION)
 			return chooser.getSelectedFile();
-		}
-		else
-			return null;
+		return null;
 	}
 
 	/**
@@ -397,11 +391,9 @@ public class FileUtils extends File {
 		chooser.setFileFilter(filter);
 		chooser.setDialogTitle(description);
 		int returnVal = chooser.showOpenDialog(null);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
+		if (returnVal == JFileChooser.APPROVE_OPTION)
 			return chooser.getSelectedFile();
-		}
-		else
-			return null;
+		return null;
 	}
 
 	/**
@@ -419,7 +411,7 @@ public class FileUtils extends File {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			return chooser.getSelectedFile();
 		}
-		else
+		//else
 			return null;
 	}
 
@@ -461,7 +453,7 @@ public class FileUtils extends File {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			return chooser.getSelectedFile();
 		}
-		else
+		//else
 			return null;
 	}
 

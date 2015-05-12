@@ -22,9 +22,9 @@ public class GraphicsEx {
 	}
 
 	public void drawStringCentered(String str, int x, int y) {
-		FontMetrics fm = g.getFontMetrics();
+		FontMetrics fm = this.g.getFontMetrics();
 		int w = fm.stringWidth(str);
-		g.drawString(str, x - w / 2, y + fm.getAscent() / 2 - 1);
+		this.g.drawString(str, x - w / 2, y + fm.getAscent() / 2 - 1);
 		// g.drawLine(x - 20, y, x + 20, y);
 	}
 

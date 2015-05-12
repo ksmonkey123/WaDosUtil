@@ -78,7 +78,7 @@ public class FullScreen implements MouseInfoI {
 	 *         depth, fps
 	 */
 	public static DisplayMode[] getDisplayModesSorted(GraphicsDevice device) {
-		List<DisplayMode> list = new ArrayList<DisplayMode>();
+		List<DisplayMode> list = new ArrayList<>();
 		for (DisplayMode m : device.getDisplayModes())
 			list.add(m);
 		Collections.sort(list, new DMComp());
@@ -216,10 +216,10 @@ public class FullScreen implements MouseInfoI {
 		this.draw = content;
 		this.title = appTitle;
 		this.individualRefreshRate = false;
-		this.klists = new ArrayList<KeyListener>();
-		this.mlists = new ArrayList<MouseListener>();
-		this.wlists = new ArrayList<WindowListener>();
-		this.mmlist = new ArrayList<MouseMotionListener>();
+		this.klists = new ArrayList<>();
+		this.mlists = new ArrayList<>();
+		this.wlists = new ArrayList<>();
+		this.mmlist = new ArrayList<>();
 	}
 
 	/**

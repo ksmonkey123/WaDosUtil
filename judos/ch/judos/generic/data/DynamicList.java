@@ -84,7 +84,7 @@ public class DynamicList<T> extends ArrayList<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	public <Type> DynamicList<Type> castOrOmit(Type[] t) {
-		DynamicList<Type> result = new DynamicList<Type>();
+		DynamicList<Type> result = new DynamicList<>();
 		for (T entry : this) {
 			try {
 				result.add((Type) entry);
@@ -116,7 +116,7 @@ public class DynamicList<T> extends ArrayList<T> {
 	 *         class.equals(class))
 	 */
 	public DynamicList<T> filterByClass(Class<?> c) {
-		DynamicList<T> result = new DynamicList<T>();
+		DynamicList<T> result = new DynamicList<>();
 		for (T entry : this) {
 			if (entry.getClass().equals(c))
 				result.add(entry);
@@ -128,7 +128,7 @@ public class DynamicList<T> extends ArrayList<T> {
 	 * @return a set with the same entries as this list
 	 */
 	public Set<T> toSet() {
-		Set<T> s = new HashSet<T>();
+		Set<T> s = new HashSet<>();
 		s.addAll(this);
 		return s;
 	}
@@ -142,7 +142,7 @@ public class DynamicList<T> extends ArrayList<T> {
 	 */
 	public static <Type> Iterable<Type> getIterableObject(final List<Type> list) {
 		if (list == null)
-			return new EmptyIterable<Type>();
+			return new EmptyIterable<>();
 		return new Iterable<Type>() {
 
 			@Override
@@ -320,7 +320,7 @@ public class DynamicList<T> extends ArrayList<T> {
 
 	public static <T2, T1 extends T2> DynamicList<T2> castDown(List<T1> l,
 		Class<T2> class1) {
-		DynamicList<T2> result = new DynamicList<T2>(l.size());
+		DynamicList<T2> result = new DynamicList<>(l.size());
 		for (int i = 0; i < l.size(); i++) {
 			result.add((T2) l.get(i));
 		}
@@ -338,7 +338,7 @@ public class DynamicList<T> extends ArrayList<T> {
 	@SuppressWarnings("unchecked")
 	public static <T1, T2 extends T1> DynamicList<T2>
 		castUp(List<T1> l, Class<T2> class1) throws ClassCastException {
-		DynamicList<T2> result = new DynamicList<T2>(l.size());
+		DynamicList<T2> result = new DynamicList<>(l.size());
 		for (int i = 0; i < l.size(); i++) {
 			T1 e = l.get(i);
 			if (class1.isInstance(e))

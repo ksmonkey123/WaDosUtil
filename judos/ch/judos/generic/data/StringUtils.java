@@ -214,10 +214,10 @@ public class StringUtils {
 		if (text.length() > charCount) {
 			if (charCount > 12)
 				return text.substring(0, charCount - 3) + "...";
-			else
+			//else
 				return text.substring(0, charCount - 1) + ".";
 		}
-		else
+		//else
 			return text;
 	}
 

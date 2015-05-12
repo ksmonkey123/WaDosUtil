@@ -25,7 +25,7 @@ public class FileReceiver {
 
 	public FileReceiver(Udp4 udp4, int packetSize) {
 		this.u = udp4;
-		this.receiveTransfers = new HashMap<InetSocketAddress, FileIncomingTransmission>();
+		this.receiveTransfers = new HashMap<>();
 		this.packetSize = packetSize;
 	}
 

@@ -53,7 +53,7 @@ public abstract class ReservingUnitCoordination extends NonReservingUnitCoordina
 		if (!this.bmap.reserveFields(getFields()))
 			throw new NoFreeSpaceException("Can't create unit on occupied space");
 
-		this.occupiedFields = new HashSet<WayPoint>();
+		this.occupiedFields = new HashSet<>();
 		this.occupiedFields.addAll(getFields());
 	}
 
@@ -78,8 +78,8 @@ public abstract class ReservingUnitCoordination extends NonReservingUnitCoordina
 			this.bmap.freeFields(leftFields);
 			this.occupiedFields.removeAll(leftFields);
 			return true;
-		} else
-			return false;
+		}
+		return false;
 	}
 
 	/**

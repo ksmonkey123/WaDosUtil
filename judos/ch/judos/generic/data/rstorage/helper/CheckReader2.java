@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  * @since 20.04.2015
  * @author Julian Schelker
  */
-public class CheckReader2 extends Reader implements AutoCloseable {
+public class CheckReader2 extends Reader /*implements AutoCloseable*/ {
 
 	protected Reader	readFrom;
 

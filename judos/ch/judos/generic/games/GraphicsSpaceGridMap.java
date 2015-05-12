@@ -46,6 +46,7 @@ public abstract class GraphicsSpaceGridMap extends SpaceGridMap implements Drawa
 	 * 
 	 * @see ch.judos.generic.graphics.Drawable#paint(java.awt.Graphics)
 	 */
+	@Override
 	public void paint(Graphics g) {
 		Point p = this.scroll.getPosition();
 		int fieldStartX = p.x / getGridSize();

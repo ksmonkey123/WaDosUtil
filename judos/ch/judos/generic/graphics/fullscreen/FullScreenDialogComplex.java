@@ -129,10 +129,7 @@ public class FullScreenDialogComplex extends JDialog implements ActionListener,
 	 */
 	@Override
 	public DisplayMode getDisplayMode() {
-		if (this.chosen)
-			return this.result;
-		else
-			return null;
+		return this.chosen ? this.result : null;
 	}
 
 	/**
@@ -142,10 +139,7 @@ public class FullScreenDialogComplex extends JDialog implements ActionListener,
 	 */
 	@Override
 	public GraphicsDevice getGraphicsDevice() {
-		if (this.chosen)
-			return this.resultD;
-		else
-			return null;
+		return this.chosen ? this.resultD : null;
 	}
 
 	/**

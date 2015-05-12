@@ -16,7 +16,7 @@ public class GroupLayoutUtils {
 
 	public GroupLayoutUtils(GroupLayout layout) {
 		this.l = layout;
-		this.groups = new Stack<Group>();
+		this.groups = new Stack<>();
 	}
 
 	/**
@@ -30,9 +30,9 @@ public class GroupLayoutUtils {
 		Group g = this.l.createSequentialGroup();
 		for (Component com : components)
 			g.addComponent(com);
-		if (groups.size() > 0)
-			groups.peek().addGroup(g);
-		groups.push(g);
+		if (this.groups.size() > 0)
+			this.groups.peek().addGroup(g);
+		this.groups.push(g);
 		return this;
 	}
 
@@ -46,9 +46,9 @@ public class GroupLayoutUtils {
 		Group g = this.l.createParallelGroup();
 		for (Component com : components)
 			g.addComponent(com);
-		if (groups.size() > 0)
-			groups.peek().addGroup(g);
-		groups.push(g);
+		if (this.groups.size() > 0)
+			this.groups.peek().addGroup(g);
+		this.groups.push(g);
 		return this;
 	}
 
@@ -83,10 +83,10 @@ public class GroupLayoutUtils {
 	 * @return
 	 */
 	public GroupLayoutUtils add(Component... components) {
-		if (groups.size() == 0)
+		if (this.groups.size() == 0)
 			throw new IllegalStateException("Must have a group on the stack first.");
 		for (Component com : components)
-			groups.peek().addComponent(com);
+			this.groups.peek().addComponent(com);
 		return this;
 	}
 

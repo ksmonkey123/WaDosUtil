@@ -108,7 +108,7 @@ public class GatewayDevice {
 
 		conn.getOutputStream().write(soapBodyBytes);
 
-		Map<String, String> nameValue = new HashMap<String, String>();
+		Map<String, String> nameValue = new HashMap<>();
 		XMLReader parser = XMLReaderFactory.createXMLReader();
 		parser.setContentHandler(new NameValueHandler(nameValue));
 		if (conn.getResponseCode() == HttpURLConnection.HTTP_INTERNAL_ERROR) {
@@ -125,11 +125,11 @@ public class GatewayDevice {
 			conn.disconnect();
 			return nameValue;
 		}
-		else {
+//		else {
 			parser.parse(new InputSource(conn.getInputStream()));
 			conn.disconnect();
 			return nameValue;
-		}
+		//}
 	}
 
 	private String		controlURL;
@@ -213,7 +213,7 @@ public class GatewayDevice {
 	 */
 	public boolean addPortMapping(int externalPort, int internalPort, String internalClient,
 		String protocol, String description) throws IOException, SAXException {
-		Map<String, String> args = new HashMap<String, String>();
+		Map<String, String> args = new HashMap<>();
 		// Why necessarily the empty string?
 		args.put("NewRemoteHost", "");
 		args.put("NewExternalPort", Integer.toString(externalPort));
@@ -224,7 +224,7 @@ public class GatewayDevice {
 		args.put("NewPortMappingDescription", description);
 		args.put("NewLeaseDuration", Integer.toString(0));
 
-		Map<String, String> nameValue = simpleUPnPcommand(controlURL, serviceType,
+		Map<String, String> nameValue = simpleUPnPcommand(this.controlURL, this.serviceType,
 			"AddPortMapping", args);
 
 		return nameValue.get("errorCode") == null;
@@ -260,38 +260,38 @@ public class GatewayDevice {
 	 */
 	public boolean deletePortMapping(int externalPort, String protocol) throws IOException,
 		SAXException {
-		Map<String, String> args = new HashMap<String, String>();
+		Map<String, String> args = new HashMap<>();
 		args.put("NewRemoteHost", "");
 		args.put("NewExternalPort", Integer.toString(externalPort));
 		args.put("NewProtocol", protocol);
 		// Map<String, String> nameValue =
-		simpleUPnPcommand(controlURL, serviceType, "DeletePortMapping", args);
+		simpleUPnPcommand(this.controlURL, this.serviceType, "DeletePortMapping", args);
 
 		return true;
 	}
 
 	public String getControlURL() {
-		return controlURL;
+		return this.controlURL;
 	}
 
 	public String getControlURLCIF() {
-		return controlURLCIF;
+		return this.controlURLCIF;
 	}
 
 	public String getDeviceType() {
-		return deviceType;
+		return this.deviceType;
 	}
 
 	public String getDeviceTypeCIF() {
-		return deviceTypeCIF;
+		return this.deviceTypeCIF;
 	}
 
 	public String getEventSubURL() {
-		return eventSubURL;
+		return this.eventSubURL;
 	}
 
 	public String getEventSubURLCIF() {
-		return eventSubURLCIF;
+		return this.eventSubURLCIF;
 	}
 
 	/**
@@ -307,14 +307,14 @@ public class GatewayDevice {
 	 *      java.lang.String, java.util.Map)
 	 */
 	public String getExternalIPAddress() throws IOException, SAXException {
-		Map<String, String> nameValue = simpleUPnPcommand(controlURL, serviceType,
+		Map<String, String> nameValue = simpleUPnPcommand(this.controlURL, this.serviceType,
 			"GetExternalIPAddress", null);
 
 		return nameValue.get("NewExternalIPAddress");
 	}
 
 	public String getFriendlyName() {
-		return friendlyName;
+		return this.friendlyName;
 	}
 
 	/**
@@ -336,10 +336,10 @@ public class GatewayDevice {
 	 */
 	public boolean getGenericPortMappingEntry(int index,
 		final PortMappingEntry portMappingEntry) throws IOException, SAXException {
-		Map<String, String> args = new HashMap<String, String>();
+		Map<String, String> args = new HashMap<>();
 		args.put("NewPortMappingIndex", Integer.toString(index));
 
-		Map<String, String> nameValue = simpleUPnPcommand(controlURL, serviceType,
+		Map<String, String> nameValue = simpleUPnPcommand(this.controlURL, this.serviceType,
 			"GetGenericPortMappingEntry", args);
 
 		try {
@@ -373,27 +373,27 @@ public class GatewayDevice {
 	 * @return the localAddress
 	 */
 	public InetAddress getLocalAddress() {
-		return localAddress;
+		return this.localAddress;
 	}
 
 	public String getLocation() {
-		return location;
+		return this.location;
 	}
 
 	public String getManufacturer() {
-		return manufacturer;
+		return this.manufacturer;
 	}
 
 	public String getModelDescription() {
-		return modelDescription;
+		return this.modelDescription;
 	}
 
 	public String getModelName() {
-		return modelName;
+		return this.modelName;
 	}
 
 	public String getModelNumber() {
-		return modelNumber;
+		return this.modelNumber;
 	}
 
 	/**
@@ -405,7 +405,7 @@ public class GatewayDevice {
 	 * @throws SAXException
 	 */
 	public Integer getPortMappingNumberOfEntries() throws IOException, SAXException {
-		Map<String, String> nameValue = simpleUPnPcommand(controlURL, serviceType,
+		Map<String, String> nameValue = simpleUPnPcommand(this.controlURL, this.serviceType,
 			"GetPortMappingNumberOfEntries", null);
 
 		Integer portMappingNumber = null;
@@ -421,23 +421,23 @@ public class GatewayDevice {
 	}
 
 	public String getPresentationURL() {
-		return presentationURL;
+		return this.presentationURL;
 	}
 
 	public String getSCPDURL() {
-		return sCPDURL;
+		return this.sCPDURL;
 	}
 
 	public String getSCPDURLCIF() {
-		return sCPDURLCIF;
+		return this.sCPDURLCIF;
 	}
 
 	public String getServiceType() {
-		return serviceType;
+		return this.serviceType;
 	}
 
 	public String getServiceTypeCIF() {
-		return serviceTypeCIF;
+		return this.serviceTypeCIF;
 	}
 
 	/**
@@ -468,13 +468,13 @@ public class GatewayDevice {
 		portMappingEntry.setExternalPort(externalPort);
 		portMappingEntry.setProtocol(protocol);
 
-		Map<String, String> args = new HashMap<String, String>();
+		Map<String, String> args = new HashMap<>();
 		// Why necessarily the empty string?
 		args.put("NewRemoteHost", "");
 		args.put("NewExternalPort", Integer.toString(externalPort));
 		args.put("NewProtocol", protocol);
 
-		Map<String, String> nameValue = simpleUPnPcommand(controlURL, serviceType,
+		Map<String, String> nameValue = simpleUPnPcommand(this.controlURL, this.serviceType,
 			"GetSpecificPortMappingEntry", args);
 		String internalClient = nameValue.get("NewInternalClient");
 		String internalPort = nameValue.get("NewInternalPort");
@@ -496,11 +496,11 @@ public class GatewayDevice {
 	}
 
 	public String getSt() {
-		return st;
+		return this.st;
 	}
 
 	public String getURLBase() {
-		return urlBase;
+		return this.urlBase;
 	}
 
 	/**
@@ -513,7 +513,7 @@ public class GatewayDevice {
 	 *      java.lang.String, java.util.Map)
 	 */
 	public boolean isConnected() throws IOException, SAXException {
-		Map<String, String> nameValue = simpleUPnPcommand(controlURL, serviceType,
+		Map<String, String> nameValue = simpleUPnPcommand(this.controlURL, this.serviceType,
 			"GetStatusInfo", null);
 
 		String connectionStatus = nameValue.get("NewConnectionStatus");
@@ -546,11 +546,11 @@ public class GatewayDevice {
 
 		/* fix urls */
 		String ipConDescURL;
-		if (urlBase != null && urlBase.trim().length() > 0) {
-			ipConDescURL = urlBase;
+		if (this.urlBase != null && this.urlBase.trim().length() > 0) {
+			ipConDescURL = this.urlBase;
 		}
 		else {
-			ipConDescURL = location;
+			ipConDescURL = this.location;
 		}
 
 		int lastSlashIndex = ipConDescURL.indexOf('/', 7);
@@ -558,10 +558,10 @@ public class GatewayDevice {
 			ipConDescURL = ipConDescURL.substring(0, lastSlashIndex);
 		}
 
-		sCPDURL = copyOrCatUrl(ipConDescURL, sCPDURL);
-		controlURL = copyOrCatUrl(ipConDescURL, controlURL);
-		controlURLCIF = copyOrCatUrl(ipConDescURL, controlURLCIF);
-		presentationURL = copyOrCatUrl(ipConDescURL, presentationURL);
+		this.sCPDURL = copyOrCatUrl(ipConDescURL, this.sCPDURL);
+		this.controlURL = copyOrCatUrl(ipConDescURL, this.controlURL);
+		this.controlURLCIF = copyOrCatUrl(ipConDescURL, this.controlURLCIF);
+		this.presentationURL = copyOrCatUrl(ipConDescURL, this.presentationURL);
 	}
 
 	public void setControlURL(String controlURL) {

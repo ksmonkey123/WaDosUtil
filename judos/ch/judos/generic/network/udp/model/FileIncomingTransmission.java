@@ -47,8 +47,8 @@ public class FileIncomingTransmission {
 		this.totalSize = fd.getLength();
 		this.partsReceived = 0;
 		this.lastPacket = -1;
-		this.missing = new HashSet<Integer>();
-		this.requestedAlready = new HashSet<Integer>();
+		this.missing = new HashSet<>();
+		this.requestedAlready = new HashSet<>();
 		this.lastRequestedParts = System.currentTimeMillis();
 		this.from = from;
 		this.listenerLastUpdate = System.currentTimeMillis();

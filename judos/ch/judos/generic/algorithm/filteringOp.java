@@ -39,7 +39,7 @@ public class filteringOp {
 		if (dimension == 3) {
 			// NoOfNeighbors = 9;
 		}
-		neighborList = new ArrayList<Double>();
+		neighborList = new ArrayList<>();
 		for (int i = 1; i < _enlargeImage.length - 1; ++i) {
 			for (int j = 1; j < _enlargeImage[1].length - 1; ++j) {
 				neighborList.add(_enlargeImage[i - 1][j - 1]);
@@ -106,7 +106,7 @@ public class filteringOp {
 				double k = _enlargeImage[i + 1][j + 1];
 				gaussianValue = (1 * a + 2 * b + 1 * c + 2 * d + 4 * e + 2 * f + 1 * g
 					+ 2 * h + 1 * k)
-					/ (double) 16;
+					/ 16.0;
 				if (i == 1 & j == 1) {
 					max = gaussianValue;
 				}

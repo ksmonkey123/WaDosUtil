@@ -41,11 +41,11 @@ public class DirectedPoint implements RStorable2 {
 	 */
 	@Deprecated
 	public double getAngle() {
-		return angle.getRadian();
+		return this.angle.getRadian();
 	}
 
 	public Angle getAAngle() {
-		return angle;
+		return this.angle;
 	}
 
 	public PointI getPoint() {

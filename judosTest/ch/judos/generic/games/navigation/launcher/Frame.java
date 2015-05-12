@@ -51,7 +51,7 @@ public class Frame extends JFrame implements KeyListener {
 		};
 		this.timer = new Timer();
 		int delay = 1000 / FPS;
-		timer.scheduleAtFixedRate(t, delay, delay);
+		this.timer.scheduleAtFixedRate(t, delay, delay);
 
 		addKeyListener(this);
 		addKeyListener(m);

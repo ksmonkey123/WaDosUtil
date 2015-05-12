@@ -59,6 +59,7 @@ public class SoundEffect {
 	 */
 	public boolean play(final float volume) {
 		Thread t = new Thread() {
+			@Override
 			public void run() {
 				playSync(volume);
 			}

@@ -39,7 +39,7 @@ public class MathJS {
 	}
 
 	public static List<Number> listDo(List<? extends Number> list, UnaryOperator op) {
-		ArrayList<Number> result = new ArrayList<Number>();
+		ArrayList<Number> result = new ArrayList<>();
 		for (Number x : list) {
 			result.add(new Double(op.calculate(x.doubleValue())));
 		}

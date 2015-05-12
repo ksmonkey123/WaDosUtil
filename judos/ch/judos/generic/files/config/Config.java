@@ -39,7 +39,7 @@ public class Config {
 	 */
 	public Config(ConfigSettingsBase settings) {
 		this.settings = settings;
-		this.data = new HashMap<String, Property>();
+		this.data = new HashMap<>();
 		init();
 		load();
 	}

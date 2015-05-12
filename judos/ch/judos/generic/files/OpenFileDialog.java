@@ -64,9 +64,9 @@ public class OpenFileDialog {
 
 		@Override
 		public String getDescription() {
-			String s = extensions[0];
-			for (int i = 1; i < extensions.length; i++)
-				s = s + ", " + extensions[i];
+			String s = this.extensions[0];
+			for (int i = 1; i < this.extensions.length; i++)
+				s = s + ", " + this.extensions[i];
 			return s;
 		}
 

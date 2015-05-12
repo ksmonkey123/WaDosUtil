@@ -46,7 +46,7 @@ public class DateHelper {
 	 */
 	public static ArrayList<String> getFormatChars() {
 		String formats = "dDjlNSwzWFmMntLYy";
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<>();
 		for (int i = 0; i < formats.length(); i++)
 			result.add(formats.substring(i, i + 1));
 		return result;
