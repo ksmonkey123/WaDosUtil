@@ -13,7 +13,7 @@ object ComplexMath {
 
 }
 
-private  class PreComplex(re : Double) extends Complex(re, 0) {
+protected class PreComplex(re : Double) extends Complex(re, 0) {
     def i(d : Double) = new Complex(re, d)
 }
 
@@ -24,7 +24,6 @@ object Complex {
     implicit def doubleToPreComplex(d : Double) = new PreComplex(d)
     val i = 0 i 1;
 }
-
 
 case class Complex(val re : Double, val im : Double) {
     override def toString = if (re != 0 && im != 0) re + " + " + im + "i" else if (im == 0) re + "" else im + "i"
