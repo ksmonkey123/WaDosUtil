@@ -78,7 +78,7 @@ class XPathImp implements XPath {
 	@Override
 	public XPath indexRange(int from, int to) {
 		return new XPathImp(this.elements.sequential()
-				.skip(0)
+				.skip(from)
 				.limit(to - from));
 	}
 
@@ -89,7 +89,7 @@ class XPathImp implements XPath {
 
 	@Override
 	public Stream<Result<String>> attribute(String name) {
-		return this.elements.map(e -> Result.ofNullable(e.getAttribute("name")));
+		return this.elements.map(e -> Result.ofNullable(e.getAttribute(name)));
 	}
 
 	@Override

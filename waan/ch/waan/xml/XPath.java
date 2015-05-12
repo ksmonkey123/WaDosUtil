@@ -66,7 +66,7 @@ public interface XPath {
 	 * get those with a matching index
 	 */
 	default XPath index(int index) {
-		return this.indexRange(0, 1);
+		return this.indexRange(index, index + 1);
 	}
 
 	/*

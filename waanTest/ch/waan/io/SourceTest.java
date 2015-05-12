@@ -16,22 +16,21 @@ public class SourceTest {
 
 	public static void main(String[] args) {
 
-		Document d = Source.fromFile(".classpath")
+		Document XML = Source.fromFile(".classpath")
 				.mkXML()
-				.get();
+				.orNull();
 
-		XPath.of(d)
+		XPath.of(XML)
+				.addNode("classpathentry")
+				.setAttribute("kind", "myKind");
+
+		XPath.of(XML)
 				.node("classpathentry")
-				.filterAttribute("path",
-						v -> (v.contains("waan") && !v.toLowerCase()
-								.contains("test")))
-				.addNode("duba")
-				.setText("hi there");
-
-		XPath.of(d)
-				.any()
-				.node("duba")
-				.text()
+				.indexRange(2, 6)
+				.attribute("kind")
+				.filter(r -> r.isPresent())
+				.map(r -> r.get())
+				.distinct()
 				.forEach(System.out::println);
 
 	}
