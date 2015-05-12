@@ -80,13 +80,13 @@ public class ImageFileView extends FileView {
 
 		if (extension != null) {
 			if (extension.equals(Utils.jpeg) || extension.equals(Utils.jpg)) {
-				icon = jpgIcon;
+				icon = this.jpgIcon;
 			} else if (extension.equals(Utils.gif)) {
-				icon = gifIcon;
+				icon = this.gifIcon;
 			} else if (extension.equals(Utils.tiff) || extension.equals(Utils.tif)) {
-				icon = tiffIcon;
+				icon = this.tiffIcon;
 			} else if (extension.equals(Utils.png)) {
-				icon = pngIcon;
+				icon = this.pngIcon;
 			}
 		}
 		return icon;

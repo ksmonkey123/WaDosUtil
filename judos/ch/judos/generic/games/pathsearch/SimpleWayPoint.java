@@ -36,7 +36,7 @@ public class SimpleWayPoint extends WayPoint implements Serializable {
 	 * @see ch.judos.generic.games.pathsearch.WayPoint#getX()
 	 */
 	public int getX() {
-		return x;
+		return this.x;
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class SimpleWayPoint extends WayPoint implements Serializable {
 	 * @see ch.judos.generic.games.pathsearch.WayPoint#getY()
 	 */
 	public int getY() {
-		return y;
+		return this.y;
 	}
 
 	/**
@@ -55,6 +55,6 @@ public class SimpleWayPoint extends WayPoint implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return x + "/" + y;
+		return this.x + "/" + this.y;
 	}
 }

@@ -51,12 +51,12 @@ public class Udp4 implements Layer3Listener, Udp4I {
 	public Udp4(Udp3I u) {
 		this.u = u;
 		this.u.addListener(this);
-		this.listeners = new HashMap<Integer, List<UdpListener>>();
+		this.listeners = new HashMap<>();
 		// -4 because 4 control bytes are used for the fileMessageType
 		// (partNr/controlNr)
 		this.fileSender = new FileSender(this, u.getMaxUnsplitPacketSize() - 4);
 		this.fileReceiver = new FileReceiver(this, u.getMaxUnsplitPacketSize() - 4);
-		this.reachabilityRequests = new HashMap<ReachabilityRequest, CheckReachThread>();
+		this.reachabilityRequests = new HashMap<>();
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class Udp4 implements Layer3Listener, Udp4I {
 	protected void addListener(UdpListener u, int typeOfMessagesToReceive) {
 		List<UdpListener> list = this.listeners.get(typeOfMessagesToReceive);
 		if (list == null) {
-			list = new ArrayList<UdpListener>();
+			list = new ArrayList<>();
 			this.listeners.put(typeOfMessagesToReceive, list);
 		}
 		list.add(u);

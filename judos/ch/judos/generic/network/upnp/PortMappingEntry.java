@@ -81,7 +81,7 @@ public class PortMappingEntry {
 	 * @return the internalPort
 	 */
 	public int getInternalPort() {
-		return internalPort;
+		return this.internalPort;
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class PortMappingEntry {
 	 * @return the externalPort
 	 */
 	public int getExternalPort() {
-		return externalPort;
+		return this.externalPort;
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class PortMappingEntry {
 	 * @return the remoteHost
 	 */
 	public String getRemoteHost() {
-		return remoteHost;
+		return this.remoteHost;
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class PortMappingEntry {
 	 * @return the internalClient
 	 */
 	public String getInternalClient() {
-		return internalClient;
+		return this.internalClient;
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class PortMappingEntry {
 	 * @return protocol
 	 */
 	public String getProtocol() {
-		return protocol;
+		return this.protocol;
 	}
 
 	/**
@@ -176,7 +176,7 @@ public class PortMappingEntry {
 	 * @return enabled
 	 */
 	public String getEnabled() {
-		return enabled;
+		return this.enabled;
 	}
 
 	/**
@@ -195,7 +195,7 @@ public class PortMappingEntry {
 	 * @return portMappingDescription
 	 */
 	public String getPortMappingDescription() {
-		return portMappingDescription;
+		return this.portMappingDescription;
 	}
 
 	/**

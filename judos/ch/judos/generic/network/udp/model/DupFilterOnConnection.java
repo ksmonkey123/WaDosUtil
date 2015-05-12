@@ -13,7 +13,7 @@ public class DupFilterOnConnection {
 	private HashMap<InetSocketAddress, DuplicateFilter>	clients;
 
 	public DupFilterOnConnection() {
-		this.clients = new HashMap<InetSocketAddress, DuplicateFilter>();
+		this.clients = new HashMap<>();
 	}
 
 	public synchronized boolean check(InetSocketAddress addr, int index) {

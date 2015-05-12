@@ -17,7 +17,7 @@ public class SpeedMeasurement {
 	public SpeedMeasurement() {
 		this.currentValue = 0;
 		this.lastUpdate = System.currentTimeMillis();
-		this.speedValues = new LinkedList<Float>();
+		this.speedValues = new LinkedList<>();
 		this.sum = 0;
 	}
 

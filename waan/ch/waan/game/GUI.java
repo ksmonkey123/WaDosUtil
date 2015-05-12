@@ -6,7 +6,6 @@ import org.eclipse.jdt.annotation.NonNull;
 
 import ch.waan.game.ui.UIComponent;
 import ch.waan.game.ui.UIContainer;
-import ch.waan.game.ui.UIResizableContainer;
 
 /**
  * The root of the UI system.

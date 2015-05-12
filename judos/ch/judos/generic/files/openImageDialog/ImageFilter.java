@@ -50,9 +50,9 @@ public class ImageFilter extends FileFilter {
 				|| extension.equals(Utils.gif) || extension.equals(Utils.jpeg)
 				|| extension.equals(Utils.jpg) || extension.equals(Utils.png)) {
 				return true;
-			} else {
+			}// else {
 				return false;
-			}
+			//}
 		}
 
 		return false;

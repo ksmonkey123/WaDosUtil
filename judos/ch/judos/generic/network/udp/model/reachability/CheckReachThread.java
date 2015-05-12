@@ -38,15 +38,15 @@ public class CheckReachThread extends Thread {
 	public void run() {
 		synchronized (this) {
 			try {
-				wait(listener.getTimeoutMS());
+				wait(this.listener.getTimeoutMS());
 			} catch (InterruptedException e) {
 			}
 		}
 		if (this.received) {
-			listener.connectionActive(target, rr.getPingMS());
+			this.listener.connectionActive(this.target, this.rr.getPingMS());
 		} else {
-			listener.connectionTimedOut(target);
-			u.reachabilityReqTimedOut(rr);
+			this.listener.connectionTimedOut(this.target);
+			this.u.reachabilityReqTimedOut(this.rr);
 		}
 	}
 

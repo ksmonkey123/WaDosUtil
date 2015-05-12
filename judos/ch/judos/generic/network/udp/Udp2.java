@@ -53,13 +53,13 @@ public class Udp2 implements Layer1Listener, Runnable, Udp2I {
 		this.u.addListener(this);
 		// this.cachConfirmationPackets =
 		new HashMap<InetSocketAddress, Packet2CacheConfirmation>();
-		this.listeners = new ArrayList<Layer2Listener>();
-		this.resendPackets = new PriorityQueue<Packet2A>();
-		this.nextPacketNr = new HashMap<InetSocketAddress, Integer>();
-		this.connectionIssue = new HashMap<InetSocketAddress, Long>();
+		this.listeners = new ArrayList<>();
+		this.resendPackets = new PriorityQueue<>();
+		this.nextPacketNr = new HashMap<>();
+		this.connectionIssue = new HashMap<>();
 		this.receiveFilter = new DupFilterOnConnection();
 		this.confirmedPacket = new DupFilterOnConnection();
-		this.connectionIssueListeners = new ArrayList<ConnectionIssueListener>();
+		this.connectionIssueListeners = new ArrayList<>();
 		this.thread = new Thread(this, "Udp2ResendThread");
 		this.thread.setDaemon(false);
 		this.running = true;

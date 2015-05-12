@@ -13,7 +13,7 @@ public class MathJSTests extends TestCase {
 
 	public void testStdv() {
 
-		ArrayList<Integer> list = new ArrayList<Integer>();
+		ArrayList<Integer> list = new ArrayList<>();
 		list.add(0);
 		list.add(6);
 

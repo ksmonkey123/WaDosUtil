@@ -42,7 +42,7 @@ public class Packet2Hash {
 	 */
 	@Override
 	public int hashCode() {
-		return Arrays.hashCode(new Object[]{nr, dest.hashCode()});
+		return Arrays.hashCode(new Object[]{this.nr, this.dest.hashCode()});
 	}
 
 }

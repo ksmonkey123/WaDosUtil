@@ -77,7 +77,7 @@ public abstract class BorderlessScrolling {
 	protected float checkScrolling(float value, float border) {
 		float diff = border - value;
 		int direction = (int) Math.signum(diff);
-		float change = MathJS.min((float) Math.abs(diff), getScrollSpeedPerFrame());
+		float change = MathJS.min(Math.abs(diff), getScrollSpeedPerFrame());
 		return value += direction * change;
 	}
 

@@ -26,14 +26,14 @@ public class Udp4ThroughputTest extends TestCase implements UdpListener,
 
 	@Override
 	public void receiveMsg(Object source, InetSocketAddress from, Object data) {
-		assertEquals(u, source);
+		assertEquals(this.u, source);
 		assertTrue(data instanceof byte[]);
 		byte[] x = (byte[]) data;
 		assertEquals(DATA * MB, x.length);
 		for (int i = 0; i < DATA * MB; i++)
 			assertEquals((byte) i, x[i]);
 		if (!SILENT)
-			System.out.println("message received " + t.getS() + "s " + t.getMS() % 1000
+			System.out.println("message received " + this.t.getS() + "s " + this.t.getMS() % 1000
 				+ " ms");
 		this.finished.set(true);
 		synchronized (this.finished) {
@@ -64,11 +64,11 @@ public class Udp4ThroughputTest extends TestCase implements UdpListener,
 
 		try {
 			this.t = new TimerJS("sending " + DATA + "MB");
-			u.sendRawDataConfirmTo(data, false, new InetSocketAddress("localhost", PORT));
+			this.u.sendRawDataConfirmTo(data, false, new InetSocketAddress("localhost", PORT));
 			data = null;
 			if (!SILENT)
-				t.printMS();
-			t.start();
+				this.t.printMS();
+			this.t.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

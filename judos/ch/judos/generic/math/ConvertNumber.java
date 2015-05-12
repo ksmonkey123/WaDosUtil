@@ -21,7 +21,7 @@ public class ConvertNumber {
 	public static String decToBin(String nr, int maxPrecision) {
 		BigDecimal b = new BigDecimal(nr);
 		StringBuffer output = new StringBuffer();
-		HashSet<BigDecimal> checkRepeat = new HashSet<BigDecimal>();
+		HashSet<BigDecimal> checkRepeat = new HashSet<>();
 		for (int i = 0; true; i++) {
 			checkRepeat.add(b);
 			b = b.multiply(new BigDecimal(2));

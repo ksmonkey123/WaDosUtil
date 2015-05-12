@@ -124,14 +124,14 @@ public class Path implements Cloneable, Comparable<Path> {
 	 */
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new Path(new ArrayList<WayPoint>(this.way));
+		return new Path(new ArrayList<>(this.way));
 	}
 
 	/**
 	 * @return new instance of the same path
 	 */
 	public Path cloneT() {
-		return new Path(new ArrayList<WayPoint>(this.way));
+		return new Path(new ArrayList<>(this.way));
 	}
 
 	/**
@@ -250,7 +250,7 @@ public class Path implements Cloneable, Comparable<Path> {
 	 * @return same list with reversed order of elements
 	 */
 	public <T> List<T> reverseList(List<T> list) {
-		List<T> result = new ArrayList<T>();
+		List<T> result = new ArrayList<>();
 		for (T t : list) {
 			result.add(0, t);
 		}
@@ -280,7 +280,7 @@ public class Path implements Cloneable, Comparable<Path> {
 	 */
 	protected List<WayPoint> shortenForward(List<WayPoint> path,
 		FreeFieldChecker fieldChecker, CoordinateTranslator transl) {
-		List<WayPoint> result = new ArrayList<WayPoint>();
+		List<WayPoint> result = new ArrayList<>();
 		Iterator<WayPoint> it = path.iterator();
 		WayPoint from = it.next();
 		result.add(from);

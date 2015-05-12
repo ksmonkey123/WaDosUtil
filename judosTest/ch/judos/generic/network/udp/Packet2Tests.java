@@ -20,7 +20,7 @@ public class Packet2Tests extends TestCase {
 
 		assertTrue(p1.compareTo(p2) < 0);
 
-		PriorityQueue<Packet2ResendConfirmed> queue = new PriorityQueue<Packet2ResendConfirmed>();
+		PriorityQueue<Packet2ResendConfirmed> queue = new PriorityQueue<>();
 		queue.add(p1);
 		queue.add(p2);
 

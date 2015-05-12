@@ -34,7 +34,7 @@ public class Udp0Tests extends TestCase {
 	}
 
 	private void someData() {
-		success = false;
+		this.success = false;
 		final byte[] senddata = new byte[]{0, 5, 100, -100, 127};
 		Layer0Listener listener = new Layer0Listener() {
 			@Override
@@ -42,7 +42,7 @@ public class Udp0Tests extends TestCase {
 				assertEquals(senddata.length, data.length);
 				assertArrayEquals(senddata, data);
 				synchronized (this) {
-					success = true;
+					Udp0Tests.this.success = true;
 					notifyAll();
 				}
 			}
@@ -61,19 +61,19 @@ public class Udp0Tests extends TestCase {
 		} catch (InterruptedException e) {
 			fail();
 		}
-		assertTrue(success);
+		assertTrue(this.success);
 		this.u.removeListener(listener);
 	}
 
 	private void emptyData() {
-		success = false;
+		this.success = false;
 		Layer0Listener listener = new Layer0Listener() {
 			@Override
 			public void receivedFrom(byte[] data, InetSocketAddress socketAddress) {
 				assertEquals(0, data.length);
 				assertEquals(60000, socketAddress.getPort());
 				synchronized (this) {
-					success = true;
+					Udp0Tests.this.success = true;
 					notifyAll();
 				}
 			}
@@ -92,7 +92,7 @@ public class Udp0Tests extends TestCase {
 		} catch (InterruptedException e) {
 			fail();
 		}
-		assertTrue(success);
+		assertTrue(this.success);
 		this.u.removeListener(listener);
 	}
 

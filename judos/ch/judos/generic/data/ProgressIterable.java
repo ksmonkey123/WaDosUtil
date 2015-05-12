@@ -43,7 +43,7 @@ public class ProgressIterable<T> implements Iterable<Progress<T>> {
 
 			public Progress<T> next() {
 				float progress = (float) this.index / ProgressIterable.this.arr.length;
-				return new Progress<T>(progress, ProgressIterable.this.arr[this.index++]);
+				return new Progress<>(progress, ProgressIterable.this.arr[this.index++]);
 			}
 
 			public void remove() {

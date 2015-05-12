@@ -24,7 +24,7 @@ public class Udp1 implements Layer0Listener, Udp1I {
 	public Udp1(Udp0Reader u) {
 		this.u = u;
 		this.u.addListener(this);
-		this.listeners = new ArrayList<Layer1Listener>();
+		this.listeners = new ArrayList<>();
 	}
 
 	/**

@@ -40,11 +40,11 @@ public class TripleW<T0, T1, T2> {
 	 */
 	public Object get(int index) {
 		if (index == 0)
-			return e0;
+			return this.e0;
 		else if (index == 1)
-			return e1;
+			return this.e1;
 		else if (index == 2)
-			return e2;
+			return this.e2;
 		else
 			throw new IndexOutOfBoundsException("only index 0, 1 and 2 is allowed.");
 	}
@@ -53,21 +53,21 @@ public class TripleW<T0, T1, T2> {
 	 * @return the first entry
 	 */
 	public T0 get0() {
-		return e0;
+		return this.e0;
 	}
 
 	/**
 	 * @return the second entry
 	 */
 	public T1 get1() {
-		return e1;
+		return this.e1;
 	}
 
 	/**
 	 * @return the third entry
 	 */
 	public T2 get2() {
-		return e2;
+		return this.e2;
 	}
 
 	/**

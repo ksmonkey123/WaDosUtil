@@ -23,7 +23,7 @@ public class HashMap2<K, K2, V> {
 	 * creates the map
 	 */
 	public HashMap2() {
-		map1 = new HashMap<K, HashMap<K2, V>>();
+		this.map1 = new HashMap<>();
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class HashMap2<K, K2, V> {
 	public void put(K key1, K2 key2, V value) {
 		HashMap<K2, V> map2 = this.map1.get(key1);
 		if (map2 == null) {
-			map2 = new HashMap<K2, V>();
+			map2 = new HashMap<>();
 			this.map1.put(key1, map2);
 		}
 		map2.put(key2, value);
@@ -60,9 +60,9 @@ public class HashMap2<K, K2, V> {
 	 * @return if the given two keys exist
 	 */
 	public boolean containsKey(K key1, K2 key2) {
-		if (map1.containsKey(key1)) {
-			return map1.get(key1).containsKey(key2);
-		} else
+		if (this.map1.containsKey(key1)) {
+			return this.map1.get(key1).containsKey(key2);
+		}// else
 			return false;
 	}
 }

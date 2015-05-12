@@ -18,7 +18,7 @@ public class HashMapList<K, V> {
 	protected HashMap<K, ArrayList<V>>	map;
 
 	public HashMapList() {
-		this.map = new HashMap<K, ArrayList<V>>();
+		this.map = new HashMap<>();
 	}
 
 	public void put(K key, V value) {

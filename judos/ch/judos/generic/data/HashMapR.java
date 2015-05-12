@@ -20,8 +20,8 @@ public class HashMapR<K, V> {
 	 * creates the map
 	 */
 	public HashMapR() {
-		this.key2value = new HashMap<K, V>();
-		this.value2key = new HashMap<V, K>();
+		this.key2value = new HashMap<>();
+		this.value2key = new HashMap<>();
 	}
 
 	/**

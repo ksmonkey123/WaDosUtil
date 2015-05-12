@@ -77,8 +77,8 @@ public abstract class NonReservingUnitCoordination extends Unit {
 			throw new NoFreeSpaceException("Cannot place unit on occupied field.");
 		this.map = map;
 		this.pos = map.getPointFromField(pos);
-		this.targets = new ArrayList<WayPoint>();
-		this.finalTargets = new ArrayList<WayPoint>();
+		this.targets = new ArrayList<>();
+		this.finalTargets = new ArrayList<>();
 	}
 
 	private void calcNewRoute(WayPoint current, WayPoint target) {
@@ -106,7 +106,7 @@ public abstract class NonReservingUnitCoordination extends Unit {
 		PointF position = this.pos.clone();
 		boolean reachedTarget = position.approachPoint(target, toGo);
 		float remaining = toGo - position.distanceTo(this.pos);
-		return new TripleW<PointF, Boolean, Float>(position, reachedTarget, remaining);
+		return new TripleW<>(position, reachedTarget, remaining);
 	}
 
 	/**
@@ -141,7 +141,7 @@ public abstract class NonReservingUnitCoordination extends Unit {
 	 */
 	protected HashSet<WayPoint> getCornerFields(PointF point) {
 		int size = this.map.getGridSize();
-		HashSet<WayPoint> f = new HashSet<WayPoint>();
+		HashSet<WayPoint> f = new HashSet<>();
 		PointF even = new PointF(size / 2 - .5f, size / 2 - .5f);
 		PointF odd = new PointF(size / 2 - .5f, -size / 2 + .5f);
 		f.add(this.map.getFieldFromPoint(point.add(even)));
@@ -158,7 +158,7 @@ public abstract class NonReservingUnitCoordination extends Unit {
 	 */
 	@Override
 	protected Set<WayPoint> getFields() {
-		return new HashSet<WayPoint>();
+		return new HashSet<>();
 	}
 
 	/**
@@ -188,10 +188,10 @@ public abstract class NonReservingUnitCoordination extends Unit {
 			if (nextPos.e1)
 				this.targets.remove(0);
 			return nextPos.e2;
-		} else {
+		}// else {
 			this.targets.clear();
 			return 0;
-		}
+		//}
 	}
 
 	/**

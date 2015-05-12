@@ -260,7 +260,7 @@ public class FileDrop {
 		final Listener listener) {
 
 		if (supportsDnD()) { // Make a drop listener
-			dropListener = new java.awt.dnd.DropTargetListener() {
+			this.dropListener = new java.awt.dnd.DropTargetListener() {
 				public void dragEnter(java.awt.dnd.DropTargetDragEvent evt) {
 					log(out, "FileDrop: dragEnter event.");
 
@@ -269,7 +269,7 @@ public class FileDrop {
 						// If it's a Swing component, set its border
 						if (c instanceof javax.swing.JComponent) {
 							javax.swing.JComponent jc = (javax.swing.JComponent) c;
-							normalBorder = jc.getBorder();
+							FileDrop.this.normalBorder = jc.getBorder();
 							log(out, "FileDrop: normal border saved.");
 							jc.setBorder(dragBorder);
 							log(out, "FileDrop: drag border set.");
@@ -381,7 +381,7 @@ public class FileDrop {
 						// If it's a Swing component, reset its border
 						if (c instanceof javax.swing.JComponent) {
 							javax.swing.JComponent jc = (javax.swing.JComponent) c;
-							jc.setBorder(normalBorder);
+							jc.setBorder(FileDrop.this.normalBorder);
 							log(out, "FileDrop: normal border restored.");
 						} // end if: JComponent
 					} // end finally
@@ -392,7 +392,7 @@ public class FileDrop {
 					// If it's a Swing component, reset its border
 					if (c instanceof javax.swing.JComponent) {
 						javax.swing.JComponent jc = (javax.swing.JComponent) c;
-						jc.setBorder(normalBorder);
+						jc.setBorder(FileDrop.this.normalBorder);
 						log(out, "FileDrop: normal border restored.");
 					} // end if: JComponent
 				} // end dragExit
@@ -442,7 +442,7 @@ public class FileDrop {
 
 	private static File[] createFileArray(BufferedReader bReader, PrintStream out) {
 		try {
-			List<File> list = new ArrayList<File>();
+			List<File> list = new ArrayList<>();
 			java.lang.String line = null;
 			while ((line = bReader.readLine()) != null) {
 				try {
@@ -457,7 +457,7 @@ public class FileDrop {
 				}
 			}
 
-			return (File[]) list.toArray(new File[list.size()]);
+			return list.toArray(new File[list.size()]);
 		} catch (IOException ex) {
 			log(out, "FileDrop: IOException");
 		}
@@ -471,7 +471,7 @@ public class FileDrop {
 		// Make drop target
 		final java.awt.dnd.DropTarget dt = new java.awt.dnd.DropTarget();
 		try {
-			dt.addDropTargetListener(dropListener);
+			dt.addDropTargetListener(this.dropListener);
 		} // end try
 		catch (java.util.TooManyListenersException e) {
 			e.printStackTrace();
@@ -490,13 +490,13 @@ public class FileDrop {
 					log(out, "FileDrop: Drop target cleared from component.");
 				} // end if: null parent
 				else {
-					new java.awt.dnd.DropTarget(c, dropListener);
+					new java.awt.dnd.DropTarget(c, FileDrop.this.dropListener);
 					log(out, "FileDrop: Drop target added to component.");
 				} // end else: parent not null
 			} // end hierarchyChanged
 		}); // end hierarchy listener
 		if (c.getParent() != null)
-			new java.awt.dnd.DropTarget(c, dropListener);
+			new java.awt.dnd.DropTarget(c, this.dropListener);
 
 		if (recursive && (c instanceof java.awt.Container)) {
 			// Get the container
@@ -601,10 +601,10 @@ public class FileDrop {
 					remove(out, comps[i], recursive);
 				return true;
 			} // end if: recursive
-			else
+		//	else
 				return false;
 		} // end if: supports DnD
-		else
+		//else
 			return false;
 	} // end remove
 
@@ -681,7 +681,7 @@ public class FileDrop {
 		 * @since 1.1
 		 */
 		public File[] getFiles() {
-			return files;
+			return this.files;
 		} // end getFiles
 
 	} // end inner class Event
@@ -825,7 +825,7 @@ public class FileDrop {
 		 * @since 1.1
 		 */
 		public java.awt.datatransfer.DataFlavor getCustomDataFlavor() {
-			return customFlavor;
+			return this.customFlavor;
 		} // end getCustomDataFlavor
 
 		/* ******** T R A N S F E R A B L E M E T H O D S ******** */
@@ -840,12 +840,12 @@ public class FileDrop {
 		 * @since 1.1
 		 */
 		public java.awt.datatransfer.DataFlavor[] getTransferDataFlavors() {
-			if (customFlavor != null)
-				return new java.awt.datatransfer.DataFlavor[]{customFlavor, DATA_FLAVOR,
+			if (this.customFlavor != null)
+				return new java.awt.datatransfer.DataFlavor[]{this.customFlavor, DATA_FLAVOR,
 					java.awt.datatransfer.DataFlavor.stringFlavor}; // end
 			// flavors
 			// array
-			else
+			//else
 				return new java.awt.datatransfer.DataFlavor[]{DATA_FLAVOR,
 					java.awt.datatransfer.DataFlavor.stringFlavor}; // end
 			// flavors
@@ -870,11 +870,11 @@ public class FileDrop {
 			throws java.awt.datatransfer.UnsupportedFlavorException, IOException {
 			// Native object
 			if (flavor.equals(DATA_FLAVOR))
-				return fetcher == null ? data : fetcher.getObject();
+				return this.fetcher == null ? this.data : this.fetcher.getObject();
 
 			// String
 			if (flavor.equals(java.awt.datatransfer.DataFlavor.stringFlavor))
-				return fetcher == null ? data.toString() : fetcher.getObject().toString();
+				return this.fetcher == null ? this.data.toString() : this.fetcher.getObject().toString();
 
 			// We can't do anything else
 			throw new java.awt.datatransfer.UnsupportedFlavorException(flavor);
