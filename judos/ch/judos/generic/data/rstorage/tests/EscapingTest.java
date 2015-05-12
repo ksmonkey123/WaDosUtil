@@ -13,9 +13,9 @@ public class EscapingTest extends SerializationTest {
 
 	@Override
 	protected Object getTestObject() {
-		return new Object[]{new ConstantSerialization[]{new ConstantSerialization("Hallo"),
+		return new Object[]{new ConstantSerialization("Hallo"),
 			new ConstantSerialization("(tag)"), new ConstantSerialization("(=4 )"),
-			new ConstantSerialization("\\brac"), new ConstantSerialization("{bla}")}};
+			new ConstantSerialization("\\brac"), new ConstantSerialization("{bla}")};
 	}
 
 	public static void main(String[] args) throws IOException, RSerializerException {

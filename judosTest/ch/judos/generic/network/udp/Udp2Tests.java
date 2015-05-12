@@ -13,11 +13,11 @@ import ch.judos.generic.network.udp.interfaces.Layer2Listener;
  */
 public class Udp2Tests extends TestCase {
 
-	private int		PORT;
-	private boolean	success;
+	int				PORT;
+	boolean			success;
 	private Udp2	u;
 
-	private void assertArrayEquals(byte[] senddata, byte[] data) {
+	void assertArrayEquals(byte[] senddata, byte[] data) {
 		for (int index = 0; index < data.length; index++)
 			assertEquals(senddata[index], data[index]);
 	}
@@ -40,16 +40,18 @@ public class Udp2Tests extends TestCase {
 		this.u.addListener(listener);
 
 		try {
-			this.u.sendDataTo(1, new byte[0], false, new InetSocketAddress("localhost",
-				this.PORT));
-		} catch (IOException e) {
+			this.u.sendDataTo(1, new byte[0], false,
+				new InetSocketAddress("localhost", this.PORT));
+		}
+		catch (IOException e) {
 			fail();
 		}
 		try {
 			synchronized (listener) {
 				listener.wait(1000);
 			}
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e) {
 			fail();
 		}
 		assertTrue(this.success);
@@ -59,18 +61,20 @@ public class Udp2Tests extends TestCase {
 	public void excessiveData() {
 		final byte[] senddata = new byte[UdpConfig.PACKET_SIZE_BYTES * 2];
 		try {
-
-			this.u.sendDataTo(1, senddata, false,
-				new InetSocketAddress("localhost", this.PORT));
+			this.u.sendDataTo(1, senddata, false, new InetSocketAddress("localhost", this.PORT));
 			fail();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
+			// expected to throw this exception
 		}
 	}
 
 	@Override
 	protected void setUp() throws Exception {
-		this.u = new Udp2(new Udp1(new Udp0Reader(new DatagramSocket())));
-		this.PORT = this.u.getLocalPort();
+		try (DatagramSocket s = new DatagramSocket()) {
+			this.u = new Udp2(new Udp1(new Udp0Reader(s)));
+			this.PORT = this.u.getLocalPort();
+		}
 	}
 
 	@Override
@@ -97,16 +101,17 @@ public class Udp2Tests extends TestCase {
 		this.u.addListener(listener);
 
 		try {
-			this.u
-				.sendDataTo(5, senddata, true, new InetSocketAddress("localhost", this.PORT));
-		} catch (IOException e) {
+			this.u.sendDataTo(5, senddata, true, new InetSocketAddress("localhost", this.PORT));
+		}
+		catch (IOException e) {
 			fail();
 		}
 		try {
 			synchronized (listener) {
 				listener.wait(1000);
 			}
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e) {
 			fail();
 		}
 		assertTrue(this.success);
@@ -132,16 +137,17 @@ public class Udp2Tests extends TestCase {
 		this.u.addListener(listener);
 
 		try {
-			this.u.sendDataTo(5, senddata, false,
-				new InetSocketAddress("localhost", this.PORT));
-		} catch (IOException e) {
+			this.u.sendDataTo(5, senddata, false, new InetSocketAddress("localhost", this.PORT));
+		}
+		catch (IOException e) {
 			fail();
 		}
 		try {
 			synchronized (listener) {
 				listener.wait(1000);
 			}
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e) {
 			fail();
 		}
 		assertTrue(this.success);

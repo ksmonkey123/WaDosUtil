@@ -1,28 +1,9 @@
 package ch.judos.generic.swing;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.border.Border;
 
 /**
@@ -58,8 +39,8 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 		proxyPanel.add(new JTextField("8080"));
 		final JCheckBox checkBox = new JCheckBox("Use Proxy", true);
 		checkBox.setFocusPainted(false);
-		ComponentTitledBorder componentBorder = new ComponentTitledBorder(checkBox,
-			proxyPanel, BorderFactory.createEtchedBorder());
+		ComponentTitledBorder componentBorder = new ComponentTitledBorder(checkBox, proxyPanel,
+			BorderFactory.createEtchedBorder());
 		checkBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -80,16 +61,16 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 		frame.setVisible(true);
 	}
 
-	int					offset			= 5;
+	int						offset			= 5;
 
-	alignement			componentAlignement;
+	alignement				componentAlignement;
 
-	private int			left;
+	private int				left;
 
-	private Component	comp;
+	private Component		comp;
 	private JComponent	container;
-	private Rectangle	rect;
-	private Border		border;
+	private Rectangle		rect;
+	private Border			border;
 	private boolean		mouseEntered	= false;
 
 	/**
@@ -160,6 +141,7 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 	 */
 	@Override
 	public void mouseDragged(MouseEvent e) {
+		// unused
 	}
 
 	/**
@@ -169,6 +151,7 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
+		// unused
 	}
 
 	/**
@@ -198,11 +181,13 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 		if (this.mouseEntered == false && this.rect.contains(me.getX(), me.getY())) {
 			this.mouseEntered = true;
 			dispatchEvent(me, MouseEvent.MOUSE_ENTERED);
-		} else if (this.mouseEntered == true) {
+		}
+		else if (this.mouseEntered == true) {
 			if (this.rect.contains(me.getX(), me.getY()) == false) {
 				this.mouseEntered = false;
 				dispatchEvent(me, MouseEvent.MOUSE_EXITED);
-			} else {
+			}
+			else {
 				dispatchEvent(me, MouseEvent.MOUSE_MOVED);
 			}
 		}
@@ -250,6 +235,11 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 				break;
 			case RIGHT :
 				this.left = width - size.width - this.offset;
+				break;
+			default :
+				System.err.println("ComponentAlignement enum not known: "
+					+ this.componentAlignement);
+				break;
 		}
 		this.rect = new Rectangle(this.left, 0, size.width, size.height);
 
@@ -259,7 +249,8 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 	private void dispatchEvent(MouseEvent me) {
 		if (this.rect != null && this.rect.contains(me.getX(), me.getY())) {
 			dispatchEvent(me, me.getID());
-		} else
+		}
+		else
 			dispatchEvent(me, MouseEvent.MOUSE_EXITED);
 	}
 
@@ -268,14 +259,14 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 		pt.translate(-this.rect.x, 0);
 
 		this.comp.setSize(this.rect.width, this.rect.height);
-		this.comp.dispatchEvent(new MouseEvent(this.comp, id, me.getWhen(), me
-			.getModifiers(), pt.x, pt.y, me.getClickCount(), me.isPopupTrigger(), me
-			.getButton()));
+		this.comp.dispatchEvent(new MouseEvent(this.comp, id, me.getWhen(), me.getModifiers(),
+			pt.x, pt.y, me.getClickCount(), me.isPopupTrigger(), me.getButton()));
 		if (!this.comp.isValid()) {
 			this.container.repaint();
 		}
 	}
 
+	@SuppressWarnings("all")
 	enum alignement {
 		LEFT, CENTER, RIGHT
 	}

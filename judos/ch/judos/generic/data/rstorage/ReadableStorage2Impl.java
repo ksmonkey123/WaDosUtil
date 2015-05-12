@@ -119,9 +119,8 @@ public class ReadableStorage2Impl implements ReadableStorage2 {
 	@Override
 	public void store(Object object, Writer writer) throws RSerializerException {
 		objectTracker.set(new ObjectTracker2());
-		RuntimeWriter2 wr = new RuntimeWriter2(new IndentWriter2(writer));
-		storeWithTags(object, wr, true);
-		try {
+		try (RuntimeWriter2 wr = new RuntimeWriter2(new IndentWriter2(writer))) {
+			storeWithTags(object, wr, true);
 			wr.close();
 		}
 		catch (IOException e) {

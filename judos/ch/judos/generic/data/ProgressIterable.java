@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ProgressIterable<T> implements Iterable<Progress<T>> {
 
-	private T[]	arr;
+	T[]	arr;
 
 	/**
 	 * @param list
@@ -51,6 +51,7 @@ public class ProgressIterable<T> implements Iterable<Progress<T>> {
 
 			@Override
 			public void remove() {
+				throw new UnsupportedOperationException();
 			}
 
 		};

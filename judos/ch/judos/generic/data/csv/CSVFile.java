@@ -39,6 +39,7 @@ public class CSVFile {
 	 * @param field
 	 * @return escaped string
 	 */
+	@SuppressWarnings("all")
 	public static String encodeForFile(String field) {
 		field = field.replaceAll(escape, escape + "u");
 		field = field.replaceAll(separator, escape + "s");
@@ -52,6 +53,7 @@ public class CSVFile {
 	 * @param field
 	 * @return unescaped string
 	 */
+	@SuppressWarnings("all")
 	public static String decodeForValue(String field) {
 		field = field.replaceAll(escape + "l", linebreak);
 		field = field.replaceAll(escape + "s", separator);

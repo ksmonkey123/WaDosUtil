@@ -38,12 +38,16 @@ public class Fields {
 		for (Field f : fields) {
 			try {
 				r.add(f.get(obj));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				r.add(null);
 			}
 		}
 		return r;
 	}
 
+	@SuppressWarnings("all")
 	public static Field getAnyField(Class<?> c, String name) {
 		while (c != null) {
 			for (Field f : c.getDeclaredFields())
@@ -58,11 +62,12 @@ public class Fields {
 		return getAllFieldsAndInherited(obj.getClass());
 	}
 
-	public static DynamicList<Field> getAllFieldsAndInherited(Class<?> c) {
+	@SuppressWarnings("all")
+	public static DynamicList<Field> getAllFieldsAndInherited(Class<?> clazz) {
 		DynamicList<Field> r = new DynamicList<>();
-		while (c != null) {
-			r.addAll(c.getDeclaredFields());
-			c = c.getSuperclass();
+		while (clazz != null) {
+			r.addAll(clazz.getDeclaredFields());
+			clazz = clazz.getSuperclass();
 		}
 		return r;
 	}

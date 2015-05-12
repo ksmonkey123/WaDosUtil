@@ -20,25 +20,26 @@ import ch.judos.generic.network.udp.interfaces.UdpFileTransferListener;
  */
 public class FileIncomingTransmission {
 
-	private InetSocketAddress		from;
-	private int						lastPacket;
-	private long					lastRequestedParts;
+	private InetSocketAddress			from;
+	private int								lastPacket;
+	private long							lastRequestedParts;
 	private UdpFileTransferListener	listener;
-	private long					listenerLastUpdate;
-	private HashSet<Integer>		missing;
-	private int						packetSize;
-	private int						parts;
-	private int						partsReceived;
-	private HashSet<Integer>		requestedAlready;
-	private RandomAccessFile		rFile;
-	private SpeedMeasurement		speedMeasure;
-	private long					totalSize;
+	private long							listenerLastUpdate;
+	private HashSet<Integer>			missing;
+	private int								packetSize;
+	private int								parts;
+	private int								partsReceived;
+	private HashSet<Integer>			requestedAlready;
+	private RandomAccessFile			rFile;
+	private SpeedMeasurement			speedMeasure;
+	private long							totalSize;
 
 	public FileIncomingTransmission(File file, FileDescription fd,
 		UdpFileTransferListener listener, int packetSize, InetSocketAddress from) {
 		try {
 			this.rFile = new RandomAccessFile(file, "rw");
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		this.listener = listener;
@@ -67,13 +68,15 @@ public class FileIncomingTransmission {
 			for (int i = this.lastPacket + 1; i < partNr; i++)
 				this.missing.add(i);
 			this.lastPacket = partNr;
-		} else if (!this.missing.remove(partNr) && !this.requestedAlready.remove(partNr))
+		}
+		else if (!this.missing.remove(partNr) && !this.requestedAlready.remove(partNr))
 			save = false;
 
 		if (save) {
 			try {
 				savePart(partNr, data);
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -83,8 +86,8 @@ public class FileIncomingTransmission {
 	private void requestPartsIfNeeded(Udp4 u) {
 		int totalMissing = this.missing.size() + this.requestedAlready.size();
 		long delay = System.currentTimeMillis() - this.lastRequestedParts;
-		out("missing: " + this.missing.size() + " requestedOnce:"
-			+ this.requestedAlready.size() + "  d:" + delay + " ms");
+		out("missing: " + this.missing.size() + " requestedOnce:" + this.requestedAlready.size()
+			+ "  d:" + delay + " ms");
 		if (this.missing.size() >= UdpConfig.MINIMAL_AMOUNT_REQUEST
 			|| (totalMissing > 0 && delay > UdpConfig.REQUEST_MISSING_MS)) {
 			byte[] data = new byte[totalMissing * 4 + 4];
@@ -103,7 +106,9 @@ public class FileIncomingTransmission {
 			this.missing.clear();
 			try {
 				u.sendFileMessage(Udp4.FileTransfer_REQUEST_DATA, data, this.from);
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
+				e.printStackTrace();
 			}
 			this.lastRequestedParts = System.currentTimeMillis();
 		}
@@ -127,7 +132,8 @@ public class FileIncomingTransmission {
 			// do this after sending complete message since it takes some time
 			this.rFile.getFD().sync();
 			this.rFile.close();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -142,8 +148,7 @@ public class FileIncomingTransmission {
 			long transmitted = this.partsReceived * this.packetSize;
 			float curSpeed = this.speedMeasure.update(transmitted);
 			float percentage = (float) ((double) transmitted / this.totalSize * 100);
-			this.listener.transmissionProgress(percentage, curSpeed, transmitted,
-				this.totalSize);
+			this.listener.transmissionProgress(percentage, curSpeed, transmitted, this.totalSize);
 		}
 	}
 }
