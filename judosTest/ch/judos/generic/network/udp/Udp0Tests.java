@@ -15,11 +15,13 @@ public class Udp0Tests extends TestCase {
 
 	public static final int	PORT	= 60000;
 	private Udp0Reader		u;
-	private boolean			success;
+	boolean						success;
 
 	@Override
 	protected void setUp() throws Exception {
-		this.u = new Udp0Reader(new DatagramSocket(PORT));
+		try (DatagramSocket ds = new DatagramSocket(PORT)) {
+			this.u = new Udp0Reader(ds);
+		}
 	}
 
 	@Override
@@ -51,14 +53,16 @@ public class Udp0Tests extends TestCase {
 
 		try {
 			this.u.sendTo(senddata, new InetSocketAddress("localhost", 60000));
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			fail();
 		}
 		try {
 			synchronized (this) {
 				this.wait(1000);
 			}
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e) {
 			fail();
 		}
 		assertTrue(this.success);
@@ -82,14 +86,16 @@ public class Udp0Tests extends TestCase {
 
 		try {
 			this.u.sendTo(new byte[0], new InetSocketAddress("localhost", 60000));
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			fail();
 		}
 		try {
 			synchronized (this) {
 				this.wait(1000);
 			}
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e) {
 			fail();
 		}
 		assertTrue(this.success);
@@ -101,11 +107,13 @@ public class Udp0Tests extends TestCase {
 		try {
 			this.u.sendTo(senddata, new InetSocketAddress("localhost", 60000));
 			fail();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
+			fail();
 		}
 	}
 
-	private void assertArrayEquals(byte[] senddata, byte[] data) {
+	void assertArrayEquals(byte[] senddata, byte[] data) {
 		for (int index = 0; index < data.length; index++)
 			assertEquals(senddata[index], data[index]);
 	}

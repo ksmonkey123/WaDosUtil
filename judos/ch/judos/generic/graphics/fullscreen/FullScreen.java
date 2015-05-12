@@ -1,25 +1,14 @@
 package ch.judos.generic.graphics.fullscreen;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.DisplayMode;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferStrategy;
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import ch.judos.generic.graphics.Drawable;
 import ch.judos.generic.graphics.MouseInfoI;
@@ -38,8 +27,7 @@ public class FullScreen implements MouseInfoI {
 	 * @param config
 	 * @return true if device can show this displaymode config
 	 */
-	public static boolean deviceSupportsDisplayMode(GraphicsDevice device,
-		DisplayMode config) {
+	public static boolean deviceSupportsDisplayMode(GraphicsDevice device, DisplayMode config) {
 		DisplayMode[] modes = device.getDisplayModes();
 		for (DisplayMode m : modes) {
 			if (m.equals(config))
@@ -81,7 +69,7 @@ public class FullScreen implements MouseInfoI {
 		List<DisplayMode> list = new ArrayList<>();
 		for (DisplayMode m : device.getDisplayModes())
 			list.add(m);
-		Collections.sort(list, new DMComp());
+		Collections.sort(list, new FullScreen.DMComp());
 		return list.toArray(new DisplayMode[]{});
 	}
 
@@ -124,7 +112,8 @@ public class FullScreen implements MouseInfoI {
 				maxPixels = pixels;
 				best = m;
 				maxFps = fps;
-			} else if (pixels == maxPixels && fps > maxFps) {
+			}
+			else if (pixels == maxPixels && fps > maxFps) {
 				maxFps = fps;
 				best = m;
 			}
@@ -152,51 +141,51 @@ public class FullScreen implements MouseInfoI {
 	/**
 	 * whether the screen is cleared before drawing a frame
 	 */
-	protected boolean						clear;
+	protected boolean								clear;
 	/**
 	 * frame inside which fullscreen content is displayed
 	 */
-	public Frame							frame;
+	public Frame									frame;
 	/**
 	 * deviced/ screen used for displaying
 	 */
-	protected GraphicsDevice				device;
+	protected GraphicsDevice					device;
 	/**
 	 * resolution and frequency used
 	 */
-	protected DisplayMode					mode;
+	protected DisplayMode						mode;
 	/**
 	 * content of the view
 	 */
-	protected Drawable						draw;
+	protected Drawable							draw;
 	/**
 	 * title for the window
 	 */
-	protected String						title;
+	protected String								title;
 	/**
 	 * refresh timer
 	 */
-	protected Timer							timer;
+	protected Timer								timer;
 	/**
 	 * prevents flickering
 	 */
-	protected BufferStrategy				bufferStrategy;
+	protected BufferStrategy					bufferStrategy;
 	/**
 	 * calc fps - last check ms
 	 */
-	protected long							fps_ms;
+	protected long									fps_ms;
 	/**
 	 * calc fps - current counter
 	 */
-	protected int							fps_co;
+	protected int									fps_co;
 	/**
 	 * calculated fps
 	 */
-	public int								FPS;
-	private int								individualRefreshRateFps;
-	private boolean							individualRefreshRate;
+	public int										FPS;
+	private int										individualRefreshRateFps;
+	private boolean								individualRefreshRate;
 	private ArrayList<KeyListener>			klists;
-	private ArrayList<MouseListener>		mlists;
+	private ArrayList<MouseListener>			mlists;
 	private ArrayList<WindowListener>		wlists;
 	private ArrayList<MouseMotionListener>	mmlist;
 
@@ -209,8 +198,7 @@ public class FullScreen implements MouseInfoI {
 	public FullScreen(GraphicsDevice device, DisplayMode config, Drawable content,
 		String appTitle) {
 		if (!deviceSupportsDisplayMode(device, config))
-			throw new InvalidParameterException(
-				"DisplayMode is not supported by this device.");
+			throw new InvalidParameterException("DisplayMode is not supported by this device.");
 		this.device = device;
 		this.mode = config;
 		this.draw = content;
@@ -224,8 +212,8 @@ public class FullScreen implements MouseInfoI {
 
 	/**
 	 * @param list
-	 *            A KeyListener to add permanently (is saved and still active
-	 *            after you exit and start FullScreen again)
+	 *           A KeyListener to add permanently (is saved and still active
+	 *           after you exit and start FullScreen again)
 	 */
 	public void addKeyListener(KeyListener list) {
 		this.klists.add(list);
@@ -271,11 +259,11 @@ public class FullScreen implements MouseInfoI {
 	 * open up the fullscreen view with certain number of buffers
 	 * 
 	 * @param numBuffers
-	 *            number of buffers to predraw on before displaying
+	 *           number of buffers to predraw on before displaying
 	 * @param fullscreen
-	 *            whether the content should be drawn in fullscreen mode
+	 *           whether the content should be drawn in fullscreen mode
 	 * @param undecorated
-	 *            for window mode: if true will not show border of window
+	 *           for window mode: if true will not show border of window
 	 */
 	public void openScreen(int numBuffers, boolean fullscreen, boolean undecorated) {
 		this.frame = new Frame(this.title, this.device.getDefaultConfiguration());
@@ -314,7 +302,8 @@ public class FullScreen implements MouseInfoI {
 			public void run() {
 				try {
 					drawIt();
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -356,7 +345,7 @@ public class FullScreen implements MouseInfoI {
 
 	/**
 	 * @param value
-	 *            turn on or off the clearing before drawing each frame
+	 *           turn on or off the clearing before drawing each frame
 	 */
 	public void setClearing(boolean value) {
 		this.clear = value;
@@ -364,8 +353,7 @@ public class FullScreen implements MouseInfoI {
 
 	/**
 	 * @param fps
-	 *            If content needs to be refreshed less than displayMode
-	 *            suggests
+	 *           If content needs to be refreshed less than displayMode suggests
 	 */
 	public void setIndividualRefreshRate(int fps) {
 		this.individualRefreshRate = true;
@@ -386,9 +374,8 @@ public class FullScreen implements MouseInfoI {
 	 */
 	@Override
 	public String toString() {
-		return this.title + "  running in " + this.mode.getWidth() + "x"
-			+ this.mode.getHeight() + " " + this.mode.getBitDepth() + "bit "
-			+ this.mode.getRefreshRate() + "fps";
+		return this.title + "  running in " + this.mode.getWidth() + "x" + this.mode.getHeight()
+			+ " " + this.mode.getBitDepth() + "bit " + this.mode.getRefreshRate() + "fps";
 	}
 
 	/**
@@ -410,7 +397,7 @@ public class FullScreen implements MouseInfoI {
 		}
 	}
 
-	private static class DMComp implements Comparator<DisplayMode> {
+	protected static class DMComp implements Comparator<DisplayMode> {
 		/**
 		 * (non-Javadoc)
 		 * 

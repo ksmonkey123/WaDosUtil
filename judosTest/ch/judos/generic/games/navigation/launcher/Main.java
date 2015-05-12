@@ -2,20 +2,15 @@ package ch.judos.generic.games.navigation.launcher;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import ch.judos.generic.control.KeyMouseAdapter;
 import ch.judos.generic.data.geometry.PointF;
-import ch.judos.generic.games.navigation.model.FlyUnit;
-import ch.judos.generic.games.navigation.model.Map;
-import ch.judos.generic.games.navigation.model.SimpleUnit;
-import ch.judos.generic.games.navigation.model.SpaceUnit;
-import ch.judos.generic.games.navigation.model.Unit;
+import ch.judos.generic.games.navigation.model.*;
 import ch.judos.generic.games.pathsearch.SimpleWayPoint;
 import ch.judos.generic.games.pathsearch.WayPoint;
 import ch.judos.generic.games.unitCoordination.MovementListener;
@@ -26,17 +21,17 @@ import ch.judos.generic.games.unitCoordination.MovementListener;
  * @version 1.0
  * @dependsOn
  */
-public class Main extends KeyAdapter implements MouseListener, MovementListener {
+public class Main extends KeyMouseAdapter implements MovementListener {
 	public static void main(String[] args) {
-		new Main();
+		new Main().initFrameAndStart();
 	}
 
-	private Map						map;
-	private int						selected;
+	private Map								map;
+	private int								selected;
 	private HashMap<Unit, Integer>	unitmode;
-	private ArrayList<Unit>			units;
+	private ArrayList<Unit>				units;
 
-	public Main() {
+	private void initFrameAndStart() {
 		this.map = new Map(15, 10);
 		this.units = new ArrayList<>();
 		this.unitmode = new HashMap<>();
@@ -56,7 +51,7 @@ public class Main extends KeyAdapter implements MouseListener, MovementListener 
 		u3.addMovementListener(this);
 		this.unitmode.put(u3, 1);
 		this.selected = 0;
-		new Frame(this);
+		new Frame(this).showAndRun();
 	}
 
 	@Override
@@ -91,8 +86,8 @@ public class Main extends KeyAdapter implements MouseListener, MovementListener 
 			Unit u = this.units.get(this.selected);
 			this.unitmode.put(u, 1);
 			Random r = new Random();
-			u.commandTo(new SimpleWayPoint(r.nextInt(this.map.getWidth()), r
-				.nextInt(this.map.getHeight())));
+			u.commandTo(new SimpleWayPoint(r.nextInt(this.map.getWidth()), r.nextInt(this.map
+				.getHeight())));
 		}
 		if (e.getKeyCode() == KeyEvent.VK_M) {
 			Unit u = this.units.get(this.selected);
@@ -107,61 +102,23 @@ public class Main extends KeyAdapter implements MouseListener, MovementListener 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
-	 */
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
-	 */
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
-	 */
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
 	 */
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		Unit u = this.units.get(this.selected);
-		WayPoint f = this.map.getFieldFromPoint(new PointF(arg0.getX() - 2,
-			arg0.getY() - 30));
+		WayPoint f = this.map.getFieldFromPoint(new PointF(arg0.getX() - 2, arg0.getY() - 30));
 		if (this.map.isInsideMap(f)) {
 			u.commandTo(f);
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
-	 */
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
 	}
 
 	private void nextTarget(Unit u) {
 		Random r = new Random();
 		int mode = this.unitmode.get(u);
 		if (mode == 1) {
-			WayPoint t = new SimpleWayPoint(r.nextInt(this.map.getWidth()), r
-				.nextInt(this.map.getHeight()));
+			WayPoint t = new SimpleWayPoint(r.nextInt(this.map.getWidth()), r.nextInt(this.map
+				.getHeight()));
 			u.commandTo(t);
 		}
 	}
@@ -184,6 +141,7 @@ public class Main extends KeyAdapter implements MouseListener, MovementListener 
 
 	@Override
 	public void routeChange(Object u) {
+		// unused
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package ch.judos.generic.dropFilesOntoApp;
 
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
 /**
@@ -7,6 +9,7 @@ import javax.swing.JFrame;
  * 
  * @author Robert Harder, rob@iharder.net
  */
+@SuppressWarnings("unused")
 public class Example {
 
 	/**
@@ -14,6 +17,7 @@ public class Example {
 	 * 
 	 * @param args
 	 */
+
 	public static void main(String[] args) {
 		javax.swing.JFrame frame = new javax.swing.JFrame("FileDrop");
 		// javax.swing.border.TitledBorder dragBorder = new
@@ -29,8 +33,9 @@ public class Example {
 				for (int i = 0; i < files.length; i++) {
 					try {
 						text.append(files[i].getCanonicalPath() + "\n");
-					} // end try
-					catch (java.io.IOException e) {
+					}
+					catch (IOException e) {
+						e.printStackTrace();
 					}
 				} // end for: through each dropped file
 			} // end filesDropped

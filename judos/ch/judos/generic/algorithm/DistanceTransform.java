@@ -1,41 +1,16 @@
 package ch.judos.generic.algorithm;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 /**
  * 
- * Author : Mongkol Thitithamasak
- * 
- * Class : Image Processing
- * 
- * Term : Fall 2011
- * 
+ * Author : Mongkol Thitithamasak Class : Image Processing Term : Fall 2011
  * Project : Distance Transform
  * 
- * 
- * 
- * 
- * 
- * Project Description :
- * 
- * There are 2 types of input data files
- * 
- * 1) binary image files : ellipse.txt,Connected
- * Circle.txt,diamond_connected.txt
- * 
- * 2) grey scale image files : donuts.txt,stpatricks leaf.txt
- * 
- * 
+ * Project Description : There are 2 types of input data files 1) binary image
+ * files : ellipse.txt,Connected Circle.txt,diamond_connected.txt 2) grey scale
+ * image files : donuts.txt,stpatricks leaf.txt
  * 
  * The program will first process the binary image files and then perform
  * distance transform
@@ -58,37 +33,33 @@ import java.util.Scanner;
  * to the edge.
  * 
  * 
- * 
- * 
- * 
  * Input: Grey scale Images and Binary Images with connected components
  * 
  * output: Enhanced Image with distance from the pixel to the border as label on
  * each pixel
- * 
- * 
  */
+@SuppressWarnings("all")
 public class DistanceTransform {
-	public static ArrayList<Double>					aboveThresholdAl;
-	public static ArrayList<Integer>				alPixelOri;
-	public static ArrayList<Double>					belowThresholdAl;
-	private static BufferedReader					bReader;
-	private static BufferedWriter					bWriter;
-	public static int								currentLabel	= 0;
+	public static ArrayList<Double>						aboveThresholdAl;
+	public static ArrayList<Integer>						alPixelOri;
+	public static ArrayList<Double>						belowThresholdAl;
+	private static BufferedReader							bReader;
+	private static BufferedWriter							bWriter;
+	public static int											currentLabel	= 0;
 	public static ArrayList<ArrayList<Integer>>		eqList;
-	private static FileReader						fReader;
-	public static int								height			= 0;
-	public static String[]							histogramArray;
-	public static Map<Double, Double>				histogramArrayCountMap;
-	public static ArrayList<Double>					labelAl;
-	public static ArrayList<Integer>				neighborArray;
-	public static double[][]						ori2DImage		= new double[1][1];
-	public static Map<Integer, Integer>				pixelCountMap;
-	public static Map<Integer, ArrayList<pixel>>	pixelMap;
-	public static double							pixelValue		= 0.0;
+	private static FileReader								fReader;
+	public static int											height			= 0;
+	public static String[]									histogramArray;
+	public static Map<Double, Double>					histogramArrayCountMap;
+	public static ArrayList<Double>						labelAl;
+	public static ArrayList<Integer>						neighborArray;
+	public static double[][]								ori2DImage		= new double[1][1];
+	public static Map<Integer, Integer>					pixelCountMap;
+	public static Map<Integer, ArrayList<pixel>>		pixelMap;
+	public static double										pixelValue		= 0.0;
 	public static Map<Integer, ArrayList<Double>>	propertiesMap;
-	public static double							thresholdValue	= 0.0;
-	public static int								width			= 0;
+	public static double										thresholdValue	= 0.0;
+	public static int											width				= 0;
 
 	/**
 	 * 
@@ -105,9 +76,9 @@ public class DistanceTransform {
 			histogramArray[(int) pixelValue] += "+";
 			if (histogramArrayCountMap.get(pixelValue) == null) {
 				histogramArrayCountMap.put(pixelValue, 1.0);
-			} else {
-				histogramArrayCountMap.put(pixelValue, histogramArrayCountMap
-					.get(pixelValue) + 1);
+			}
+			else {
+				histogramArrayCountMap.put(pixelValue, histogramArrayCountMap.get(pixelValue) + 1);
 			}
 		}
 	}
@@ -139,7 +110,8 @@ public class DistanceTransform {
 		try {
 			fReader.close();
 			// pWriter.close();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -219,16 +191,19 @@ public class DistanceTransform {
 						enlargeImage[i][j] = p;
 						enlargeImage[i][j + 1] = p;
 						enlargeImage[i + 1][j] = p;
-					} else if (i == 0 & j == oriImage[1].length - 1) // top
-																		// right
+					}
+					else if (i == 0 & j == oriImage[1].length - 1) // top
+					// right
 					{
 						enlargeImage[i][j + 1] = p;
 						enlargeImage[i][j + 2] = p;
 						enlargeImage[i + 1][j + 2] = p;
-					} else {
+					}
+					else {
 						enlargeImage[i][j + 1] = p;
 					}
-				} else // i!=0
+				}
+				else // i!=0
 				{
 					if (i != oriImage.length - 1 & j == 0) {
 						enlargeImage[i + 1][j] = p;
@@ -241,8 +216,9 @@ public class DistanceTransform {
 						enlargeImage[i + 1][j] = p;
 						enlargeImage[i + 2][j] = p;
 						enlargeImage[i + 2][j + 1] = p;
-					} else if (i == oriImage.length - 1 & j == oriImage[1].length - 1) // bottom
-																						// right
+					}
+					else if (i == oriImage.length - 1 & j == oriImage[1].length - 1) // bottom
+					// right
 					{
 						enlargeImage[i + 1][j + 2] = p;
 						enlargeImage[i + 2][j + 2] = p;
@@ -319,8 +295,7 @@ public class DistanceTransform {
 
 	/**
 	 * 
-	 * this method takes label number as an input and look up the same label
-	 * with
+	 * this method takes label number as an input and look up the same label with
 	 * 
 	 * less value.
 	 * 
@@ -382,31 +357,35 @@ public class DistanceTransform {
 				try {
 					nw = (int) _image[i - 1][j - 1];
 					neighborArray.add(nw);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					nw = 0;
 				}
 				try {
 					n = (int) _image[i - 1][j];
 					neighborArray.add(n);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					n = 0;
 				}
 				try {
 					ne = (int) _image[i - 1][j + 1];
 					neighborArray.add(ne);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					ne = 0;
 				}
 				try {
 					w = (int) _image[i][j - 1];
 					neighborArray.add(w);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					w = 0;
 				}
 				c = (int) _image[i][j];
 				if (c > 0) {
 					if (nw == 0 && n == 0 && ne == 0 && w == 0)// case 1 : all
-																// are zeros
+					// are zeros
 					{
 						ArrayList<Integer> al = new ArrayList<>();
 						al.add(++currentLabel);
@@ -414,21 +393,26 @@ public class DistanceTransform {
 						_image[i][j] = currentLabel;
 						// print2DimensionArray(_image);
 						// print("");
-					} else if (!neighborArray.isEmpty()
-						&& nonZeroAreTheSameLabel(neighborArray))// case 2 : all
-																	// the same
-																	// values
+					}
+					else if (!neighborArray.isEmpty() && nonZeroAreTheSameLabel(neighborArray))// case
+																														// 2
+																														// :
+																														// all
+					// the same
+					// values
 					{
 						_image[i][j] = findMin(neighborArray); // take value
-																// from one of
-																// the neighbors
+						// from one of
+						// the neighbors
 						// print2DimensionArray(_image);
 						// print("");
-					} else if (!neighborArray.isEmpty()
-						&& !nonZeroAreTheSameLabel(neighborArray)) // case 3 :
-																	// not all
-																	// are the
-																	// same
+					}
+					else if (!neighborArray.isEmpty() && !nonZeroAreTheSameLabel(neighborArray)) // case
+																															// 3
+																															// :
+					// not all
+					// are the
+					// same
 					{
 						_image[i][j] = findMin(neighborArray);
 						// print2DimensionArray(_image);
@@ -482,28 +466,32 @@ public class DistanceTransform {
 				try {
 					nw = (int) _image[i - 1][j - 1];
 					neighborArray.add(nw);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					nw = 0;
 					neighborArray.add(nw);
 				}
 				try {
 					n = (int) _image[i - 1][j];
 					neighborArray.add(n);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					n = 0;
 					neighborArray.add(n);
 				}
 				try {
 					ne = (int) _image[i - 1][j + 1];
 					neighborArray.add(ne);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					ne = 0;
 					neighborArray.add(ne);
 				}
 				try {
 					w = (int) _image[i][j - 1];
 					neighborArray.add(w);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					w = 0;
 					neighborArray.add(w);
 				}
@@ -532,7 +520,8 @@ public class DistanceTransform {
 		for (int i = 0; i < al.size(); ++i) {
 			if (al.get(i) > _tresholdValue) {
 				aboveThresholdAl.add(al.get(i));
-			} else {
+			}
+			else {
 				belowThresholdAl.add(al.get(i));
 			}
 		}
@@ -676,7 +665,7 @@ public class DistanceTransform {
 	 * This program takes no arguments in command line.
 	 * 
 	 * @param args
-	 *            the command line arguments
+	 *           the command line arguments
 	 */
 	public static void main(String[] args) {
 		double aboveAvg = 0.0;
@@ -685,8 +674,7 @@ public class DistanceTransform {
 		String fileName = "";
 		// try
 		// {
-		String[] inputFile = {"ellipse.txt", "Connected Circle.txt",
-			"diamond_connected.txt"};
+		String[] inputFile = {"ellipse.txt", "Connected Circle.txt", "diamond_connected.txt"};
 		for (int i = 0; i < inputFile.length; ++i) {
 			fileName = inputFile[i];
 			String BinaryImage = fileName;
@@ -766,8 +754,8 @@ public class DistanceTransform {
 			File myFile = new File(fileName);
 			myFile.delete();
 			writeToFile(fileName, image);
-			fileName = thresholding.thresholdOutBinaryImage(fileName, thresholdValue,
-				width, height);
+			fileName = thresholding.thresholdOutBinaryImage(fileName, thresholdValue, width,
+				height);
 			String BinaryImage = fileName;
 			// read binary image
 			readFromFile(BinaryImage);
@@ -829,9 +817,8 @@ public class DistanceTransform {
 	public static void print2DimensionArray(double[][] twodimenstionArray) {
 		for (int i = 0; i < twodimenstionArray.length; ++i) {
 			for (int j = 0; j < twodimenstionArray[0].length; ++j) {
-				System.out.print(String.valueOf(roundToDecimals(twodimenstionArray[i][j],
-					2)
-					+ " "));
+				System.out.print(String
+					.valueOf(roundToDecimals(twodimenstionArray[i][j], 2) + " "));
 			}
 			print("");
 		}
@@ -856,9 +843,9 @@ public class DistanceTransform {
 		for (int i = 0; i < twodimenstionArray.length; ++i) {
 			for (int j = 0; j < twodimenstionArray[0].length; ++j) {
 				if (twodimenstionArray[i][j] != 0) {
-					System.out
-						.print(String.valueOf((int) twodimenstionArray[i][j]) + " ");
-				} else {
+					System.out.print(String.valueOf((int) twodimenstionArray[i][j]) + " ");
+				}
+				else {
 					System.out.print("  ");
 				}
 			}
@@ -883,7 +870,8 @@ public class DistanceTransform {
 		for (int i = 0; i < al.length; ++i) {
 			if (count < max) {
 				print(i + " :" + histogramArray[i]);
-			} else {
+			}
+			else {
 				break;
 			}
 			++count;
@@ -905,7 +893,8 @@ public class DistanceTransform {
 		for (int i = 0; i < al.size(); ++i) {
 			if (count < 8) {
 				System.out.print(al.get(i).intValue() + "   ");
-			} else {
+			}
+			else {
 				System.out.print(String.valueOf(roundToDecimals(al.get(i), 1)) + "   ");
 			}
 			if (i < al.size() - 1) {
@@ -944,7 +933,8 @@ public class DistanceTransform {
 					// print("width : "+ width);
 					// print("height : "+ height);
 					ori2DImage = new double[height][width];
-				} else {
+				}
+				else {
 					// ori2DImage = new double[width][height];
 					String[] pixelValueArray = new String[width];
 					if (oneLine.length() != 0) {
@@ -996,9 +986,11 @@ public class DistanceTransform {
 				++intCount;
 				if (intCount == 1) {
 					height = scan.nextInt();
-				} else if (intCount == 2) {
+				}
+				else if (intCount == 2) {
 					width = scan.nextInt();
-				} else {
+				}
+				else {
 					int pixel = scan.nextInt();
 					alPixelOri.add(pixel);
 					// String[]widthHeight = oneLine.trim().split(" ");
@@ -1075,48 +1067,57 @@ public class DistanceTransform {
 				try {
 					ea = (int) _image[i][j + 1];
 					neighborArray.add(ea);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					ea = 0;
 				}
 				try {
 					sw = (int) _image[i + 1][j - 1];
 					neighborArray.add(sw);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					sw = 0;
 				}
 				try {
 					s = (int) _image[i + 1][j];
 					neighborArray.add(s);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					s = 0;
 				}
 				try {
 					se = (int) _image[i + 1][j + 1];
 					neighborArray.add(se);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					se = 0;
 				}
 				c = (int) _image[i][j];
 				if (c > 0) {
 					if (ea == 0 && sw == 0 && s == 0 && se == 0)// case 1 : all
-																// are zeros
+					// are zeros
 					{
 						// do nothing
-					} else if (!neighborArray.isEmpty()
-						&& nonZeroAreTheSameLabel(neighborArray))// case 2 : all
-																	// the same
-																	// values
+					}
+					else if (!neighborArray.isEmpty() && nonZeroAreTheSameLabel(neighborArray))// case
+																														// 2
+																														// :
+																														// all
+					// the same
+					// values
 					{
 						_image[i][j] = findMin(neighborArray); // take value
-																// from one of
-																// the neighbors
+						// from one of
+						// the neighbors
 						// print2DimensionArray(_image);
 						// print("");
-					} else if (!neighborArray.isEmpty()
-						&& !nonZeroAreTheSameLabel(neighborArray)) // case 3 :
-																	// not all
-																	// are the
-																	// same
+					}
+					else if (!neighborArray.isEmpty() && !nonZeroAreTheSameLabel(neighborArray)) // case
+																															// 3
+																															// :
+					// not all
+					// are the
+					// same
 					{
 						neighborArray.add(c);
 						_image[i][j] = findMinEqual(findMin(neighborArray));
@@ -1162,28 +1163,32 @@ public class DistanceTransform {
 				try {
 					ea = (int) _image[i][j + 1];
 					neighborArray.add(ea);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					ea = 0;
 					neighborArray.add(ea);
 				}
 				try {
 					sw = (int) _image[i + 1][j - 1];
 					neighborArray.add(sw);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					sw = 0;
 					neighborArray.add(sw);
 				}
 				try {
 					s = (int) _image[i + 1][j];
 					neighborArray.add(s);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					s = 0;
 					neighborArray.add(s);
 				}
 				try {
 					se = (int) _image[i + 1][j + 1];
 					neighborArray.add(se);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					se = 0;
 					neighborArray.add(se);
 				}
@@ -1237,10 +1242,10 @@ public class DistanceTransform {
 					// if the label return null count then it is a new label,
 					// put 1
 					// if the label return number, then it is old lable, add 1
-					pixelCountMap.put(label, pixelCountMap.get(label) == null ? 1
-						: pixelCountMap.get(label) + 1);
+					pixelCountMap.put(label, pixelCountMap.get(label) == null ? 1 : pixelCountMap
+						.get(label) + 1);
 					if (!pixelMap.containsKey(label)) // does not contain this
-														// label
+					// label
 					{
 						pixelArrayList = new ArrayList<>();
 						pixelMap.put(label, pixelArrayList);
@@ -1264,7 +1269,8 @@ public class DistanceTransform {
 					minCol = p.col;
 					maxCol = p.col;
 					first = false;
-				} else {
+				}
+				else {
 					minRow = findLesser(p.row, minRow);
 					maxRow = findLarger(p.row, maxRow);
 					minCol = findLesser(p.row, minCol);
@@ -1306,7 +1312,7 @@ public class DistanceTransform {
 			int lineCount = 0;
 			while ((oneLine = bReader.readLine()) != null) {
 				++lineCount;
-				String[] pixelValue = new String[width];
+				String[] pixelValueX = new String[width];
 				if (oneLine.length() != 0) {
 					if (lineCount == 1) {
 						String[] widthHeight = oneLine.trim().split(" ");
@@ -1315,12 +1321,14 @@ public class DistanceTransform {
 						print("width : " + width);
 						print("height : " + height);
 						binaryImage = new double[height][width];
-					} else {
-						pixelValue = oneLine.split(" ");
-						for (int i = 0; i < pixelValue.length; ++i) {
-							if (Double.parseDouble(pixelValue[i]) < thresholdValue) {
+					}
+					else {
+						pixelValueX = oneLine.split(" ");
+						for (int i = 0; i < pixelValueX.length; ++i) {
+							if (Double.parseDouble(pixelValueX[i]) < thresholdValue) {
 								binaryImage[lineCount - 1][i] = 0;
-							} else {
+							}
+							else {
 								binaryImage[lineCount - 1][i] = 1;
 							}
 						}
@@ -1358,7 +1366,8 @@ public class DistanceTransform {
 				bWriter.newLine();
 				bWriter.flush();
 			}
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -1386,7 +1395,8 @@ public class DistanceTransform {
 				bWriter.newLine();
 				bWriter.flush();
 			}
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

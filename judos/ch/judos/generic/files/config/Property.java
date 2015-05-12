@@ -16,11 +16,11 @@ public class Property {
 	/**
 	 * how to initialize the value if no value is yet stored
 	 */
-	protected String		defaultValue;
+	protected String			defaultValue;
 	/**
 	 * if set to true no changes are allowed afterwards
 	 */
-	protected boolean		readOnly;
+	protected boolean			readOnly;
 	/**
 	 * how this property should be called
 	 */
@@ -28,16 +28,16 @@ public class Property {
 	/**
 	 * the current value of the property
 	 */
-	protected String		value;
+	protected String			value;
 	private boolean			changeDisabled;
 
 	/**
 	 * @param name
-	 *            how this property should be called
+	 *           how this property should be called
 	 * @param readOnly
-	 *            if set to true no changes are allowed afterwards
+	 *           if set to true no changes are allowed afterwards
 	 * @param defaultValue
-	 *            how to initialize the value if no value is yet stored
+	 *           how to initialize the value if no value is yet stored
 	 */
 	public Property(String name, boolean readOnly, boolean defaultValue) {
 		this(name, readOnly, String.valueOf(defaultValue));
@@ -45,11 +45,11 @@ public class Property {
 
 	/**
 	 * @param name
-	 *            how this property should be called
+	 *           how this property should be called
 	 * @param readOnly
-	 *            if set to true no changes are allowed afterwards
+	 *           if set to true no changes are allowed afterwards
 	 * @param defaultValue
-	 *            how to initialize the value if no value is yet stored
+	 *           how to initialize the value if no value is yet stored
 	 */
 	public Property(String name, boolean readOnly, int defaultValue) {
 		this(name, readOnly, String.valueOf(defaultValue));
@@ -57,12 +57,13 @@ public class Property {
 
 	/**
 	 * @param name
-	 *            how this property should be called
+	 *           how this property should be called
 	 * @param readOnly
-	 *            if set to true no changes are allowed afterwards
+	 *           if set to true no changes are allowed afterwards
 	 * @param defaultValue
-	 *            how to initialize the value if no value is yet stored
+	 *           how to initialize the value if no value is yet stored
 	 */
+	@SuppressWarnings("all")
 	public Property(String name, boolean readOnly, String defaultValue) {
 		this.name = name;
 		this.readOnly = readOnly;
@@ -112,7 +113,7 @@ public class Property {
 	/**
 	 * @return the value as integer
 	 * @throws NumberFormatException
-	 *             - if the string cannot be parsed as an integer.
+	 *            - if the string cannot be parsed as an integer.
 	 */
 	public int getInt() {
 		validate();
@@ -160,7 +161,7 @@ public class Property {
 	 * 
 	 * @param newValue
 	 * @throws RuntimeException
-	 *             - if the property is readonly
+	 *            - if the property is readonly
 	 */
 	public void setValue(boolean newValue) {
 		setValue(String.valueOf(newValue));
@@ -175,7 +176,7 @@ public class Property {
 	 * 
 	 * @param newValue
 	 * @throws RuntimeException
-	 *             - if the property is readonly
+	 *            - if the property is readonly
 	 */
 	public void setValue(int newValue) {
 		setValue(String.valueOf(newValue));
@@ -193,7 +194,7 @@ public class Property {
 	 * 
 	 * @param newValue
 	 * @throws RuntimeException
-	 *             - if the property is readonly
+	 *            - if the property is readonly
 	 */
 	public void setValue(String newValue) {
 		validate();

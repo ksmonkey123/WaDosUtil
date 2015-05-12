@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 /**
  * @since 14.09.2011
  * @author Julian Schelker
@@ -37,18 +39,14 @@ public class StringUtils {
 	 * @param field
 	 * @return escaped string
 	 */
+	@SuppressWarnings("all")
 	public static String encodeOneLine(String field) {
-		field = field.replaceAll("\\" + escape, "\\" + escape + "u"); // needs
-																		// to be
-																		// escaped
-																		// for
-																		// regex
+		field = field.replaceAll("\\" + escape, "\\" + escape + "u");
+		// needs to be escaped for regex
 		field = field.replaceAll(returnChar, "\\" + escape + "r");// needs to be
-																	// escaped
-																	// for regex
+		// escaped for regex
 		field = field.replaceAll(linebreak, "\\" + escape + "n");// needs to be
-																	// escaped
-																	// for regex
+		// escaped for regex
 		return field;
 	}
 
@@ -58,6 +56,7 @@ public class StringUtils {
 	 * @param field
 	 * @return unescaped string
 	 */
+	@SuppressWarnings("all")
 	public static String decodeOneLine(String field) {
 		field = field.replaceAll("\\" + escape + "n", linebreak);
 		field = field.replaceAll("\\" + escape + "r", returnChar);
@@ -99,14 +98,15 @@ public class StringUtils {
 	/**
 	 * Link: http://rosettacode.org/wiki/Levenshtein_distance#Java
 	 * 
-	 * @param a
-	 * @param b
-	 * @return the levenshtein distance between two strings measured in number
-	 *         of characters removed/edited
+	 * @param string1
+	 * @param string2
+	 * 
+	 * @return the levenshtein distance between two strings measured in number of
+	 *         characters removed/edited
 	 */
-	public static int getLevenshteinDistance(String a, String b) {
-		a = a.toLowerCase();
-		b = b.toLowerCase();
+	public static int getLevenshteinDistance(String string1, String string2) {
+		String a = string1.toLowerCase();
+		String b = string2.toLowerCase();
 		// i == 0
 		int[] costs = new int[b.length() + 1];
 		for (int j = 0; j < costs.length; j++)
@@ -131,8 +131,8 @@ public class StringUtils {
 	 * 
 	 * @param s
 	 * @param t
-	 * @return the levenshtein distance between two strings measured in number
-	 *         of characters removed/edited
+	 * @return the levenshtein distance between two strings measured in number of
+	 *         characters removed/edited
 	 */
 	public static int distanceRec(String s, String t) {
 		/*
@@ -152,8 +152,8 @@ public class StringUtils {
 			return distanceRec(s.substring(1), t.substring(1));
 
 		/*
-		 * else try: changing first letter of s to that of t, remove first
-		 * letter of s, or remove first letter of t
+		 * else try: changing first letter of s to that of t, remove first letter
+		 * of s, or remove first letter of t
 		 */
 		int a = distanceRec(s.substring(1), t.substring(1));
 		int b = distanceRec(s, t.substring(1));
@@ -207,18 +207,18 @@ public class StringUtils {
 	 * 
 	 * @param text
 	 * @param charCount
-	 *            the maximum of characters in the string
+	 *           the maximum of characters in the string
 	 * @return the shortened text
 	 */
 	public static String shorten(String text, int charCount) {
 		if (text.length() > charCount) {
 			if (charCount > 12)
 				return text.substring(0, charCount - 3) + "...";
-			//else
-				return text.substring(0, charCount - 1) + ".";
+			// else
+			return text.substring(0, charCount - 1) + ".";
 		}
-		//else
-			return text;
+		// else
+		return text;
 	}
 
 	/**
@@ -269,16 +269,18 @@ public class StringUtils {
 
 		@Override
 		public void remove() {
+			throw new NotImplementedException();
 		}
 	}
 
 	/**
 	 * @param text
 	 * @param findReplaces
-	 *            an arbitrary number of arrays with 2 elements [0]=find
-	 *            [1]=replace
+	 *           an arbitrary number of arrays with 2 elements [0]=find
+	 *           [1]=replace
 	 * @return
 	 */
+	@SuppressWarnings("all")
 	public static String replaceAll(String text, String[]... findReplaces) {
 		for (String[] findReplace : findReplaces) {
 			String find = Pattern.quote(findReplace[0]);
@@ -296,6 +298,7 @@ public class StringUtils {
 	 * @param replace
 	 * @return the new text
 	 */
+	@SuppressWarnings("all")
 	public static String replaceAll(String text, String[] find, String replace) {
 		for (String findX : find) {
 			findX = Pattern.quote(findX);
@@ -306,18 +309,19 @@ public class StringUtils {
 
 	/**
 	 * @param s
-	 *            the text
+	 *           the text
 	 * @param start
-	 *            position in string, might be negative. A negative start
-	 *            position means to start at the end.<br>
-	 *            substr(s,-1) will return the last letter
+	 *           position in string, might be negative. A negative start position
+	 *           means to start at the end.<br>
+	 *           substr(s,-1) will return the last letter
 	 * @param length
-	 *            of output string. Might also be negative to get back all
-	 *            characters except n.<br>
-	 *            substr(s,0,-5) will return everything except the last 5
-	 *            characters.
+	 *           of output string. Might also be negative to get back all
+	 *           characters except n.<br>
+	 *           substr(s,0,-5) will return everything except the last 5
+	 *           characters.
 	 * @return the cut out string
 	 */
+	@SuppressWarnings("all")
 	public static String substr(String s, int start, int length) {
 		if (start < 0)
 			start += s.length();
@@ -331,11 +335,11 @@ public class StringUtils {
 
 	/**
 	 * @param s
-	 *            the text
+	 *           the text
 	 * @param start
-	 *            position in string, might be negative. A negative start
-	 *            position means to start at the end.<br>
-	 *            substr(s,-1) will return the last letter
+	 *           position in string, might be negative. A negative start position
+	 *           means to start at the end.<br>
+	 *           substr(s,-1) will return the last letter
 	 * @return the cut out string
 	 */
 	public static String substr(String s, int start) {
@@ -347,7 +351,7 @@ public class StringUtils {
 	 * to match the given length
 	 * 
 	 * @param obj
-	 *            provides the String via the toString method
+	 *           provides the String via the toString method
 	 * @param length
 	 * @return the repeated String
 	 */
@@ -381,16 +385,17 @@ public class StringUtils {
 
 	/**
 	 * @param obj
-	 *            the Object witch provides the String via toString method
+	 *           the Object witch provides the String via toString method
 	 * @param length
 	 * @param ex
-	 *            the extension String to insert on the left<br>
-	 *            the first n chars are used, where n is
-	 *            length-obj.toString().length<br>
-	 *            if n is bigger than ex.length, the inserted chars are again
-	 *            used from the beginning of ex
+	 *           the extension String to insert on the left<br>
+	 *           the first n chars are used, where n is
+	 *           length-obj.toString().length<br>
+	 *           if n is bigger than ex.length, the inserted chars are again used
+	 *           from the beginning of ex
 	 * @return the extended string
 	 */
+	@SuppressWarnings("all")
 	public static String extendLeftWith(Object obj, int length, String ex) {
 		StringBuffer b = new StringBuffer(obj.toString());
 		ex = reverse(ex);
@@ -404,14 +409,14 @@ public class StringUtils {
 
 	/**
 	 * @param obj
-	 *            the Object witch provides the String via toString method
+	 *           the Object witch provides the String via toString method
 	 * @param length
 	 * @param ex
-	 *            the extension String to insert on the right<br>
-	 *            the first n chars are used, where n is
-	 *            length-obj.toString().length<br>
-	 *            if n is bigger than ex.length, the inserted chars are again
-	 *            used from the beginning of ex
+	 *           the extension String to insert on the right<br>
+	 *           the first n chars are used, where n is
+	 *           length-obj.toString().length<br>
+	 *           if n is bigger than ex.length, the inserted chars are again used
+	 *           from the beginning of ex
 	 * @return the extended string
 	 */
 	public static String extendRightWith(Object obj, int length, String ex) {
@@ -426,23 +431,24 @@ public class StringUtils {
 
 	/**
 	 * @param f
-	 *            a text file
+	 *           a text file
 	 * @return the plain text content of the file
 	 * @throws IOException
-	 *             if the file is not found or an exception occured during
-	 *             reading the content
+	 *            if the file is not found or an exception occured during reading
+	 *            the content
 	 */
 	public static StringBuffer file2String(File f) throws IOException {
-		BufferedReader read = new BufferedReader(new FileReader(f));
-		StringBuffer result = new StringBuffer();
-		String line;
-		while ((line = read.readLine()) != null) {
-			result.append(line);
-			result.append(newline);
+		try (BufferedReader read = new BufferedReader(new FileReader(f))) {
+			StringBuffer result = new StringBuffer();
+			String line;
+			while ((line = read.readLine()) != null) {
+				result.append(line);
+				result.append(newline);
+			}
+			read.close();
+			result.setLength(result.length() - newline.length());
+			return result;
 		}
-		read.close();
-		result.setLength(result.length() - newline.length());
-		return result;
 	}
 
 	/**
@@ -453,9 +459,10 @@ public class StringUtils {
 	 * @throws IOException
 	 */
 	public static void string2File(String content, File file) throws IOException {
-		BufferedWriter write = new BufferedWriter(new FileWriter(file));
-		write.write(content);
-		write.close();
+		try (BufferedWriter write = new BufferedWriter(new FileWriter(file))) {
+			write.write(content);
+			write.close();
+		}
 	}
 
 	public static String join(String[] arr, String glue) {

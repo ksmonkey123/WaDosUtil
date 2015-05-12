@@ -35,7 +35,7 @@ public class TripleW<T0, T1, T2> {
 
 	/**
 	 * @param index
-	 *            0 based index
+	 *           0 based index
 	 * @return the n'th element
 	 */
 	public Object get(int index) {
@@ -79,14 +79,13 @@ public class TripleW<T0, T1, T2> {
 	public void set(Object e) {
 		try {
 			this.e0 = (T0) e;
-		} catch (Exception exc) {
+		}
+		catch (Exception exc) {
 			try {
 				this.e1 = (T1) e;
-			} catch (Exception exc2) {
-				try {
-					this.e2 = (T2) e;
-				} catch (Exception exc3) {
-				}
+			}
+			catch (Exception exc2) {
+				this.e2 = (T2) e;
 			}
 		}
 	}

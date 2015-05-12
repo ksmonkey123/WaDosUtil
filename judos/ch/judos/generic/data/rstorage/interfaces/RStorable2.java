@@ -8,5 +8,5 @@ package ch.judos.generic.data.rstorage.interfaces;
  * @author Julian Schelker
  */
 public interface RStorable2 {
-
+	// do not need to implement any methods
 }

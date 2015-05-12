@@ -3,6 +3,9 @@ package ch.judos.generic.data;
 import java.lang.reflect.Array;
 import java.util.*;
 
+import org.eclipse.jdt.annotation.Nullable;
+
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import ch.judos.generic.reflection.Classes;
 
 /**
@@ -12,9 +15,9 @@ import ch.judos.generic.reflection.Classes;
  * @author Julian Schelker
  * @version 1.11 / 21.02.2013
  * @param <T>
- *            any object to be in the list
+ *           any object to be in the list
  */
-public class DynamicList<T> extends ArrayList<T> {
+public class DynamicList<@Nullable T> extends ArrayList<T> {
 
 	/**
 	 * create an empty list
@@ -56,7 +59,7 @@ public class DynamicList<T> extends ArrayList<T> {
 	 * list is modified and returned to add further objects
 	 * 
 	 * @param obj
-	 *            add some object
+	 *           add some object
 	 * @return the list itself
 	 */
 	public DynamicList<T> a(T obj) {
@@ -79,16 +82,18 @@ public class DynamicList<T> extends ArrayList<T> {
 	/**
 	 * @param <Type>
 	 * @param t
-	 * @return a list with all objects from this list that could be casted to
-	 *         the given type
+	 * @return a list with all objects from this list that could be casted to the
+	 *         given type
 	 */
 	@SuppressWarnings("unchecked")
-	public <Type> DynamicList<Type> castOrOmit(Type[] t) {
-		DynamicList<Type> result = new DynamicList<>();
+	public <@Nullable Type> DynamicList<Type> castOrOmit(Type[] t) {
+		DynamicList<@Nullable Type> result = new DynamicList<>();
 		for (T entry : this) {
 			try {
 				result.add((Type) entry);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
+				// omit item
 			}
 		}
 		return result;
@@ -101,7 +106,11 @@ public class DynamicList<T> extends ArrayList<T> {
 	public String concatToString(String glue) {
 		StringBuffer b = new StringBuffer();
 		for (int i = 0; i < size(); i++) {
-			b.append(get(i).toString());
+			T e = get(i);
+			if (e != null)
+				b.append(e.toString());
+			else
+				b.append("null");
 			if (i < size() - 1)
 				b.append(glue);
 		}
@@ -118,8 +127,9 @@ public class DynamicList<T> extends ArrayList<T> {
 	public DynamicList<T> filterByClass(Class<?> c) {
 		DynamicList<T> result = new DynamicList<>();
 		for (T entry : this) {
-			if (entry.getClass().equals(c))
-				result.add(entry);
+			if (entry != null)
+				if (entry.getClass().equals(c))
+					result.add(entry);
 		}
 		return result;
 	}
@@ -140,9 +150,10 @@ public class DynamicList<T> extends ArrayList<T> {
 	 * @param list
 	 * @return the list as iterable object
 	 */
-	public static <Type> Iterable<Type> getIterableObject(final List<Type> list) {
+	@SuppressWarnings("unused")
+	public static <@Nullable Type> Iterable<Type> getIterableObject(final List<Type> list) {
 		if (list == null)
-			return new EmptyIterable<>();
+			return new EmptyIterable<Type>();
 		return new Iterable<Type>() {
 
 			@Override
@@ -173,12 +184,15 @@ public class DynamicList<T> extends ArrayList<T> {
 	 * @param <Type>
 	 * @param list
 	 * @param search
-	 *            the string to look for in the toString() of the objects
+	 *           the string to look for in the toString() of the objects
 	 * @return the object that is found - null if none is found
 	 */
-	public static <Type> Type searchExact(List<Type> list, String search) {
+	public static <@Nullable Type> Type searchExact(List<Type> list, String search) {
 		for (Type o : list) {
-			if (o.toString().equals(search))
+			String s = "null";
+			if (o != null)
+				s = o.toString();
+			if (s.equals(search))
 				return o;
 		}
 		return null;
@@ -187,14 +201,10 @@ public class DynamicList<T> extends ArrayList<T> {
 	/**
 	 * @param <X>
 	 * @param elements
-	 * @return the smallest element of the list, according to their natural
-	 *         order
+	 * @return the smallest element of the list, according to their natural order
 	 */
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	public static <X> X smallest(List elements) {
-		elements = new ArrayList(elements);
-		Collections.sort(elements);
-		return (X) elements.get(0);
+	public static <X extends Comparable<X>> Optional<X> smallest(List<X> elements) {
+		return elements.stream().min(Comparator.naturalOrder());
 	}
 
 	/**
@@ -220,13 +230,14 @@ public class DynamicList<T> extends ArrayList<T> {
 			for (Object o : list)
 				buf.append(o.toString() + ",");
 			buf.setLength(buf.length() - 1);
-		} else {
+		}
+		else {
 			buf.append("<<leer>>");
 		}
 		return buf.toString();
 	}
 
-	static class EmptyIterable<T> implements Iterable<T> {
+	static class EmptyIterable<@Nullable T> implements Iterable<T> {
 
 		@Override
 		public Iterator<T> iterator() {
@@ -244,6 +255,7 @@ public class DynamicList<T> extends ArrayList<T> {
 
 				@Override
 				public void remove() {
+					throw new NotImplementedException();
 				}
 
 			};
@@ -318,11 +330,11 @@ public class DynamicList<T> extends ArrayList<T> {
 		return null;
 	}
 
-	public static <T2, T1 extends T2> DynamicList<T2> castDown(List<T1> l,
-		Class<T2> class1) {
+	@SuppressWarnings("null")
+	public static <T2, T1 extends T2> DynamicList<T2> castDown(List<T1> l) {
 		DynamicList<T2> result = new DynamicList<>(l.size());
 		for (int i = 0; i < l.size(); i++) {
-			result.add((T2) l.get(i));
+			result.add(l.get(i));
 		}
 		return result;
 	}
@@ -335,17 +347,16 @@ public class DynamicList<T> extends ArrayList<T> {
 	 * @return
 	 * @throws ClassCastException
 	 */
-	@SuppressWarnings("unchecked")
-	public static <T1, T2 extends T1> DynamicList<T2>
-		castUp(List<T1> l, Class<T2> class1) throws ClassCastException {
+	@SuppressWarnings({"unchecked", "null"})
+	public static <T1, T2 extends T1> DynamicList<T2> castUp(List<T1> l, Class<T2> class1)
+		throws ClassCastException {
 		DynamicList<T2> result = new DynamicList<>(l.size());
 		for (int i = 0; i < l.size(); i++) {
 			T1 e = l.get(i);
 			if (class1.isInstance(e))
 				result.add((T2) e);
 			else
-				throw new ClassCastException("Can't cast object " + e + " to class "
-					+ class1);
+				throw new ClassCastException("Can't cast object " + e + " to class " + class1);
 		}
 		return result;
 	}

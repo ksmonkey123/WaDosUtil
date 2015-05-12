@@ -17,14 +17,12 @@ public class JDialogWithTaskbarEntry extends JDialog {
 
 	/**
 	 * @param args
+	 * @throws InterruptedException
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		JDialogWithTaskbarEntry x = new JDialogWithTaskbarEntry("Test");
 		x.setVisible(true);
-		try {
-			Thread.sleep(2500);
-		} catch (InterruptedException e) {
-		}
+		Thread.sleep(2500);
 		x.setVisible(false);
 	}
 

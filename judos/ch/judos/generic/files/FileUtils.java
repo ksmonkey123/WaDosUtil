@@ -33,8 +33,8 @@ public class FileUtils extends File {
 
 	// TODO: remove in 1.4
 	/**
-	 * @deprecated use the equivalent checkOrCreateDir(File) checks if the
-	 *             folder name exists, if not it is created
+	 * @deprecated use the equivalent checkOrCreateDir(File) checks if the folder
+	 *             name exists, if not it is created
 	 * 
 	 * @param name
 	 */
@@ -66,7 +66,7 @@ public class FileUtils extends File {
 	 * @return the md5 hash code for this file
 	 * @throws NoSuchAlgorithmException
 	 * @throws IOException
-	 *             if the file could not be read
+	 *            if the file could not be read
 	 */
 	public static String getMd5HexForStream(InputStream is) throws NoSuchAlgorithmException,
 		IOException {
@@ -139,32 +139,21 @@ public class FileUtils extends File {
 	 * @return true if operation succeeded - false if exception occured
 	 */
 	public static boolean copyFile(File f1, File f2) {
-		InputStream in = null;
-		OutputStream out = null;
-		try {
-			in = new FileInputStream(f1);
-			out = new FileOutputStream(f2);
-
+		try (InputStream in = new FileInputStream(f1);
+			OutputStream out = new FileOutputStream(f2)) {
 			byte[] buf = new byte[1024];
 			int len;
 			while ((len = in.read(buf)) > 0) {
 				out.write(buf, 0, len);
 			}
 			return true;
+
 		}
 		catch (FileNotFoundException ex) {
 			return false;
 		}
 		catch (IOException e) {
 			return false;
-		}
-		finally {
-			try {
-				in.close();
-				out.close();
-			}
-			catch (Exception e) {
-			}
 		}
 	}
 
@@ -278,9 +267,9 @@ public class FileUtils extends File {
 	 * @param f
 	 * @return BufferedReader to read the file
 	 * @throws FileNotFoundException
-	 *             - if the file does not exist, is a directory rather than a
-	 *             regular file, or for some other reason cannot be opened for
-	 *             reading.
+	 *            - if the file does not exist, is a directory rather than a
+	 *            regular file, or for some other reason cannot be opened for
+	 *            reading.
 	 */
 	@Deprecated
 	public static BufferedReader readFile(File f) throws FileNotFoundException {
@@ -293,9 +282,9 @@ public class FileUtils extends File {
 	 * @param name
 	 * @return BufferedReader to read the file
 	 * @throws FileNotFoundException
-	 *             - if the file does not exist, is a directory rather than a
-	 *             regular file, or for some other reason cannot be opened for
-	 *             reading.
+	 *            - if the file does not exist, is a directory rather than a
+	 *            regular file, or for some other reason cannot be opened for
+	 *            reading.
 	 */
 	@Deprecated
 	public static BufferedReader readFile(String name) throws FileNotFoundException {
@@ -304,9 +293,9 @@ public class FileUtils extends File {
 
 	/**
 	 * @param parent
-	 *            component of the popup
+	 *           component of the popup
 	 * @param title
-	 *            displayed to the user
+	 *           displayed to the user
 	 * @return the directory selected or null if operation is canceled
 	 */
 	public static File requestDir(Component parent, String title) {
@@ -315,11 +304,11 @@ public class FileUtils extends File {
 
 	/**
 	 * @param parent
-	 *            component of the popup
+	 *           component of the popup
 	 * @param title
-	 *            displayed to the user
+	 *           displayed to the user
 	 * @param startAt
-	 *            initial directory to come up with
+	 *           initial directory to come up with
 	 * @return the directory selected or null if operation is canceled
 	 */
 	public static File requestDir(Component parent, String title, File startAt) {
@@ -342,7 +331,7 @@ public class FileUtils extends File {
 
 	/**
 	 * @param title
-	 *            displayed to the user
+	 *           displayed to the user
 	 * @return the directory selected or null if operation is canceled
 	 */
 	public static File requestDir(String title) {
@@ -351,9 +340,9 @@ public class FileUtils extends File {
 
 	/**
 	 * @param title
-	 *            displayed to the user
+	 *           displayed to the user
 	 * @param startAt
-	 *            initial directory to come up with
+	 *           initial directory to come up with
 	 * @return the directory selected or null if operation is canceled
 	 */
 	public static File requestDir(String title, File startAt) {
@@ -373,11 +362,11 @@ public class FileUtils extends File {
 
 	/**
 	 * @param startPath
-	 *            initial directory to come up with
+	 *           initial directory to come up with
 	 * @param description
-	 *            displayed to the user
+	 *           displayed to the user
 	 * @param extensions
-	 *            which are allowed
+	 *           which are allowed
 	 * @return the selected file or null is the operation is canceled
 	 */
 	public static File requestFile(File startPath, String description, String[] extensions) {
@@ -398,9 +387,9 @@ public class FileUtils extends File {
 
 	/**
 	 * @param description
-	 *            some text to display to the user
+	 *           some text to display to the user
 	 * @param extensions
-	 *            array of the extensions allowed
+	 *           array of the extensions allowed
 	 * @return the file the user entered - null if cancel was pressed
 	 */
 	public static File requestFile(String description, String extensions[]) {
@@ -411,19 +400,19 @@ public class FileUtils extends File {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			return chooser.getSelectedFile();
 		}
-		//else
-			return null;
+		// else
+		return null;
 	}
 
 	// TODO: remove in build 1.4
 	/**
 	 * @deprecated use the requestFile(File,String,String[]) equivalent version
 	 * @param startPath
-	 *            initial directory to come up with
+	 *           initial directory to come up with
 	 * @param description
-	 *            displayed to the user
+	 *           displayed to the user
 	 * @param extensions
-	 *            which are allowed
+	 *           which are allowed
 	 * @return the selected file or null is the operation is canceled
 	 */
 	@Deprecated
@@ -433,11 +422,11 @@ public class FileUtils extends File {
 
 	/**
 	 * @param startPath
-	 *            initial directory to come up with
+	 *           initial directory to come up with
 	 * @param description
-	 *            displayed to the user
+	 *           displayed to the user
 	 * @param extensions
-	 *            which are allowed
+	 *           which are allowed
 	 * @return the selected file or null is the operation is canceled
 	 */
 	public static File saveFile(File startPath, String description, String extensions[]) {
@@ -453,8 +442,8 @@ public class FileUtils extends File {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			return chooser.getSelectedFile();
 		}
-		//else
-			return null;
+		// else
+		return null;
 	}
 
 	// TODO: remove in 1.4
@@ -463,9 +452,9 @@ public class FileUtils extends File {
 	 * @param f
 	 * @return BufferedWriter to write into the file
 	 * @throws IOException
-	 *             - if the file exists but is a directory rather than a regular
-	 *             file, does not exist but cannot be created, or cannot be
-	 *             opened for any other reason
+	 *            - if the file exists but is a directory rather than a regular
+	 *            file, does not exist but cannot be created, or cannot be opened
+	 *            for any other reason
 	 */
 	@Deprecated
 	public static BufferedWriter writeFile(File f) throws IOException {
@@ -478,9 +467,9 @@ public class FileUtils extends File {
 	 * @param name
 	 * @return BufferedWriter to write into the file
 	 * @throws IOException
-	 *             - if the file exists but is a directory rather than a regular
-	 *             file, does not exist but cannot be created, or cannot be
-	 *             opened for any other reason
+	 *            - if the file exists but is a directory rather than a regular
+	 *            file, does not exist but cannot be created, or cannot be opened
+	 *            for any other reason
 	 */
 	@Deprecated
 	public static BufferedWriter writeFile(String name) throws IOException {
@@ -493,8 +482,7 @@ public class FileUtils extends File {
 	 * @return true if writing succeeded
 	 */
 	public static boolean writeToFile(File file, String content) {
-		try {
-			BufferedWriter writer = getWriterForFile(file);
+		try (BufferedWriter writer = getWriterForFile(file)) {
 			writer.write(content);
 			writer.close();
 		}

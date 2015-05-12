@@ -37,14 +37,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import javax.swing.*;
 
 /*
  * FileChooserDemo2.java requires these files:
@@ -57,11 +50,12 @@ import javax.swing.UIManager;
  *   images/tiffIcon.gif (required by ImageFileView.java)
  *   images/pngIcon.png (required by ImageFileView.java)
  */
+@SuppressWarnings("all")
 public class Demo extends JPanel implements ActionListener {
 	private static final long	serialVersionUID	= -2763901179684304188L;
 	static private String		newline				= "\n";
-	private JTextArea			log;
-	private JFileChooser		fc;
+	private JTextArea				log;
+	private JFileChooser			fc;
 
 	public Demo() {
 		super(new BorderLayout());
@@ -105,7 +99,8 @@ public class Demo extends JPanel implements ActionListener {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = this.fc.getSelectedFile();
 			this.log.append("Attaching file: " + file.getName() + "." + newline);
-		} else {
+		}
+		else {
 			this.log.append("Attachment cancelled by user." + newline);
 		}
 		this.log.setCaretPosition(this.log.getDocument().getLength());
