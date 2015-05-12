@@ -5,4 +5,5 @@ package ch.judos.generic.network.udp.interfaces;
  * @author Julian Schelker
  */
 public interface Layer2Listener extends Layer1Listener {
+	// defines the same methods but on a improved level
 }

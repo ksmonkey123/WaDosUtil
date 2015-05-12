@@ -13,9 +13,9 @@ public class CheckReachThread extends Thread {
 
 	private ReachabilityListener	listener;
 	private boolean					received;
-	private ReachabilityRequest		rr;
+	private ReachabilityRequest	rr;
 	private InetSocketAddress		target;
-	private Udp4					u;
+	private Udp4						u;
 
 	public CheckReachThread(Udp4 u, ReachabilityRequest rr, ReachabilityListener listener) {
 		this.u = u;
@@ -39,12 +39,15 @@ public class CheckReachThread extends Thread {
 		synchronized (this) {
 			try {
 				wait(this.listener.getTimeoutMS());
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e) {
+				// nothing, received stays on false
 			}
 		}
 		if (this.received) {
 			this.listener.connectionActive(this.target, this.rr.getPingMS());
-		} else {
+		}
+		else {
 			this.listener.connectionTimedOut(this.target);
 			this.u.reachabilityReqTimedOut(this.rr);
 		}

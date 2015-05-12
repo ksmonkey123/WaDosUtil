@@ -23,7 +23,9 @@ public class Cloner {
 		}
 		try {
 			return clonePrimObject(obj);
-		} catch (InvalidParameterException e) {
+		}
+		catch (InvalidParameterException e) {
+			// continue as expected
 		}
 
 		Class<?> c = obj.getClass();
@@ -34,33 +36,41 @@ public class Cloner {
 		try {
 			Method m = c.getMethod("clone");
 			return m.invoke(obj);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
+			// continue
 		}
 		// try to call a constructor with one argument of the type we want to
 		// clone
 		try {
 			Constructor<?> constr = c.getConstructor(c);
 			return constr.newInstance(obj);
-		} catch (Exception e1) {
+		}
+		catch (Exception e1) {
+			// continue
 		}
 		// try to call any other constructor
 		Constructor<?>[] constrArr = c.getConstructors();
 		for (Constructor<?> constr : constrArr) {
 			try {
 				return constr.newInstance(obj);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
+				// continue
 			}
 		}
 		throw new CloneNotSupportedException("Could not clone element: " + obj);
 	}
 
-	private static <T> Object cloneArrayObjects(Object obj, Class<?> c)
+	private static Object cloneArrayObjects(Object obj, Class<?> c)
 		throws CloneNotSupportedException {
 		if (!c.isPrimitive()) {
 			try {
 				Object[] z = (Object[]) obj;
 				return z.clone();
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
+				// continue
 			}
 		}
 		try {
@@ -81,7 +91,8 @@ public class Cloner {
 				return Arrays.copyOf(t, t.length);
 			}
 			throw new Exception("primitive type not supported yet");
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new CloneNotSupportedException("Could not clone array");
 		}
 	}
@@ -95,7 +106,6 @@ public class Cloner {
 			return new Long((Long) obj);
 		if (obj instanceof Float)
 			return new Float((Float) obj);
-		throw new InvalidParameterException(
-			"Not an boxing class for an primitive object.");
+		throw new InvalidParameterException("Not an boxing class for an primitive object.");
 	}
 }

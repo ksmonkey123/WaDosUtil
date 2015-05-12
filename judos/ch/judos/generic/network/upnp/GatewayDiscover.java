@@ -31,6 +31,8 @@ import java.net.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 //import javax.xml.parsers.ParserConfigurationException;
 
 //import org.xml.sax.SAXException;
@@ -38,19 +40,20 @@ import java.util.Map;
 /**
  * Handles the discovery of GatewayDevices, via the {@link #discover()} method.
  */
+@SuppressWarnings("all")
 public class GatewayDiscover {
 	/**
 	 * The broadcast address to use when trying to contact UPnP devices
 	 */
-	public static final String				IP		= "239.255.255.250";
+	public static final String						IP			= "239.255.255.250";
 	/**
 	 * The SSDP port
 	 */
-	public static final int					PORT	= 1900;
+	public static final int							PORT		= 1900;
 	/**
 	 * The timeout to set for the initial broadcast request
 	 */
-	private static final int				TIMEOUT	= 3000;
+	private static final int						TIMEOUT	= 3000;
 	/**
 	 * A map of the GatewayDevices discovered so far. The assumption is that a
 	 * machine is connected to up to a Gateway Device per InetAddress
@@ -70,8 +73,7 @@ public class GatewayDiscover {
 	 * The host may be connected to different networks via different network
 	 * interfaces. Assumes that each network interface has a different
 	 * InetAddress and returns a map associating every GatewayDevice (responding
-	 * to a broadcast discovery message) with the InetAddress it is connected
-	 * to.
+	 * to a broadcast discovery message) with the InetAddress it is connected to.
 	 * 
 	 * @return a map containing a GatewayDevice per InetAddress
 	 * @throws SocketException
@@ -81,8 +83,9 @@ public class GatewayDiscover {
 	 * @throws ParserConfigurationException
 	 */
 	public Map<InetAddress, GatewayDevice> discover() throws SocketException,
-		UnknownHostException, IOException//, SAXException, ParserConfigurationException {
-		{
+		UnknownHostException, IOException// , SAXException,
+													// ParserConfigurationException {
+	{
 		DatagramSocket ssdp = new DatagramSocket();
 		int port = ssdp.getLocalPort();
 		final String searchMessage = "M-SEARCH * HTTP/1.1\r\n" + "HOST: " + IP + ":" + port
@@ -102,14 +105,13 @@ public class GatewayDiscover {
 				try {
 					ssdp.receive(receivePacket);
 					byte[] receivedData = new byte[receivePacket.getLength()];
-					System.arraycopy(receivePacket.getData(), 0, receivedData, 0,
-						receivePacket.getLength());
+					System.arraycopy(receivePacket.getData(), 0, receivedData, 0, receivePacket
+						.getLength());
 					// devices should be a map, and receivePacket.address
 					// should be the key ;)
 					GatewayDevice d = parseMSearchReplay(receivedData);
 					/* Get local address as it appears to the Gateway */
-					InetAddress localAddress = getOutboundAddress(receivePacket
-						.getSocketAddress());
+					InetAddress localAddress = getOutboundAddress(receivePacket.getSocketAddress());
 					d.setLocalAddress(localAddress);
 					this.devices.put(localAddress, d);
 				}
@@ -136,11 +138,11 @@ public class GatewayDiscover {
 	 * the remote party identified by <tt>remoteAddress</tt>.
 	 * 
 	 * @param remoteAddress
-	 *            the address of the remote party.
+	 *           the address of the remote party.
 	 * @return the address that should be used to contact the local host from
 	 *         <tt>remoteAddress</tt>
 	 * @throws SocketException
-	 *             on network failure
+	 *            on network failure
 	 */
 	private InetAddress getOutboundAddress(SocketAddress remoteAddress) throws SocketException {
 		DatagramSocket sock = new DatagramSocket();
@@ -162,8 +164,8 @@ public class GatewayDiscover {
 	/**
 	 * Gets the valid gateway
 	 * 
-	 * @return the first GatewayDevice which is connected to the network, or
-	 *         null if nost present
+	 * @return the first GatewayDevice which is connected to the network, or null
+	 *         if nost present
 	 */
 	public GatewayDevice getValidGateway() {
 		for (GatewayDevice device : this.devices.values()) {
@@ -182,7 +184,7 @@ public class GatewayDiscover {
 	 * Parses the reply from UPnP devices
 	 * 
 	 * @param reply
-	 *            the raw bytes received as a reply
+	 *           the raw bytes received as a reply
 	 * @return the representation of a GatewayDevice
 	 */
 	private GatewayDevice parseMSearchReplay(byte[] reply) {
@@ -201,8 +203,8 @@ public class GatewayDiscover {
 			}
 			else {
 				String key = line.substring(0, line.indexOf(':'));
-				String value = line.length() > key.length() + 1 ? line
-					.substring(key.length() + 1) : null;
+				String value = line.length() > key.length() + 1 ? line.substring(key.length() + 1)
+					: null;
 				key = key.trim();
 				if (value != null) {
 					value = value.trim();

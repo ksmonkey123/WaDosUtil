@@ -1,12 +1,6 @@
 package ch.judos.generic.data.csv;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,7 +28,7 @@ public class CSVFileReader {
 	 * a static implementation to read a csv-file
 	 * 
 	 * @param input
-	 *            the file to read
+	 *           the file to read
 	 * @return the interface to interact with the csv-file
 	 * @throws IOException
 	 */
@@ -46,7 +40,7 @@ public class CSVFileReader {
 	 * a static implementation to read a csv-file
 	 * 
 	 * @param input
-	 *            the file to read
+	 *           the file to read
 	 * @return the interface to interact with the csv-file
 	 * @throws IOException
 	 */
@@ -58,7 +52,7 @@ public class CSVFileReader {
 	 * a static implementation to read a csv-file
 	 * 
 	 * @param input
-	 *            the file to read
+	 *           the file to read
 	 * @return the interface to interact with the csv-file
 	 * @throws IOException
 	 */
@@ -72,7 +66,7 @@ public class CSVFileReader {
 	 * a static implementation to read a csv-file
 	 * 
 	 * @param pathname
-	 *            the filename of the file to read
+	 *           the filename of the file to read
 	 * @return the interface to interact with the csv-file
 	 * @throws IOException
 	 */
@@ -96,7 +90,7 @@ public class CSVFileReader {
 
 	/**
 	 * @param index
-	 *            must be in the valid range (between 0 and countEntries()-1)
+	 *           must be in the valid range (between 0 and countEntries()-1)
 	 * @return a stored object of the file
 	 * @throws IndexOutOfBoundsException
 	 */
@@ -104,8 +98,8 @@ public class CSVFileReader {
 		return this.entities[index];
 	}
 
-	protected String	separation;
-	private String[]	attributes;
+	protected String		separation;
+	private String[]		attributes;
 	private String[][]	entities;
 
 	/**
@@ -118,23 +112,23 @@ public class CSVFileReader {
 		String line;
 		String attributeLine = reader.readLine();
 		HashMap<String, Integer> candidates = getSeparationCandidates(attributeLine);
-		ArrayList<String> entityList = new ArrayList<>();
+		ArrayList<String> allLines = new ArrayList<>();
 		while ((line = reader.readLine()) != null) {
-			entityList.add(line);
+			allLines.add(line);
 		}
-		removeSeparationCandidates(candidates, entityList);
+		removeSeparationCandidates(candidates, allLines);
 		this.separation = getSeparationCharacter(candidates);
 
 		this.attributes = CSVFile.decodeForValue(attributeLine.split(this.separation, -1));
-		this.entities = new String[entityList.size()][];
+		this.entities = new String[allLines.size()][];
 		int index = 0;
-		for (String entity : entityList) {
+		for (String entity : allLines) {
 			this.entities[index] = CSVFile.decodeForValue(entity.split(this.separation, -1));
 			index++;
 		}
 		if (!muted) {
 			System.out.println("Separation character = " + this.separation);
-			System.out.println("Number of entities = " + entityList.size());
+			System.out.println("Number of entities = " + allLines.size());
 			System.out.println("Number of attributes = " + this.attributes.length);
 		}
 	}
@@ -153,11 +147,11 @@ public class CSVFileReader {
 
 	/**
 	 * @param candidates
-	 * @param entities
+	 * @param lines
 	 */
 	protected void removeSeparationCandidates(HashMap<String, Integer> candidates,
-		ArrayList<String> entities) {
-		for (String entity : entities) {
+		ArrayList<String> lines) {
+		for (String entity : lines) {
 			Iterator<Entry<String, Integer>> it = candidates.entrySet().iterator();
 			while (it.hasNext()) {
 				Entry<String, Integer> en = it.next();

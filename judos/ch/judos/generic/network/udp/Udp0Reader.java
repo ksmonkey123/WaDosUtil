@@ -15,7 +15,7 @@ import ch.judos.generic.network.udp.interfaces.Layer0Listener;
 public class Udp0Reader extends Udp0Sender implements Runnable {
 
 	protected ArrayList<Layer0Listener>	listeners;
-	protected Thread					reader;
+	protected Thread							reader;
 
 	public Udp0Reader(DatagramSocket ds) throws SocketException {
 		super(ds);

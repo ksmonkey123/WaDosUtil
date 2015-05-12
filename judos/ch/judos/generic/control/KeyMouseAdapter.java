@@ -21,6 +21,7 @@ public class KeyMouseAdapter implements MouseListener, KeyListener {
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
+		// unused by default
 	}
 
 	/**
@@ -30,6 +31,7 @@ public class KeyMouseAdapter implements MouseListener, KeyListener {
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
+		// unused by default
 	}
 
 	/**
@@ -39,7 +41,7 @@ public class KeyMouseAdapter implements MouseListener, KeyListener {
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
-
+		// unused by default
 	}
 
 	/**
@@ -49,7 +51,7 @@ public class KeyMouseAdapter implements MouseListener, KeyListener {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
+		// unused by default
 	}
 
 	/**
@@ -59,7 +61,7 @@ public class KeyMouseAdapter implements MouseListener, KeyListener {
 	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
-
+		// unused by default
 	}
 
 	/**
@@ -69,7 +71,7 @@ public class KeyMouseAdapter implements MouseListener, KeyListener {
 	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
-
+		// unused by default
 	}
 
 	/**
@@ -79,6 +81,7 @@ public class KeyMouseAdapter implements MouseListener, KeyListener {
 	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
+		// unused by default
 	}
 
 	/**
@@ -88,6 +91,7 @@ public class KeyMouseAdapter implements MouseListener, KeyListener {
 	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		// unused by default
 	}
 
 }

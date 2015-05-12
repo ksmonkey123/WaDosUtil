@@ -8,5 +8,5 @@ package ch.judos.generic.data.language;
  * @version 1.0 / 01.07.2013
  */
 public class German implements LanguageI {
-
+	// todo implement
 }

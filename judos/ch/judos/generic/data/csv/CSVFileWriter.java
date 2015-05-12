@@ -1,12 +1,6 @@
 package ch.judos.generic.data.csv;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
@@ -25,7 +19,7 @@ import ch.judos.generic.data.StringUtils;
  */
 public class CSVFileWriter {
 
-	private String[]			attributes;
+	private String[]					attributes;
 	private ArrayList<String[]>	entries;
 
 	/**
@@ -57,7 +51,9 @@ public class CSVFileWriter {
 	 * @throws IOException
 	 */
 	public void writeFile(File output) throws IOException {
-		write(new FileWriter(output));
+		try (Writer w = new FileWriter(output)) {
+			write(w);
+		}
 	}
 
 	/**

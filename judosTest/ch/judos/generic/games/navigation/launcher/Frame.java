@@ -20,16 +20,18 @@ public class Frame extends JFrame implements KeyListener {
 	public static final int		FPS					= 60;
 
 	private static final long	serialVersionUID	= -5151041547543472432L;
-	private Timer				timer;
+	private Timer					timer;
+
+	JPanelX							content;
 
 	public Frame(Main m) {
 		super("Walking test");
 		Dimension size = new Dimension(800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		final JPanel content = new JPanelX(m);
-		content.setPreferredSize(size);
-		add(content);
+		this.content = new JPanelX(m);
+		this.content.setPreferredSize(size);
+		add(this.content);
 
 		// setSize(size);
 		// setPreferredSize(size);
@@ -38,24 +40,27 @@ public class Frame extends JFrame implements KeyListener {
 		pack();
 		setResizable(false);
 		setLocationByPlatform(true);
-		setVisible(true);
+
 		// validate();
 		// createBufferStrategy(2);
 		// this.buf = getBufferStrategy();
 
+		addKeyListener(this);
+		addKeyListener(m);
+		this.addMouseListener(m);
+	}
+
+	public void showAndRun() {
+		setVisible(true);
 		TimerTask t = new TimerTask() {
 			@Override
 			public void run() {
-				content.repaint();
+				Frame.this.content.repaint();
 			}
 		};
 		this.timer = new Timer();
 		int delay = 1000 / FPS;
 		this.timer.scheduleAtFixedRate(t, delay, delay);
-
-		addKeyListener(this);
-		addKeyListener(m);
-		this.addMouseListener(m);
 	}
 
 	/*
@@ -65,6 +70,7 @@ public class Frame extends JFrame implements KeyListener {
 	 */
 	@Override
 	public void keyPressed(KeyEvent arg0) {
+		// unused
 	}
 
 	/*
@@ -87,12 +93,13 @@ public class Frame extends JFrame implements KeyListener {
 	 */
 	@Override
 	public void keyTyped(KeyEvent arg0) {
+		// unused
 	}
 
 	private static class JPanelX extends JPanel {
 
 		private static final long	serialVersionUID	= -4579397306400357694L;
-		private Main				m;
+		private Main					m;
 
 		public JPanelX(Main m) {
 			super(true);

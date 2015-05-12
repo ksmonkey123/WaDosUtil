@@ -5,5 +5,5 @@ package ch.judos.generic.boids;
  * @author Julian Schelker
  */
 public class BoidGroup {
-
+	// todo implement
 }

@@ -28,14 +28,14 @@ public class RotatedRect {
 		init();
 	}
 	
-	public void moveAbsolute(double x, double y) {
-		this.x += x;
-		this.y += y;
+	public void moveAbsolute(double xPos, double yPos) {
+		this.x += xPos;
+		this.y += yPos;
 	}
 	
-	public void moveRelative(double x, double y) {
-		this.x += y * Math.cos(this.theta) + x * Math.sin(this.theta + Math.PI);
-		this.y += y * Math.sin(this.theta) - x * Math.cos(this.theta + Math.PI);
+	public void moveRelative(double xPos, double yPos) {
+		this.x += yPos * Math.cos(this.theta) + xPos * Math.sin(this.theta + Math.PI);
+		this.y += yPos * Math.sin(this.theta) - xPos * Math.cos(this.theta + Math.PI);
 	}
 	
 	private void init() {
@@ -51,24 +51,24 @@ public class RotatedRect {
 	}
 	
 	private int[] getXPoints() {
-		int[] x = new int[4];
+		int[] xPos = new int[4];
 		double[] a = getPointsAngles();
 		for (int i = 0; i < 4; i++)
-			x[i] = (int) (this.x + this.r * Math.cos(a[i]));
-		return x;
+			xPos[i] = (int) (this.x + this.r * Math.cos(a[i]));
+		return xPos;
 	}
 	
 	private int[] getYPoints() {
-		int[] y = new int[4];
+		int[] yPos = new int[4];
 		double[] a = getPointsAngles();
 		for (int i = 0; i < 4; i++)
-			y[i] = (int) (this.y + this.r * Math.sin(a[i]));
-		return y;
+			yPos[i] = (int) (this.y + this.r * Math.sin(a[i]));
+		return yPos;
 	}
 	
-	private Point2D getPoint(double theta) {
-		return new Point2D.Double(this.x + this.r * Math.cos(theta), this.y
-			+ this.r * Math.sin(theta));
+	private Point2D getPoint(double angle) {
+		return new Point2D.Double(this.x + this.r * Math.cos(angle), this.y
+			+ this.r * Math.sin(angle));
 	}
 	
 	private Polygon getPoly() {
@@ -78,35 +78,35 @@ public class RotatedRect {
 	/**
 	 * takes between 500ns and 2qs
 	 * 
-	 * @param r
+	 * @param rect
 	 * @return whether this intersects with r
 	 */
-	public boolean intersects(RotatedRect r) {
-		double d = distanceTo(r);
-		if (d >= this.r + r.r)
+	public boolean intersects(RotatedRect rect) {
+		double d = distanceTo(rect);
+		if (d >= this.r + rect.r)
 			return false;
-		if (d <= this.innerR + r.innerR)
+		if (d <= this.innerR + rect.innerR)
 			return true;
-		if (this.containsPointsOf(r))
+		if (this.containsPointsOf(rect))
 			return true;
-		if (r.containsPointsOf(this))
+		if (rect.containsPointsOf(this))
 			return true;
 		return false;
 	}
 	
-	public boolean containsPointsOf(RotatedRect r) {
+	public boolean containsPointsOf(RotatedRect rect) {
 		Polygon p = this.getPoly();
-		double[] angles = r.getPointsAngles();
+		double[] angles = rect.getPointsAngles();
 		for (int i = 0; i < 4; i++) {
-			Point2D vertex = r.getPoint(angles[i]);
+			Point2D vertex = rect.getPoint(angles[i]);
 			if (p.contains(vertex))
 				return true;
 		}
 		return false;
 	}
 	
-	public double distanceTo(RotatedRect r) {
-		return Math.hypot(r.x - this.x, r.y - this.y);
+	public double distanceTo(RotatedRect rect) {
+		return Math.hypot(rect.x - this.x, rect.y - this.y);
 	}
 	
 	public void draw(Graphics2D g) {
