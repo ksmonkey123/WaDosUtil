@@ -151,7 +151,7 @@ public class DynamicList<@Nullable T> extends ArrayList<T> {
 	 * @return the list as iterable object
 	 */
 	@SuppressWarnings("unused")
-	public static <@Nullable Type> Iterable<Type> getIterableObject(final List<Type> list) {
+	public static <Type> Iterable<Type> getIterableObject(final List<Type> list) {
 		if (list == null)
 			return new EmptyIterable<Type>();
 		return new Iterable<Type>() {

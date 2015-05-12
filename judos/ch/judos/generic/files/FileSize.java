@@ -21,7 +21,7 @@ public class FileSize {
 			size1 /= 1024;
 			ei++;
 		}
-		return (double) Math.round(size1 * 100) / 100. + " " + e[ei];
+		return Math.round(size1 * 100) / 100. + " " + e[ei];
 	}
 
 }

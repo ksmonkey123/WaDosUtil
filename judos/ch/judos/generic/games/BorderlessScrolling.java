@@ -1,10 +1,6 @@
 package ch.judos.generic.games;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.*;
 
 import javax.swing.SwingUtilities;
 
@@ -32,9 +28,8 @@ public abstract class BorderlessScrolling {
 	public BorderlessScrolling(Dimension viewPort) {
 		super();
 		this.viewPort = viewPort;
-		this.scrollIn = new Rectangle(-SCROLL_OUTSIDE_PX, -SCROLL_OUTSIDE_PX,
-			viewPort.width + 2 * SCROLL_OUTSIDE_PX, viewPort.height + 2
-				* SCROLL_OUTSIDE_PX);
+		this.scrollIn = new Rectangle(-SCROLL_OUTSIDE_PX, -SCROLL_OUTSIDE_PX, viewPort.width + 2
+			* SCROLL_OUTSIDE_PX, viewPort.height + 2 * SCROLL_OUTSIDE_PX);
 	}
 
 	/**
@@ -48,8 +43,8 @@ public abstract class BorderlessScrolling {
 
 	/**
 	 * @param c
-	 *            the component relative to which the mouse coordinates are
-	 *            retrieved
+	 *           the component relative to which the mouse coordinates are
+	 *           retrieved
 	 */
 	public void setRelativeTo(Component c) {
 		this.comp = c;
@@ -78,7 +73,7 @@ public abstract class BorderlessScrolling {
 		float diff = border - value;
 		int direction = (int) Math.signum(diff);
 		float change = MathJS.min(Math.abs(diff), getScrollSpeedPerFrame());
-		return value += direction * change;
+		return value + direction * change;
 	}
 
 	protected void scrollLeft() {

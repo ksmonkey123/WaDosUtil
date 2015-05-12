@@ -24,6 +24,7 @@ public abstract class SerializationTest extends TestCase {
 		testOneObject(obj);
 	}
 
+	@SuppressWarnings("resource")
 	public void testOneObject(Object obj) throws RSerializerException, IOException {
 		ReadableStorage2 r = ReadableStorage2.getNewStorage();
 

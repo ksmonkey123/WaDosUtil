@@ -34,7 +34,7 @@ public class Tag {
 
 	@Override
 	public String toString() {
-		String classId = this.classId.orElse("");
+		String currentClassId = this.classId.orElse("");
 		String ref1 = "", ref2 = "";
 
 		if (this.hasSetReference)
@@ -42,7 +42,7 @@ public class Tag {
 		if (this.hasGetReference)
 			ref2 = "$" + this.referenceNumber;
 
-		String tag = (ref2 + " " + ref1 + " " + classId).trim();
+		String tag = (ref2 + " " + ref1 + " " + currentClassId).trim();
 		if (tag.equals(""))
 			return "";
 		return "(" + tag + ")";

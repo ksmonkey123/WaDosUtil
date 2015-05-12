@@ -71,10 +71,10 @@ public class Udp2Tests extends TestCase {
 
 	@Override
 	protected void setUp() throws Exception {
-		try (DatagramSocket s = new DatagramSocket()) {
-			this.u = new Udp2(new Udp1(new Udp0Reader(s)));
-			this.PORT = this.u.getLocalPort();
-		}
+		@SuppressWarnings("resource")
+		DatagramSocket s = new DatagramSocket();
+		this.u = new Udp2(new Udp1(new Udp0Reader(s)));
+		this.PORT = this.u.getLocalPort();
 	}
 
 	@Override

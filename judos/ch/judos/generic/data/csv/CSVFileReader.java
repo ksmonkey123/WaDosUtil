@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import ch.judos.generic.data.Map;
 import ch.judos.generic.data.StringUtils;
 
 /**
@@ -32,6 +33,7 @@ public class CSVFileReader {
 	 * @return the interface to interact with the csv-file
 	 * @throws IOException
 	 */
+	@SuppressWarnings("resource")
 	public static CSVFileReader readFile(File input) throws IOException {
 		return read(new FileReader(input));
 	}
@@ -169,18 +171,15 @@ public class CSVFileReader {
 	/**
 	 * finds all possible separation chars
 	 * 
-	 * @param attributes
+	 * @param lineWithAttributes
 	 * @return
 	 */
-	protected HashMap<String, Integer> getSeparationCandidates(String attributes) {
+	protected HashMap<String, Integer> getSeparationCandidates(String lineWithAttributes) {
 		HashMap<String, Integer> result = new HashMap<>();
 		String s;
-		for (char c : attributes.toCharArray()) {
+		for (char c : lineWithAttributes.toCharArray()) {
 			s = Character.toString(c);
-			if (result.containsKey(s))
-				result.put(s, result.get(s) + 1);
-			else
-				result.put(s, 1);
+			Map.add(result, s, 1);
 		}
 		return result;
 	}

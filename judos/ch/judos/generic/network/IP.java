@@ -34,6 +34,7 @@ public class IP {
 	 * 
 	 * @return the official ip address of your computer / nat device
 	 */
+	@SuppressWarnings("resource")
 	public static String getWanIp() {
 		if (wanIp == null || "-not found-".equals(wanIp)) {
 			wanIp = "-not found-";
@@ -43,7 +44,9 @@ public class IP {
 				InputStream in = c.getInputStream();
 				BufferedReader br = new BufferedReader(new InputStreamReader(in));
 				wanIp = br.readLine();
-			} catch (Exception e) {
+				br.close();
+			}
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -86,7 +89,8 @@ public class IP {
 		try {
 			String localHost = InetAddress.getLocalHost().getHostName();
 			return InetAddress.getAllByName(localHost);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return null;
 		}
 	}

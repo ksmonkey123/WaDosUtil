@@ -2,6 +2,8 @@ package ch.judos.generic.data;
 
 import java.util.HashMap;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 /**
  * a hashmap with two keys
  * 
@@ -12,7 +14,7 @@ import java.util.HashMap;
  * @param <K2>
  * @param <V>
  */
-public class HashMap2<K, K2, V> {
+public class HashMap2<K, K2, @Nullable V> {
 
 	/**
 	 * the map
@@ -63,6 +65,6 @@ public class HashMap2<K, K2, V> {
 		if (this.map1.containsKey(key1)) {
 			return this.map1.get(key1).containsKey(key2);
 		}// else
-			return false;
+		return false;
 	}
 }

@@ -1,6 +1,5 @@
 package ch.judos.generic.data.format;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 /**
@@ -10,7 +9,7 @@ import java.text.NumberFormat;
 public class NumberFormatJS {
 
 	public static String formatHighNumber(int nr) {
-		NumberFormat n = DecimalFormat.getIntegerInstance();
+		NumberFormat n = NumberFormat.getIntegerInstance();
 		return n.format(nr);
 	}
 }

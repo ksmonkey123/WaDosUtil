@@ -1,25 +1,11 @@
 package ch.judos.generic.graphics.fullscreen;
 
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.DisplayMode;
-import java.awt.GraphicsDevice;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -33,15 +19,15 @@ public class FullScreenDialogComplex extends JDialog implements ActionListener,
 	ListSelectionListener, FullScreenDialogI {
 
 	private static final long		serialVersionUID	= -7452838983112945857L;
-	private JButton					exit;
-	private JButton					ok;
-	private JTable					dmList;
+	JButton								exit;
+	JButton								ok;
+	private JTable						dmList;
 	private JScrollPane				dmPane;
 	private GraphicsDevice[]		devices;
 
 	// java 6 vs java 7 problem with parametrized JComboBox
 	@SuppressWarnings("rawtypes")
-	private JComboBox				gui_devices;
+	private JComboBox					gui_devices;
 	private DisplayMode				result;
 	private GraphicsDevice			resultD;
 	private boolean					chosen;
@@ -105,9 +91,9 @@ public class FullScreenDialogComplex extends JDialog implements ActionListener,
 		if (source == this.exit) {
 			quit();
 
-		} else if (source == this.gui_devices) {
-			JS_GraphicsDevice jsdev = (JS_GraphicsDevice) this.gui_devices
-				.getSelectedItem();
+		}
+		else if (source == this.gui_devices) {
+			JS_GraphicsDevice jsdev = (JS_GraphicsDevice) this.gui_devices.getSelectedItem();
 			DisplayModeModel model = new DisplayModeModel(FullScreen
 				.getDisplayModesSorted(jsdev.dev));
 			this.dmList.setModel(model);
@@ -116,7 +102,8 @@ public class FullScreenDialogComplex extends JDialog implements ActionListener,
 
 			this.resultD = jsdev.dev;
 			this.ok.setEnabled(true);
-		} else if (source == this.ok) {
+		}
+		else if (source == this.ok) {
 			this.chosen = true;
 			quit();
 		}
@@ -176,12 +163,12 @@ public class FullScreenDialogComplex extends JDialog implements ActionListener,
 				boolean keyHandled = false;
 				if (e.getID() == KeyEvent.KEY_PRESSED) {
 					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-						actionPerformed(new ActionEvent(FullScreenDialogComplex.this.ok,
-							0, "enter"));
+						actionPerformed(new ActionEvent(FullScreenDialogComplex.this.ok, 0, "enter"));
 						keyHandled = true;
-					} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-						actionPerformed(new ActionEvent(
-							FullScreenDialogComplex.this.exit, 0, "escape"));
+					}
+					else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+						actionPerformed(new ActionEvent(FullScreenDialogComplex.this.exit, 0,
+							"escape"));
 						keyHandled = true;
 					}
 				}
@@ -233,8 +220,7 @@ public class FullScreenDialogComplex extends JDialog implements ActionListener,
 			.getDisplayModesSorted(this.devices[0]));
 		this.dmList.setModel(model);
 
-		this.dmList.getSelectionModel().setSelectionMode(
-			ListSelectionModel.SINGLE_SELECTION);
+		this.dmList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.dmList.getSelectionModel().setSelectionInterval(0, 0);
 
 		this.result = model.getDisplayMode(0);
@@ -275,7 +261,7 @@ public class FullScreenDialogComplex extends JDialog implements ActionListener,
 
 	private class JS_GraphicsDevice {
 
-		private GraphicsDevice	dev;
+		GraphicsDevice	dev;
 
 		public JS_GraphicsDevice(GraphicsDevice dev) {
 			this.dev = dev;
@@ -354,7 +340,8 @@ class DisplayModeModel extends DefaultTableModel {
 				String ret;
 				if (bitDepth == DisplayMode.BIT_DEPTH_MULTI) {
 					ret = "Multi";
-				} else {
+				}
+				else {
 					ret = Integer.toString(bitDepth);
 				}
 				return ret;
@@ -364,11 +351,16 @@ class DisplayModeModel extends DefaultTableModel {
 				String ret;
 				if (refreshRate == DisplayMode.REFRESH_RATE_UNKNOWN) {
 					ret = "Unknown";
-				} else {
+				}
+				else {
 					ret = Integer.toString(refreshRate);
 				}
 				return ret;
 			}
+			default :
+				new Exception("Unknown FullScreenDialogComplex index: " + colIndex)
+					.printStackTrace();
+				break;
 		}
 		throw new ArrayIndexOutOfBoundsException("Invalid column value");
 	}

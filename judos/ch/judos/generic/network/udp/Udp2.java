@@ -17,7 +17,6 @@ import ch.judos.generic.network.udp.interfaces.Udp1I;
 import ch.judos.generic.network.udp.interfaces.Udp2I;
 import ch.judos.generic.network.udp.model.DupFilterOnConnection;
 import ch.judos.generic.network.udp.model.Packet2A;
-import ch.judos.generic.network.udp.model.Packet2CacheConfirmation;
 import ch.judos.generic.network.udp.model.Packet2ResendConfirmed;
 
 /**
@@ -33,16 +32,16 @@ import ch.judos.generic.network.udp.model.Packet2ResendConfirmed;
  * @author Julian Schelker
  */
 public class Udp2 implements Layer1Listener, Runnable, Udp2I {
-	private DupFilterOnConnection				confirmedPacket;
-	private HashMap<InetSocketAddress, Long>	connectionIssue;
+	private DupFilterOnConnection						confirmedPacket;
+	private HashMap<InetSocketAddress, Long>		connectionIssue;
 	private ArrayList<ConnectionIssueListener>	connectionIssueListeners;
-	private List<Layer2Listener>				listeners;
+	private List<Layer2Listener>						listeners;
 	private HashMap<InetSocketAddress, Integer>	nextPacketNr;
-	private DupFilterOnConnection				receiveFilter;
-	public PriorityQueue<Packet2A>				resendPackets;
-	private boolean								running;
-	private Thread								thread;
-	private Udp1I								u;
+	private DupFilterOnConnection						receiveFilter;
+	public PriorityQueue<Packet2A>					resendPackets;
+	private boolean										running;
+	private Thread											thread;
+	private Udp1I											u;
 
 	// UDP: use a cach to confirm packets
 	// private HashMap<InetSocketAddress, Packet2CacheConfirmation>
@@ -51,8 +50,8 @@ public class Udp2 implements Layer1Listener, Runnable, Udp2I {
 	public Udp2(Udp1I u) {
 		this.u = u;
 		this.u.addListener(this);
-		// this.cachConfirmationPackets =
-		new HashMap<InetSocketAddress, Packet2CacheConfirmation>();
+		// this.cachConfirmationPackets = new HashMap<InetSocketAddress,
+		// Packet2CacheConfirmation>();
 		this.listeners = new ArrayList<>();
 		this.resendPackets = new PriorityQueue<>();
 		this.nextPacketNr = new HashMap<>();
@@ -125,7 +124,8 @@ public class Udp2 implements Layer1Listener, Runnable, Udp2I {
 		Serializer.int2bytes(data, 0, nr);
 		try {
 			sendDataToUnchecked(0, data, false, from);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			// do nothing, packet will arrive again and confirmation is tried
 			// again
 		}
@@ -250,8 +250,7 @@ public class Udp2 implements Layer1Listener, Runnable, Udp2I {
 			// get base information
 			hadConnectionIssueBefore = this.connectionIssue.containsKey(destination);
 			if (hadConnectionIssueBefore)
-				lastIssue = System.currentTimeMillis()
-					- this.connectionIssue.get(destination);
+				lastIssue = System.currentTimeMillis() - this.connectionIssue.get(destination);
 			// update values
 			this.connectionIssue.put(destination, System.currentTimeMillis());
 		}
@@ -269,23 +268,33 @@ public class Udp2 implements Layer1Listener, Runnable, Udp2I {
 				if (this.resendPackets.size() == 0) {
 					try {
 						this.resendPackets.wait();
-					} catch (InterruptedException e) {
 					}
-				} else {
+					catch (InterruptedException e) {
+						System.err.println("Error while waiting for next sending period:");
+						e.printStackTrace();
+					}
+				}
+				else {
 					Packet2A x = this.resendPackets.peek();
 					if (x.getResendOn() > System.currentTimeMillis()) {
 						try {
-							this.resendPackets.wait(x.getResendOn()
-								- System.currentTimeMillis());
-						} catch (InterruptedException e) {
+							this.resendPackets.wait(x.getResendOn() - System.currentTimeMillis());
 						}
-					} else {
+						catch (InterruptedException e) {
+							System.err.println("Error while resending packet:");
+							e.printStackTrace();
+						}
+					}
+					else {
 						x = this.resendPackets.poll();
 						if (!x.needsConfirmation()
 							|| this.confirmedPacket.check(x.getDestination(), x.getNr())) {
 							try {
 								send(x);
-							} catch (IOException e) {
+							}
+							catch (IOException e) {
+								System.err.println("Error while sending packet:");
+								e.printStackTrace();
 							}
 							x.wasResentNow();
 							if (x.hasConnectionIssues())
@@ -317,17 +326,18 @@ public class Udp2 implements Layer1Listener, Runnable, Udp2I {
 	/**
 	 * (non-Javadoc)
 	 * 
-	 * @see ch.judos.generic.network.udp.interfaces.Udp2I#sendDataTo(int,
-	 *      byte[], boolean, java.net.InetSocketAddress)
+	 * @see ch.judos.generic.network.udp.interfaces.Udp2I#sendDataTo(int, byte[],
+	 *      boolean, java.net.InetSocketAddress)
 	 */
 	@Override
-	public void sendDataTo(int type, byte[] data, boolean confirmation,
-		InetSocketAddress dest) throws IOException {
+	public void sendDataTo(int type, byte[] data, boolean confirmation, InetSocketAddress dest)
+		throws IOException {
 		if (type < 1 || type > 127)
 			throw new IOException("invalid type Nr, only 1-127 are allowed for free use");
 		sendDataToUnchecked(type, data, confirmation, dest);
 	}
 
+	@SuppressWarnings("all")
 	private void sendDataToUnchecked(int type, byte[] data, boolean confirmation,
 		InetSocketAddress dest) throws IOException {
 		byte[] sendData = new byte[data.length + 4];
@@ -338,8 +348,7 @@ public class Udp2 implements Layer1Listener, Runnable, Udp2I {
 			type += 128;
 			Serializer.int2bytes(sendData, 0, nr);
 		}
-		Packet2ResendConfirmed packet = new Packet2ResendConfirmed(type, sendData, dest,
-			nr);
+		Packet2ResendConfirmed packet = new Packet2ResendConfirmed(type, sendData, dest, nr);
 		send(packet);
 		if (confirmation)
 			memorizePacketToResendAfterTimeout(packet);
