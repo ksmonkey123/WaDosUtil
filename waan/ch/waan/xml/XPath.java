@@ -5,103 +5,158 @@ import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import ch.waan.util.Result;
 import ch.waan.util.Tuple2;
 
 /**
+ * Pipeline-Style XML processing utility. <br/>
+ * 
+ * An XPath instance holds a list of all XML elements that match the defined
+ * "path"
+ * 
  * @author Andreas Wälchli
  * @version 1.1, 2015-05-11
  */
 public interface XPath {
 
-	static XPath of(Document d) {
-		return new XPathImp(Stream.of(d.getDocumentElement()));
-	}
-
-	// ###### XPath QUERIES ######
-
-	/*
-	 * all children and sub-children of the current node
+	/**
+	 * Recursively returns an XPath containing all current nodes and all their
+	 * children
 	 */
 	XPath any();
 
-	/*
-	 * all direct children
+	/**
+	 * Returns an XPath containing all children of all current nodes
 	 */
 	XPath children();
 
-	/*
-	 * all nodes that match the name
+	/**
+	 * Returns an XPath containing all children of all current nodes that match
+	 * the given name
+	 * 
+	 * @param name
 	 */
 	default XPath node(String name) {
 		return this.children()
 				.filterName(name::equals);
 	}
 
+	/**
+	 * Returns an XPath containing all current elements that contain an argument
+	 * with the given name
+	 * 
+	 * @param name
+	 */
 	default XPath filterAttribute(String name) {
 		return this.filterAttribute(name, val -> true);
 	}
 
-	/*
-	 * filter name by predicate
+	/**
+	 * Returns an XPath containing all current elements that have a name
+	 * validated by a given predicate
+	 * 
+	 * @param predicate
 	 */
 	XPath filterName(Predicate<String> predicate);
 
-	/*
-	 * take those that have the attribute with the value
+	/**
+	 * Returns an XPath containing all current elements that have a given
+	 * attribute with a given value
+	 * 
+	 * @param name
+	 * @param value
 	 */
 	default XPath filterAttribute(String name, String value) {
 		return this.filterAttribute(name, val -> val.equals(value));
 	}
 
-	/*
-	 * take those that have the attribute with a predicate matching value
+	/**
+	 * Returns an XPath containing all current elements that have a given
+	 * attribute validated by a given predicate
+	 * 
+	 * @param name
+	 * @param predicate
 	 */
 	XPath filterAttribute(String name, Predicate<String> predicate);
 
-	/*
-	 * get those with a matching index
+	/**
+	 * Returns an XPath containing the node with a given index
+	 * 
+	 * @param index
 	 */
 	default XPath index(int index) {
-		return this.indexRange(0, 1);
+		return this.indexRange(index, 1);
 	}
 
-	/*
-	 * get those where the index matches the predicate
+	/**
+	 * 
+	 * Returns an XPath containing a given number of nodes starting at a given
+	 * index
+	 * 
+	 * @param from
+	 * @param amount
 	 */
-	XPath indexRange(int from, int to);
+	XPath indexRange(int from, int amount);
 
 	// ###### EXTRACTORS ######
 
+	/**
+	 * Returns a stream containing the text of all current elements
+	 */
 	Stream<Result<String>> text();
 
+	/**
+	 * Returns a stream containing a list of attribute tuples for each elements
+	 */
 	Stream<List<Tuple2<String, String>>> attributes();
 
+	/**
+	 * Returns a stream containing all DOM nodes of all current elements
+	 */
 	Stream<Node> node();
 
+	/**
+	 * Returns a stream containing the attribute value for a given attribute
+	 * name for each element
+	 */
 	Stream<Result<String>> attribute(String name);
 
-	// ###### MUTATORS #######
-
+	/**
+	 * Replaces the text content of all current elements by a given String
+	 * 
+	 * @param text
+	 */
 	void setText(String text);
 
+	/**
+	 * Inserts the given attribute into all current elements. If the attribute
+	 * value is {@code null}, the attribute will be removed.
+	 * 
+	 * @param name
+	 * @param value
+	 */
 	void setAttribute(String name, String value);
 
-	/*
-	 * remove the nodes
+	/**
+	 * Removes all current elements from the XML
 	 */
 	void dropNode();
 
-	/*
-	 * replace the text
+	/**
+	 * Replaces the text of each element by the value returned by the updater
+	 * method. The old text will be passed to the updater as the argument.
+	 * 
+	 * @param updater
 	 */
 	void updateText(UnaryOperator<String> updater);
 
-	/*
-	 * add node and enter them
+	/**
+	 * Adds a node with the given name into each of the current nodes and
+	 * returns an XPath containing all created nodes
+	 * 
+	 * @param name
 	 */
 	XPath addNode(String name);
 
