@@ -72,17 +72,19 @@ public class RStorableString2 implements RStorableWrapper {
 		return this.string;
 	}
 
-	public static String encodeLine(String s) {
+	@SuppressWarnings("all")
+	public static String encodeLine(String string) {
 		String[] s1 = {"\\", "\\\\"};
 		String[] s2 = {"\"", "\\\""};
-		s = StringUtils.replaceAll(s, s1, s2);
-		return s;
+		string = StringUtils.replaceAll(string, s1, s2);
+		return string;
 	}
 
-	public static String decodeLine(String s) {
+	@SuppressWarnings("all")
+	public static String decodeLine(String string) {
 		String[] s1 = {"\\\"", "\""};
 		String[] s2 = {"\\\\", "\\"};
-		s = StringUtils.replaceAll(s, s1, s2);
-		return s;
+		string = StringUtils.replaceAll(string, s1, s2);
+		return string;
 	}
 }

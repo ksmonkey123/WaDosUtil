@@ -1,5 +1,8 @@
 *.class
 
+# ignore because of the custom set flags to ignore warnings
+.classpath
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
@@ -8,6 +11,7 @@
 *.war
 *.ear
 .DS_Store
+.cache
 
 
 # library folder

@@ -36,7 +36,7 @@ public class Date implements Cloneable, Comparable<Date> {
 	 * see also the static parse method for parsing dates
 	 * 
 	 * @param year
-	 *            give some values to initialize this date
+	 *           give some values to initialize this date
 	 * @param month
 	 * @param day
 	 */
@@ -81,8 +81,24 @@ public class Date implements Cloneable, Comparable<Date> {
 	 * @param day
 	 * @return true if this represents the given date
 	 */
+	@SuppressWarnings("all")
 	public boolean equals(int year, int month, int day) {
 		return this.year == year && this.month == month && this.day == day;
+	}
+
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + this.day;
+		result = prime * result + this.month;
+		result = prime * result + this.year;
+		return result;
 	}
 
 	/**
@@ -91,18 +107,26 @@ public class Date implements Cloneable, Comparable<Date> {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object o) {
-		if (this == o)
+	public boolean equals(Object obj) {
+		if (this == obj)
 			return true;
-		if (!(o instanceof Date))
+		if (obj == null)
 			return false;
-		Date d = (Date) o;
-		return d.year == this.year && d.month == this.month && d.day == this.day;
+		if (getClass() != obj.getClass())
+			return false;
+		Date other = (Date) obj;
+		if (this.day != other.day)
+			return false;
+		if (this.month != other.month)
+			return false;
+		if (this.year != other.year)
+			return false;
+		return true;
 	}
 
 	/**
 	 * @param date
-	 *            another date
+	 *           another date
 	 * @return true if this date is in the futur relatively to the given date
 	 */
 	public boolean isAfter(Date date) {
@@ -111,7 +135,7 @@ public class Date implements Cloneable, Comparable<Date> {
 
 	/**
 	 * @param date
-	 *            another date
+	 *           another date
 	 * @return true if this date is in the past relatively to the given date
 	 */
 	public boolean isBefore(Date date) {
@@ -218,7 +242,7 @@ public class Date implements Cloneable, Comparable<Date> {
 	 * date</a>
 	 * 
 	 * @param format
-	 *            : one char for every format, use / as escape char
+	 *           : one char for every format, use / as escape char
 	 * @return the formated string
 	 */
 	public String toString(String format) {
@@ -235,7 +259,8 @@ public class Date implements Cloneable, Comparable<Date> {
 					pos++;
 					cf = format.substring(pos, pos + 1);
 					r.append(cf);
-				} else
+				}
+				else
 					r.append(cf);
 			}
 		}
@@ -246,11 +271,11 @@ public class Date implements Cloneable, Comparable<Date> {
 	 * adds the specified format to the string
 	 * 
 	 * @param cf
-	 *            format
+	 *           format
 	 * @param r
-	 *            stringbuffer to add the result
+	 *           stringbuffer to add the result
 	 * @param c
-	 *            the calender
+	 *           the calender
 	 * @return true if format is found, false otherwise
 	 */
 	protected boolean formatChar(String cf, StringBuffer r, GregorianCalendar c) {
@@ -261,7 +286,8 @@ public class Date implements Cloneable, Comparable<Date> {
 			if (this.day < 10)
 				r.append("0");
 			r.append(this.day);
-		} else if (cf.equals("D"))
+		}
+		else if (cf.equals("D"))
 			r.append(weekdayName).substring(0, 3);
 		else if (cf.equals("j"))
 			r.append(this.day);
@@ -272,37 +298,44 @@ public class Date implements Cloneable, Comparable<Date> {
 				r.append(7);
 			else
 				r.append(weekdayNr);
-		} else if (cf.equals("S")) {
+		}
+		else if (cf.equals("S")) {
 			String[] postfix = new String[]{"st", "nd", "rd", "th"};
 			if (this.day < 4)
 				r.append(postfix[this.day - 1]);
 			else
 				r.append(postfix[3]);
-		} else if (cf.equals("w"))
+		}
+		else if (cf.equals("w"))
 			r.append(weekdayNr);
 		else if (cf.equals("z")) {
 			int dayOfYear = c.get(Calendar.DAY_OF_YEAR);
 			r.append(dayOfYear - 1);
-		} else if (cf.equals("W")) {
+		}
+		else if (cf.equals("W")) {
 			int weekOfYear = c.get(Calendar.WEEK_OF_YEAR);
 			r.append(weekOfYear);
-		} else if (cf.equals("F"))
+		}
+		else if (cf.equals("F"))
 			r.append(DateHelper.monthNames[this.month - 1]);
 		else if (cf.equals("m")) {
 			if (this.month < 10)
 				r.append(0);
 			r.append(this.month);
-		} else if (cf.equals("M"))
+		}
+		else if (cf.equals("M"))
 			r.append(DateHelper.monthNames[this.month - 1].substring(0, 3));
 		else if (cf.equals("n"))
 			r.append(this.month);
 		else if (cf.equals("t")) {
 			int daysInMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH);
 			r.append(daysInMonth);
-		} else if (cf.equals("L")) {
+		}
+		else if (cf.equals("L")) {
 			int leapYear = (c.isLeapYear(this.year) ? 1 : 0);
 			r.append(leapYear);
-		} else if (cf.equals("Y")) {
+		}
+		else if (cf.equals("Y")) {
 			if (this.year < 1000) {
 				r.append(0);
 				if (this.year < 100)
@@ -311,7 +344,8 @@ public class Date implements Cloneable, Comparable<Date> {
 					r.append(0);
 			}
 			r.append(this.year);
-		} else if (cf.equals("y"))
+		}
+		else if (cf.equals("y"))
 			r.append(String.valueOf(this.year).substring(2));
 		else
 			return false;

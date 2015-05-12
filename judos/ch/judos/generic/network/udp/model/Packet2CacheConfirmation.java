@@ -22,6 +22,7 @@ public class Packet2CacheConfirmation extends Packet2A {
 
 	@Override
 	public void wasResentNow() {
+		// do nothing
 	}
 
 	@Override
@@ -34,8 +35,8 @@ public class Packet2CacheConfirmation extends Packet2A {
 		return false;
 	}
 
-	public void addConfirms(int nr) {
-		this.confirms.add(nr);
+	public void addConfirms(int packetNumber) {
+		this.confirms.add(packetNumber);
 	}
 
 }

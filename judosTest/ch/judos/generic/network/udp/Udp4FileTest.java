@@ -21,14 +21,12 @@ import ch.judos.generic.network.udp.model.FileDescription;
 public class Udp4FileTest extends TestCase implements FileTransmissionHandler,
 	UdpFileTransferListener {
 
-	public static final boolean	SILENT		= true;
-
-	public static final int		PORT		= 60000;
-	public static final String	testFile	= TestConstants.DATA_PATH + "mp3.zip";
-	public static final String	testReceive	= TestConstants.DATA_PATH
-												+ "mp3-received.zip";
-	private long				start;
-	private Udp4I				u;
+	public static final boolean	SILENT	= true;
+	public static File				testFile;
+	public static final int			PORT		= 60000;
+	private long						start;
+	private Udp4I						u;
+	private File						testFileReceive;
 
 	@Override
 	public int getUpdateEveryMS() {
@@ -37,7 +35,7 @@ public class Udp4FileTest extends TestCase implements FileTransmissionHandler,
 
 	@Override
 	public File requestFileTransmission(FileDescription fd) {
-		return new File(testReceive);
+		return testFileReceive;
 	}
 
 	@Override
@@ -49,18 +47,22 @@ public class Udp4FileTest extends TestCase implements FileTransmissionHandler,
 	protected void setUp() throws Exception {
 		Udp2 u2 = new Udp2(new Udp1(new Udp0Reader(new DatagramSocket(PORT))));
 		this.u = new Udp4(new Udp3(u2));
+		testFile = TestConstants.getTestData(3 * 1024 * 1024);
+		testFileReceive = TestConstants.getTestFileForWriting();
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
 		this.u.dispose();
+		testFile.delete();
+		testFileReceive.delete();
 	}
 
 	public void testSomeThing() throws FileNotFoundException, InterruptedException {
 		this.u.setFileHandler(this);
 
-		this.u.sendFileTo(new File(testFile), "some test file", new InetSocketAddress(
-			"localhost", PORT), null);
+		this.u.sendFileTo(testFile, "some test file", new InetSocketAddress("localhost", PORT),
+			null);
 
 		synchronized (this) {
 			wait();
@@ -95,8 +97,8 @@ public class Udp4FileTest extends TestCase implements FileTransmissionHandler,
 		long total) {
 		if (!SILENT)
 			System.out.println(MathJS.round(percentage, 0) + "% speed: "
-				+ ByteData.autoFormat(avgSpeed) + "  " + ByteData.autoFormat(transmitted)
-				+ " / " + ByteData.autoFormat(total));
+				+ ByteData.autoFormat(avgSpeed) + "  " + ByteData.autoFormat(transmitted) + " / "
+				+ ByteData.autoFormat(total));
 	}
 
 }
