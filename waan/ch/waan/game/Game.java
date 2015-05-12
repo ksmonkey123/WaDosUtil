@@ -65,6 +65,7 @@ public final class Game {
 		this.controller.tick(passedTime);
 	}
 
+	@SuppressWarnings("unused")
 	private void render(int passedTime) {
 		this.gui.render();
 	}
@@ -86,8 +87,7 @@ public final class Game {
 	 *            the initial scene
 	 * @return the game instance
 	 */
-	public static @NonNull Game
-			initializeGame(@NonNull SceneController initialScene) {
+	public static @NonNull Game initializeGame(@NonNull SceneController initialScene) {
 		return new Game(800, 600, initialScene, 20, 50);
 	}
 }

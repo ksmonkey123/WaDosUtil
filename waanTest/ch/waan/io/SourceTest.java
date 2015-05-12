@@ -3,16 +3,7 @@
  */
 package ch.waan.io;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-import javax.xml.validation.ValidatorHandler;
-
-import org.w3c.dom.Document;
-
 import ch.waan.xml.XML;
-import ch.waan.xml.XPath;
 
 /**
  * @author Andreas Wälchli
