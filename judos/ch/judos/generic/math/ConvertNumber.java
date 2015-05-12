@@ -89,6 +89,6 @@ public class ConvertNumber {
 	 * @return the equivalent int value
 	 */
 	public static int unsignedByte2Int(byte b) {
-		return (int) b & 0xFF;
+		return Byte.toUnsignedInt(b);
 	}
 }
