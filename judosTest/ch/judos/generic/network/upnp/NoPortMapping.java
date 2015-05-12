@@ -17,14 +17,14 @@ public class NoPortMapping implements UdpListener {
 	 * @throws IOException
 	 * @throws SerializerException
 	 */
-	public static void main(String[] args) throws InterruptedException,
-		SerializerException, IOException {
-		new NoPortMapping(60000);
+	public static void main(String[] args) throws InterruptedException, SerializerException,
+		IOException {
+		new NoPortMapping().showPortMappingInfo(60000);
 	}
 
 	private boolean	received;
 
-	public NoPortMapping(int port) throws SerializerException, IOException,
+	public void showPortMappingInfo(int port) throws SerializerException, IOException,
 		InterruptedException {
 		String externalIp = IP.getWanIp();
 		System.out.println("public IP: " + externalIp);
@@ -38,8 +38,7 @@ public class NoPortMapping implements UdpListener {
 		System.out.println("sending byte[0] to itself via public IP...");
 		this.received = false;
 		synchronized (this) {
-			u.sendRawDataConfirmTo(new byte[0], true, new InetSocketAddress(externalIp,
-				port));
+			u.sendRawDataConfirmTo(new byte[0], true, new InetSocketAddress(externalIp, port));
 			this.wait(2000);
 		}
 		if (!this.received)

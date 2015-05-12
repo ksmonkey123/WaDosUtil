@@ -17,12 +17,12 @@ public class Udp4ThroughputTest extends TestCase implements UdpListener,
 
 	public static final boolean	SILENT	= true;
 
-	private static final int	DATA	= 5;
-	private static final int	MB		= 1024 * 1024;
-	public static final int		PORT	= 60000;
-	private TimerJS				t;
-	private Udp4				u;
-	private AtomicBoolean		finished;
+	private static final int		DATA		= 5;
+	private static final int		MB			= 1024 * 1024;
+	public static final int			PORT		= 60000;
+	private TimerJS					t;
+	private Udp4						u;
+	private AtomicBoolean			finished;
 
 	@Override
 	public void receiveMsg(Object source, InetSocketAddress from, Object data) {
@@ -43,12 +43,15 @@ public class Udp4ThroughputTest extends TestCase implements UdpListener,
 
 	@Override
 	protected void setUp() throws Exception {
-		Udp2 u2 = new Udp2(new Udp1(new Udp0Reader(new DatagramSocket(PORT))));
+		@SuppressWarnings("resource")
+		DatagramSocket ds = new DatagramSocket(PORT);
+		Udp2 u2 = new Udp2(new Udp1(new Udp0Reader(ds)));
 		this.u = new Udp4(new Udp3(u2));
 		this.u.addDataListener(this);
 		u2.addConnectionIssueListener(this);
 		// displays amount of packages in queue to be resend/confirmed
 		// new Udp2Monitor(u2);
+
 	}
 
 	@Override
@@ -69,13 +72,15 @@ public class Udp4ThroughputTest extends TestCase implements UdpListener,
 			if (!SILENT)
 				this.t.printMS();
 			this.t.start();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		synchronized (this.finished) {
 			try {
 				this.finished.wait(5 * 1000);
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
@@ -84,9 +89,11 @@ public class Udp4ThroughputTest extends TestCase implements UdpListener,
 
 	@Override
 	public void connectionIsBroken(InetSocketAddress destination) {
+		// not needed
 	}
 
 	@Override
 	public void connectionReconnected(InetSocketAddress from) {
+		// not needed
 	}
 }

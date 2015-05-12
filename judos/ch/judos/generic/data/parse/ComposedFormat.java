@@ -41,6 +41,7 @@ public class ComposedFormat extends Format {
 	 * @see ch.judos.generic.data.parse.Format#matchAndConsume(java.lang.String)
 	 */
 	@Override
+	@SuppressWarnings("all")
 	public String matchAndConsume(String input) {
 		for (Format p : this.parts) {
 			input = p.matchAndConsume(input);
@@ -78,23 +79,23 @@ public class ComposedFormat extends Format {
 	/**
 	 * create a format by its parts
 	 * 
-	 * @param parts
+	 * @param initParts
 	 */
-	protected void init(Format... parts) {
-		this.parts = parts;
+	protected void init(Format... initParts) {
+		this.parts = initParts;
 	}
 
 	/**
 	 * allows any object as formatParts.<br>
-	 * Objects that don't extend FormatPart will be interpretated as
-	 * ConstantFP's with value of their toString() method
+	 * Objects that don't extend FormatPart will be interpretated as ConstantFP's
+	 * with value of their toString() method
 	 * 
-	 * @param parts
+	 * @param initParts
 	 */
-	protected void init(Object... parts) {
-		this.parts = new Format[parts.length];
+	protected void init(Object... initParts) {
+		this.parts = new Format[initParts.length];
 		int index = 0;
-		for (Object o : parts) {
+		for (Object o : initParts) {
 			if (!(o instanceof Format))
 				this.parts[index++] = new ConstantFormat(o.toString());
 			else

@@ -44,6 +44,7 @@ public class Udp0Reader extends Udp0Sender implements Runnable {
 				Thread.sleep(100);
 			}
 			catch (InterruptedException e) {
+				// do nothing
 			}
 			// timeout after some time if reader is still alive
 			if (System.currentTimeMillis() - startTimeMS > timeOutMS)
@@ -91,8 +92,6 @@ public class Udp0Reader extends Udp0Sender implements Runnable {
 				byte[] data = new byte[packet.getLength()];
 				System.arraycopy(packet.getData(), 0, data, 0, packet.getLength());
 				received((InetSocketAddress) packet.getSocketAddress(), data);
-			}
-			catch (SocketException e) {
 			}
 			catch (Exception e) {
 				e.printStackTrace();

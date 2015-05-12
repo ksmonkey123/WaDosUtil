@@ -6,7 +6,7 @@ package ch.judos.generic.network.udp;
  */
 public class WaitNotifyTest {
 	public static void main(String[] args) {
-		new WaitNotifyTest();
+		new WaitNotifyTest().runExample();
 	}
 
 	/**
@@ -14,7 +14,7 @@ public class WaitNotifyTest {
 	 * however it might varify since waking up can occur right when the timeout
 	 * occurs
 	 */
-	public WaitNotifyTest() {
+	public void runExample() {
 
 		boolean wokenUp = false;
 		final WaitNotifyTest x = this;
@@ -24,7 +24,9 @@ public class WaitNotifyTest {
 			public void run() {
 				try {
 					Thread.sleep(499);
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e) {
+					// not needed
 				}
 				synchronized (x) {
 					x.notify();
@@ -38,7 +40,8 @@ public class WaitNotifyTest {
 				long ms = System.currentTimeMillis();
 				this.wait(500);
 				wokenUp = System.currentTimeMillis() - ms < 500;
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}

@@ -26,27 +26,27 @@ import ch.judos.generic.network.udp.model.reachability.ReachabilityResponse;
  */
 public class Udp4 implements Layer3Listener, Udp4I {
 
-	public static final int									FileTransfer_ACCEPTED				= -2;
-	public static final int									FileTransfer_COMPLETED				= -5;
-	public static final int									FileTransfer_DENIED					= -3;
-	public static final int									FileTransfer_REQUEST_DATA			= -4;
-	public static final int									FileTransfer_REQUEST_FILE_TRANSFER	= -1;
+	public static final int												FileTransfer_ACCEPTED					= -2;
+	public static final int												FileTransfer_COMPLETED					= -5;
+	public static final int												FileTransfer_DENIED						= -3;
+	public static final int												FileTransfer_REQUEST_DATA				= -4;
+	public static final int												FileTransfer_REQUEST_FILE_TRANSFER	= -1;
 
 	/**
 	 * these numbers are used as identifier for the udp messages<br>
 	 * available are: 1-63
 	 */
-	private static final int								TYPE_FILE							= 3;
+	private static final int											TYPE_FILE									= 3;
 
-	private static final int								TYPE_OBJECT							= 1;
-	private static final int								TYPE_PING							= 4;
-	private static final int								TYPE_RAW_DATA						= 2;
+	private static final int											TYPE_OBJECT									= 1;
+	private static final int											TYPE_PING									= 4;
+	private static final int											TYPE_RAW_DATA								= 2;
 
-	private FileReceiver									fileReceiver;
-	private FileSender										fileSender;
-	private HashMap<Integer, List<UdpListener>>				listeners;
+	private FileReceiver													fileReceiver;
+	private FileSender													fileSender;
+	private HashMap<Integer, List<UdpListener>>					listeners;
 	private HashMap<ReachabilityRequest, CheckReachThread>	reachabilityRequests;
-	private Udp3I											u;
+	private Udp3I															u;
 
 	public Udp4(Udp3I u) {
 		this.u = u;
@@ -60,22 +60,22 @@ public class Udp4 implements Layer3Listener, Udp4I {
 	}
 
 	@Override
-	public void addDataListener(UdpListener u) {
-		addListener(u, TYPE_RAW_DATA);
+	public void addDataListener(UdpListener listener) {
+		addListener(listener, TYPE_RAW_DATA);
 	}
 
-	protected void addListener(UdpListener u, int typeOfMessagesToReceive) {
+	protected void addListener(UdpListener listener, int typeOfMessagesToReceive) {
 		List<UdpListener> list = this.listeners.get(typeOfMessagesToReceive);
 		if (list == null) {
 			list = new ArrayList<>();
 			this.listeners.put(typeOfMessagesToReceive, list);
 		}
-		list.add(u);
+		list.add(listener);
 	}
 
 	@Override
-	public void addObjectListener(UdpListener u) {
-		addListener(u, TYPE_OBJECT);
+	public void addObjectListener(UdpListener listener) {
+		addListener(listener, TYPE_OBJECT);
 	}
 
 	/**
@@ -171,8 +171,7 @@ public class Udp4 implements Layer3Listener, Udp4I {
 				try {
 					Object o = Serializer.bytes2object(packetData);
 					if (o instanceof ReachabilityRequest) {
-						ReachabilityResponse rr = new ReachabilityResponse(
-							(ReachabilityRequest) o);
+						ReachabilityResponse rr = new ReachabilityResponse((ReachabilityRequest) o);
 						byte[] data1 = Serializer.object2Bytes(rr);
 						this.u.sendDataTo(TYPE_PING, data1, true, from);
 					}
@@ -187,34 +186,37 @@ public class Udp4 implements Layer3Listener, Udp4I {
 					e.printStackTrace();
 				}
 				return;
+			default :
+				new Exception("Unknown message type: " + type).printStackTrace();
+				break;
 		}
 		notifyListeners(type, list, result, from);
 	}
 
 	@Override
-	public void removeDataListener(UdpListener u) {
-		removeListener(u, TYPE_RAW_DATA);
+	public void removeDataListener(UdpListener listener) {
+		removeListener(listener, TYPE_RAW_DATA);
 	}
 
-	public void removeListener(UdpListener u, int typeOfMessagesToReceive) {
+	public void removeListener(UdpListener listener, int typeOfMessagesToReceive) {
 		List<UdpListener> list = this.listeners.get(typeOfMessagesToReceive);
 		if (list == null)
 			return;
-		list.remove(u);
+		list.remove(listener);
 		if (list.isEmpty())
 			this.listeners.remove(typeOfMessagesToReceive);
 	}
 
 	@Override
-	public void removeObjectListener(UdpListener u) {
-		removeListener(u, TYPE_OBJECT);
+	public void removeObjectListener(UdpListener listener) {
+		removeListener(listener, TYPE_OBJECT);
 	}
 
 	/**
 	 * NOTE: system usage only
 	 * 
 	 * @param type
-	 *            of file message
+	 *           of file message
 	 * @param data
 	 * @param target
 	 * @throws IOException
@@ -231,8 +233,8 @@ public class Udp4 implements Layer3Listener, Udp4I {
 	@Override
 	public void sendFileTo(File f, String description, InetSocketAddress to,
 		UdpFileTransferListener fileListener) throws FileNotFoundException {
-		this.fileSender.addToQueue(new FileOutgoingTransmission(f, description,
-			this.fileSender.getPacketSize(), to, fileListener));
+		this.fileSender.addToQueue(new FileOutgoingTransmission(f, description, this.fileSender
+			.getPacketSize(), to, fileListener));
 	}
 
 	/**

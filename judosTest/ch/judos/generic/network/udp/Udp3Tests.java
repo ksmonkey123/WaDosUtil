@@ -96,9 +96,9 @@ public class Udp3Tests extends TestCase {
 
 	@Override
 	protected void setUp() throws Exception {
-		try (DatagramSocket s = new DatagramSocket(PORT)) {
-			this.u = new Udp3(new Udp2(new Udp1(new Udp0Reader(s))));
-		}
+		@SuppressWarnings("resource")
+		DatagramSocket s = new DatagramSocket(PORT);
+		this.u = new Udp3(new Udp2(new Udp1(new Udp0Reader(s))));
 	}
 
 	@Override

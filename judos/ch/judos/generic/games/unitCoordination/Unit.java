@@ -14,18 +14,10 @@ import ch.judos.generic.games.pathsearch.WayPoint;
  * @version 1.0 / 27.02.2013
  */
 public abstract class Unit extends Obstacle {
-	/**
-	 * id of event if unit reaches target
-	 */
-	public static final int					TARGET_REACHED		= 1;
-	/**
-	 * id of event if unit can't reach its target
-	 */
-	public static final int					CANT_REACH_TARGET	= 2;
-	/**
-	 * id of event if unit recalcs its path
-	 */
-	public static final int					ROUTE_RECALC		= 3;
+
+	public enum UNIT_EVENT {
+		TARGET_REACHED, CANT_REACH_TARGET, ROUTE_RECALC;
+	}
 
 	/**
 	 * listeners interested in the movement of this unit
@@ -74,17 +66,20 @@ public abstract class Unit extends Obstacle {
 	 * 
 	 * @param event
 	 */
-	protected void notifyAllListeners(int event) {
+	protected void notifyAllListeners(UNIT_EVENT event) {
 		for (MovementListener l : this.listener) {
 			switch (event) {
-				case 1 :
+				case TARGET_REACHED :
 					l.targetReached(this);
 					break;
-				case 2 :
+				case CANT_REACH_TARGET :
 					l.cantReachTarget(this);
 					break;
-				case 3 :
+				case ROUTE_RECALC :
 					l.routeChange(this);
+					break;
+				default :
+					System.err.println("unknown enum UnitEvent: " + event);
 					break;
 			}
 		}
@@ -104,8 +99,8 @@ public abstract class Unit extends Obstacle {
 
 	/**
 	 * update the unit, this includes possible movement and state changes of it<br>
-	 * this method must be called from some controller, otherwise the movement
-	 * is not going to work
+	 * this method must be called from some controller, otherwise the movement is
+	 * not going to work
 	 */
 	public abstract void update();
 }

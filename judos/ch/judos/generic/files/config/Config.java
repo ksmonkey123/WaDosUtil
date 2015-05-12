@@ -1,11 +1,6 @@
 package ch.judos.generic.files.config;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -32,7 +27,7 @@ public class Config {
 	/**
 	 * the settings for the config to use
 	 */
-	private ConfigSettingsBase			settings;
+	private ConfigSettingsBase				settings;
 
 	/**
 	 * @param settings
@@ -46,7 +41,7 @@ public class Config {
 
 	/**
 	 * @param name
-	 *            of the property
+	 *           of the property
 	 * @return the property - if not found null is returned
 	 */
 	public Property getPropertyByName(String name) {
@@ -75,16 +70,10 @@ public class Config {
 	 * loads all configurations out of the file
 	 */
 	protected void load() {
-		BufferedReader r;
-		try {
-			r = new BufferedReader(new FileReader(this.settings.getFile()));
-		} catch (FileNotFoundException e1) {
-			// just do nothing, because no configs are set yet
-			return;
-		}
-		String line;
-		String[] m;
-		try {
+		try (BufferedReader r = new BufferedReader(new FileReader(this.settings.getFile()))) {
+
+			String line;
+			String[] m;
 			while ((line = r.readLine()) != null) {
 				m = line.split(SPLIT_EXPRESSION, 2);
 				Property p = getPropertyByName(m[0]);
@@ -96,7 +85,12 @@ public class Config {
 					e.printStackTrace();
 				}
 			}
-		} catch (IOException e) {
+		}
+		catch (FileNotFoundException e1) {
+			// just do nothing, because no configs are set yet
+			return;
+		}
+		catch (IOException e) {
 			Exception e2 = new RuntimeException(
 				"Config file is corrupt, ignoring remaining properties, setting their value to defaultValue.\n"
 					+ e.getMessage());
@@ -111,15 +105,14 @@ public class Config {
 	 */
 	public boolean save() {
 		this.settings.save();
-		try {
-			BufferedWriter w = new BufferedWriter(new FileWriter(this.settings.getFile()));
+		try (BufferedWriter w = new BufferedWriter(new FileWriter(this.settings.getFile()))) {
 			Set<Entry<String, Property>> entries = this.data.entrySet();
 			for (Entry<String, Property> entry : entries) {
 				w.write(entry.getKey() + SPLIT_EXPRESSION + entry.getValue().getString());
 				w.newLine();
 			}
-			w.close();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 			return false;
 		}

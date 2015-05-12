@@ -57,6 +57,7 @@ public abstract class Format {
 	 * remove matched data
 	 */
 	public void removeData() {
+		// todo: check implementation
 	}
 
 	/**

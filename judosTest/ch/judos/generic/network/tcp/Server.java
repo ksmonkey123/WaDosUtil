@@ -1,10 +1,6 @@
 package ch.judos.generic.network.tcp;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -15,17 +11,21 @@ import java.net.Socket;
 public class Server implements Runnable {
 
 	public static void main(String argv[]) throws Exception {
-		ServerSocket welcomeSocket = new ServerSocket(60000);
-		boolean running = true;
+		try (ServerSocket welcomeSocket = new ServerSocket(60000)) {
+			boolean running = true;
 
-		while (running) {
-			Socket cs = welcomeSocket.accept();
-			System.out.println("got connection from " + cs.getInetAddress() + ":"
-				+ cs.getPort() + " with local port: " + cs.getLocalPort());
-			new Server(cs);
+			while (running) {
+				try (Socket cs = welcomeSocket.accept()) {
+					System.out.println("got connection from " + cs.getInetAddress() + ":"
+						+ cs.getPort() + " with local port: " + cs.getLocalPort());
+					new Server(cs).start();
+				}
+			}
 		}
+	}
 
-		welcomeSocket.close();
+	private void start() {
+		new Thread(this).start();
 	}
 
 	private BufferedReader	in;
@@ -34,8 +34,6 @@ public class Server implements Runnable {
 	public Server(Socket cs) throws IOException {
 		this.in = new BufferedReader(new InputStreamReader(cs.getInputStream()));
 		this.out = new BufferedWriter(new OutputStreamWriter(cs.getOutputStream()));
-
-		new Thread(this).start();
 	}
 
 	@Override
@@ -54,7 +52,8 @@ public class Server implements Runnable {
 				this.out.newLine();
 				this.out.flush();
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}

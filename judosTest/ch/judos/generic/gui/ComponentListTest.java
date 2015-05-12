@@ -15,10 +15,10 @@ public class ComponentListTest extends JFrame {
 	private static final long	serialVersionUID	= 3202698926181997884L;
 
 	public static void main(String[] args) {
-		new ComponentListTest();
+		new ComponentListTest().showTest();
 	}
 
-	public ComponentListTest() {
+	public void showTest() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		ComponentList<Integer> list = new ComponentList<>();

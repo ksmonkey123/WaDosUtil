@@ -54,7 +54,7 @@ public class SoundEffect {
 	 * play the sound in the background
 	 * 
 	 * @param volume
-	 *            [0,1]
+	 *           [0,1]
 	 * @return true if succeeded, false otherwise
 	 */
 	public boolean play(final float volume) {
@@ -74,24 +74,23 @@ public class SoundEffect {
 	 * @param volumePercentage
 	 * @return when the sound could be played true, false if exception occured
 	 */
+	@SuppressWarnings("all")
 	protected boolean playSync(float volumePercentage) {
 		if (volumePercentage > 1)
 			volumePercentage /= 100;
-		try {
-			Clip clip = AudioSystem.getClip();
-			AudioInputStream audioInputStream = AudioSystem
-				.getAudioInputStream(this.file);
+		try (AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(this.file);
+			Clip clip = AudioSystem.getClip()) {
 			clip.open(audioInputStream);
 
-			FloatControl volume = (FloatControl) clip
-				.getControl(FloatControl.Type.MASTER_GAIN);
+			FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 			float max = volume.getMaximum();
 			float min = volume.getMinimum();
 			float level = (max - min) * volumePercentage + min;
 			volume.setValue(level);
 
 			clip.start(); // Start playing
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
