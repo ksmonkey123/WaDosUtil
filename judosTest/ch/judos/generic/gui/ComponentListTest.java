@@ -21,7 +21,7 @@ public class ComponentListTest extends JFrame {
 	public ComponentListTest() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		ComponentList<Integer> list = new ComponentList<Integer>();
+		ComponentList<Integer> list = new ComponentList<>();
 		list.setCenterAligned(true);
 		for (int i = 0; i < 3; i++) {
 			ComponentListEntry entry = new ComponentListEntry();

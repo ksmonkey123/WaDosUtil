@@ -34,17 +34,17 @@ public class BigPacketSend {
 
 	public byte[][] getPackets() {
 		byte[][] packets = new byte[this.parts][];
-		for (short i = 0; i < parts; i++) {
-			int dataStartPos = i * packetDataLimit;
-			int dataLength = packetDataLimit;
-			if (dataStartPos + dataLength > data.length)
-				dataLength = data.length - dataStartPos;
+		for (short i = 0; i < this.parts; i++) {
+			int dataStartPos = i * this.packetDataLimit;
+			int dataLength = this.packetDataLimit;
+			if (dataStartPos + dataLength > this.data.length)
+				dataLength = this.data.length - dataStartPos;
 
 			byte[] packetData = new byte[CONTROL_DATA_BYTES + dataLength];
-			Serializer.short2bytes(packetData, 0, id);
+			Serializer.short2bytes(packetData, 0, this.id);
 			Serializer.short2bytes(packetData, 2, i);
-			Serializer.short2bytes(packetData, 4, parts);
-			System.arraycopy(data, dataStartPos, packetData, CONTROL_DATA_BYTES,
+			Serializer.short2bytes(packetData, 4, this.parts);
+			System.arraycopy(this.data, dataStartPos, packetData, CONTROL_DATA_BYTES,
 				dataLength);
 			packets[i] = packetData;
 		}

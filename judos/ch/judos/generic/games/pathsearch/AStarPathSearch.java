@@ -32,10 +32,10 @@ public class AStarPathSearch {
 
 		boolean debugWaySearch = false;
 
-		HashMap2<Integer, Integer, WayPoint> ways = new HashMap2<Integer, Integer, WayPoint>();
+		HashMap2<Integer, Integer, WayPoint> ways = new HashMap2<>();
 
 		ways.put(start.getX(), start.getY(), start);
-		PriorityQueue<AStarSearchWayPoint> searchOn = new PriorityQueue<AStarSearchWayPoint>();
+		PriorityQueue<AStarSearchWayPoint> searchOn = new PriorityQueue<>();
 		searchOn.add(new AStarSearchWayPoint(start, 0, target.getX(), target.getY()));
 		if (debugWaySearch) {
 			System.out.println();
@@ -81,7 +81,7 @@ public class AStarPathSearch {
 		if (!ways.containsKey(target.getX(), target.getY()))
 			return null;
 		// look up the found way
-		List<WayPoint> result = new ArrayList<WayPoint>();
+		List<WayPoint> result = new ArrayList<>();
 		WayPoint cur = target;
 		if (debugWaySearch)
 			System.out.println("way backwards:");

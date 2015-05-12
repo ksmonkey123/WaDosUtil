@@ -16,7 +16,7 @@ public class Packet2CacheConfirmation extends Packet2A {
 	public Packet2CacheConfirmation(InetSocketAddress dest, int numberToConfirm) {
 		// numberToConfirm is used as identifier
 		super(dest, numberToConfirm, UdpConfig.RESEND_TIMEOUT_CACHE_CONFIRMATION_MS);
-		this.confirms = new ArrayList<Integer>();
+		this.confirms = new ArrayList<>();
 		this.confirms.add(numberToConfirm);
 	}
 

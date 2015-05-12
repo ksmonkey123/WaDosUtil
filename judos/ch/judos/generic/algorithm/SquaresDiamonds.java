@@ -34,13 +34,13 @@ public class SquaresDiamonds {
 		this.segments = (int) Math.pow(2, iterations) + 1;
 
 		// initialize points
-		points = new float[segments][segments];
-		for (int x = 0; x < segments; x++) {
-			for (int y = 0; y < segments; y++) {
-				points[x][y] = -1;
+		this.points = new float[this.segments][this.segments];
+		for (int x = 0; x < this.segments; x++) {
+			for (int y = 0; y < this.segments; y++) {
+				this.points[x][y] = -1;
 			}
 		}
-		this.currentSize = segments - 1;
+		this.currentSize = this.segments - 1;
 		this.roughness = 1f;
 		this.currentIteration = 0;
 
@@ -56,12 +56,12 @@ public class SquaresDiamonds {
 		float[][] newPoints = new float[this.segments][this.segments];
 		this.currentSize = 1;
 
-		for (int x = 0; x < segments; x++) {
-			for (int y = 0; y < segments; y++) {
+		for (int x = 0; x < this.segments; x++) {
+			for (int y = 0; y < this.segments; y++) {
 
 				float avg = avgNeighbours2(x, y);
 
-				float newHeight = (float) (1 - smoothness) * this.points[x][y]
+				float newHeight = (1f - smoothness) * this.points[x][y]
 					+ smoothness * avg;
 				// System.out.println("h�he: "+this.points[x][y]+" avg umg.: "+avg+" neu:"+newHeight);
 
@@ -76,22 +76,22 @@ public class SquaresDiamonds {
 	private void restoreMaxHeight() {
 		float maxheight = -1;
 		float minheight = 2;
-		for (int x = 0; x < segments; x++) {
-			for (int y = 0; y < segments; y++) {
-				if (points[x][y] > maxheight)
-					maxheight = points[x][y];
-				if (points[x][y] < minheight)
-					minheight = points[x][y];
+		for (int x = 0; x < this.segments; x++) {
+			for (int y = 0; y < this.segments; y++) {
+				if (this.points[x][y] > maxheight)
+					maxheight = this.points[x][y];
+				if (this.points[x][y] < minheight)
+					minheight = this.points[x][y];
 			}
 		}
 		float factor = 1 / (maxheight - minheight);
 
-		for (int x = 0; x < segments; x++) {
-			for (int y = 0; y < segments; y++) {
-				points[x][y] = (points[x][y] - minheight) * factor;
+		for (int x = 0; x < this.segments; x++) {
+			for (int y = 0; y < this.segments; y++) {
+				this.points[x][y] = (this.points[x][y] - minheight) * factor;
 
-				if (points[x][y] < this.waterMin) {
-					points[x][y] = this.waterMin;
+				if (this.points[x][y] < this.waterMin) {
+					this.points[x][y] = this.waterMin;
 				}
 			}
 		}
@@ -99,32 +99,32 @@ public class SquaresDiamonds {
 
 	private void init() {
 
-		while (currentIteration < maxIterations) {
+		while (this.currentIteration < this.maxIterations) {
 
 			// start with edge squares
-			if (currentIteration == 0) {
-				points[0][0] = rndHeight(roughness, roughness);
-				points[currentSize][0] = rndHeight(roughness, roughness);
-				points[0][currentSize] = rndHeight(roughness, roughness);
-				points[currentSize][currentSize] = rndHeight(roughness, roughness);
+			if (this.currentIteration == 0) {
+				this.points[0][0] = rndHeight(this.roughness, this.roughness);
+				this.points[this.currentSize][0] = rndHeight(this.roughness, this.roughness);
+				this.points[0][this.currentSize] = rndHeight(this.roughness, this.roughness);
+				this.points[this.currentSize][this.currentSize] = rndHeight(this.roughness, this.roughness);
 			}
 
 			// diamond step
-			int start = currentSize / 2;
-			for (int x = start; x < segments; x += currentSize) {
-				for (int y = start; y < segments; y += currentSize) {
+			int start = this.currentSize / 2;
+			for (int x = start; x < this.segments; x += this.currentSize) {
+				for (int y = start; y < this.segments; y += this.currentSize) {
 					float ref = avgNeighbours1(x, y);
-					points[x][y] = rndHeight(ref, roughness);
+					this.points[x][y] = rndHeight(ref, this.roughness);
 				}
 			}
 
 			// square step
 			this.currentSize /= 2;
-			for (int x = 0; x < segments; x += currentSize) {
-				for (int y = 0; y < segments; y += currentSize) {
-					if (points[x][y] == -1) {
+			for (int x = 0; x < this.segments; x += this.currentSize) {
+				for (int y = 0; y < this.segments; y += this.currentSize) {
+					if (this.points[x][y] == -1) {
 						float ref = avgNeighbours2(x, y);
-						points[x][y] = rndHeight(ref, roughness);
+						this.points[x][y] = rndHeight(ref, this.roughness);
 					}
 				}
 			}
@@ -141,19 +141,19 @@ public class SquaresDiamonds {
 		int ab = this.currentSize / 2;
 		if (reachable(x + ab, y + ab)) {
 			anz++;
-			value += points[x + ab][y + ab];
+			value += this.points[x + ab][y + ab];
 		}
 		if (reachable(x - ab, y + ab)) {
 			anz++;
-			value += points[x - ab][y + ab];
+			value += this.points[x - ab][y + ab];
 		}
 		if (reachable(x + ab, y - ab)) {
 			anz++;
-			value += points[x + ab][y - ab];
+			value += this.points[x + ab][y - ab];
 		}
 		if (reachable(x - ab, y - ab)) {
 			anz++;
-			value += points[x - ab][y - ab];
+			value += this.points[x - ab][y - ab];
 		}
 		if (anz > 0) {
 			value /= anz;
@@ -170,19 +170,19 @@ public class SquaresDiamonds {
 		int ab = this.currentSize;
 		if (reachable(x + ab, y)) {
 			anz++;
-			value += points[x + ab][y];
+			value += this.points[x + ab][y];
 		}
 		if (reachable(x - ab, y)) {
 			anz++;
-			value += points[x - ab][y];
+			value += this.points[x - ab][y];
 		}
 		if (reachable(x, y - ab)) {
 			anz++;
-			value += points[x][y - ab];
+			value += this.points[x][y - ab];
 		}
 		if (reachable(x, y + ab)) {
 			anz++;
-			value += points[x][y + ab];
+			value += this.points[x][y + ab];
 		}
 		if (anz > 0) {
 			value /= anz;

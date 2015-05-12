@@ -24,7 +24,7 @@ public class FocusTraversalPolicyList extends FocusTraversalPolicy {
 	 * creates a policy with no components
 	 */
 	public FocusTraversalPolicyList() {
-		this.list = new ArrayList<Component>();
+		this.list = new ArrayList<>();
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class FocusTraversalPolicyList extends FocusTraversalPolicy {
 	 * @param order
 	 */
 	public FocusTraversalPolicyList(Component[] order) {
-		this.list = new ArrayList<Component>();
+		this.list = new ArrayList<>();
 		for (int i = 0; i < order.length; i++)
 			this.list.add(order[i]);
 	}
@@ -55,8 +55,8 @@ public class FocusTraversalPolicyList extends FocusTraversalPolicy {
 	 */
 	@Override
 	public Component getComponentAfter(Container container, Component component) {
-		int index = list.indexOf(component);
-		return list.get((index + 1) % list.size());
+		int index = this.list.indexOf(component);
+		return this.list.get((index + 1) % this.list.size());
 	}
 
 	/**
@@ -67,8 +67,8 @@ public class FocusTraversalPolicyList extends FocusTraversalPolicy {
 	 */
 	@Override
 	public Component getComponentBefore(Container container, Component component) {
-		int index = list.indexOf(component);
-		return list.get((index - 1 + list.size()) % list.size());
+		int index = this.list.indexOf(component);
+		return this.list.get((index - 1 + this.list.size()) % this.list.size());
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class FocusTraversalPolicyList extends FocusTraversalPolicy {
 	 */
 	@Override
 	public Component getDefaultComponent(Container container) {
-		return list.get(0);
+		return this.list.get(0);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class FocusTraversalPolicyList extends FocusTraversalPolicy {
 	 */
 	@Override
 	public Component getFirstComponent(Container container) {
-		return list.get(0);
+		return this.list.get(0);
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class FocusTraversalPolicyList extends FocusTraversalPolicy {
 	 */
 	@Override
 	public Component getLastComponent(Container container) {
-		return list.get(list.size() - 1);
+		return this.list.get(this.list.size() - 1);
 	}
 
 }

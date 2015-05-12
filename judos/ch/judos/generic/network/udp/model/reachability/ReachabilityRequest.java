@@ -28,7 +28,7 @@ public class ReachabilityRequest implements Serializable {
 		if (!(obj instanceof ReachabilityRequest))
 			return false;
 		ReachabilityRequest r = (ReachabilityRequest) obj;
-		return id == r.id && sent == r.sent && target.equals(r.target);
+		return this.id == r.id && this.sent == r.sent && this.target.equals(r.target);
 	}
 
 	public int getPingMS() {
@@ -41,7 +41,7 @@ public class ReachabilityRequest implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Arrays.hashCode(new Object[]{id, sent, target});
+		return Arrays.hashCode(new Object[]{this.id, this.sent, this.target});
 	}
 
 	public void responseReceived() {

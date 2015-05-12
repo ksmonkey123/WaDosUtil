@@ -66,6 +66,7 @@ public class Date implements Cloneable, Comparable<Date> {
 	 *         -1 if this.isBefore(date) <br>
 	 *         0 if the two dates represent the same day, month and year
 	 */
+	@Override
 	public int compareTo(Date date) {
 		if (isAfter(date))
 			return 1;

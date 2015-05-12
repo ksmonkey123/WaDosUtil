@@ -39,15 +39,15 @@ public class RotatedRect {
 	}
 	
 	private void init() {
-		this.r = Math.hypot(w / 2, h / 2);
-		this.alpha = Math.atan2(h / 2, w / 2);
-		this.innerR = Math.min(w / 2, h / 2);
+		this.r = Math.hypot(this.w / 2, this.h / 2);
+		this.alpha = Math.atan2(this.h / 2, this.w / 2);
+		this.innerR = Math.min(this.w / 2, this.h / 2);
 	}
 	
 	private double[] getPointsAngles() {
 		double pi = Math.PI;
-		return new double[] { this.theta + alpha, this.theta - alpha,
-			this.theta + pi + alpha, this.theta + pi - alpha };
+		return new double[] { this.theta + this.alpha, this.theta - this.alpha,
+			this.theta + pi + this.alpha, this.theta + pi - this.alpha };
 	}
 	
 	private int[] getXPoints() {

@@ -41,7 +41,7 @@ public class TupleR<T0, T1> implements CloneableJS {
 	 */
 	@Override
 	public TupleR<T0, T1> clone() throws CloneNotSupportedException {
-		return new TupleR<T0, T1>(e0, e1);
+		return new TupleR<>(this.e0, this.e1);
 	}
 
 	/**
@@ -66,9 +66,9 @@ public class TupleR<T0, T1> implements CloneableJS {
 	 */
 	public Object get(int index) {
 		if (index == 0) {
-			return e0;
+			return this.e0;
 		} else if (index == 1)
-			return e1;
+			return this.e1;
 		else
 			throw new IndexOutOfBoundsException("only index 0 and 1 is allowed.");
 	}

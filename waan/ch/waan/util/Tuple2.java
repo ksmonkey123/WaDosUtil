@@ -62,4 +62,9 @@ public class Tuple2<T1, T2> {
 	public int hashCode() {
 		return Objects.hash(this._1, this._2);
 	}
+
+	@Override
+	public String toString() {
+		return "(" + this._1 + ";" + this._2 + ")";
+	}
 }

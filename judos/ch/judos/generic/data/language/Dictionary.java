@@ -24,7 +24,7 @@ public class Dictionary {
 	 * @return all supported languages
 	 */
 	public static String[] getSupportedLanguages() {
-		ArrayList<String> l = new ArrayList<String>();
+		ArrayList<String> l = new ArrayList<>();
 		for (Class<?> c : languages)
 			l.add(c.getSimpleName());
 		Collections.sort(l);

@@ -134,7 +134,7 @@ public class MainGui {
 					break;
 				}
 				pmCount++;
-			} while (portMapping != null);
+			} while(true); //while (portMapping != null);
 		} else {
 			if (activeGW.getGenericPortMappingEntry(0, portMapping))
 				addLogLine("Portmapping #0 successfully retrieved ("

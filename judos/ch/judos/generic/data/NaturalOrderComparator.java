@@ -62,6 +62,7 @@ public class NaturalOrderComparator implements Comparator<Object> {
 	 * 
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 	 */
+	@Override
 	public int compare(Object o1, Object o2) {
 		String a = o1.toString();
 		String b = o2.toString();
@@ -126,11 +127,7 @@ public class NaturalOrderComparator implements Comparator<Object> {
 	}
 
 	static char charAt(String s, int i) {
-		if (i >= s.length()) {
-			return 0;
-		} else {
-			return s.charAt(i);
-		}
+		return i >= s.length() ? 0 : s.charAt(i);
 	}
 
 	// public static void main(String[] args) {

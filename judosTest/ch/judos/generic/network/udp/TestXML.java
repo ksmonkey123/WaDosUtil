@@ -41,7 +41,7 @@ public class TestXML extends TestCase implements UdpListener {
 		u.addObjectListener(this);
 
 		this.text = "<root>Hallo XML Welt!</root>";
-		Document d = Serializer.text2Document(text);
+		Document d = Serializer.text2Document(this.text);
 		this.received = false;
 		u.sendObjectConfirmTo(d, true, new InetSocketAddress("localhost", u
 			.getLocalPort()));

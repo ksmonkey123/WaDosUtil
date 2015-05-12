@@ -74,6 +74,7 @@ public class AStarSearchWayPoint extends SimpleWayPoint implements
 	 * @return comparision value
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
+	@Override
 	public int compareTo(AStarSearchWayPoint o) {
 		double a = this.steps + this.dist;
 		double b = o.steps + o.dist;

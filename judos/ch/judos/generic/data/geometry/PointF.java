@@ -2,7 +2,7 @@ package ch.judos.generic.data.geometry;
 
 import java.awt.Point;
 import java.awt.geom.Point2D;
-import java.io.Serializable;
+//import java.io.Serializable;
 
 import ch.judos.generic.data.rstorage.interfaces.RStorable2;
 
@@ -13,7 +13,7 @@ import ch.judos.generic.data.rstorage.interfaces.RStorable2;
  * @author Julian Schelker
  * @version 1.0 / 27.02.2013
  */
-public class PointF extends Point2D.Float implements Cloneable, Serializable, RStorable2 {
+public class PointF extends Point2D.Float implements /*Cloneable, Serializable, */ RStorable2 {
 
 	private static final long	serialVersionUID	= 1495729872930076211L;
 
@@ -108,11 +108,11 @@ public class PointF extends Point2D.Float implements Cloneable, Serializable, RS
 			this.y = target.y;
 			return true;
 		}
-		else {
+		//else {
 			double angle = Math.atan2(delta.y, delta.x);
 			movePoint(angle, speed);
 			return false;
-		}
+		//}
 	}
 
 	/**

@@ -18,7 +18,7 @@ public class HashMapSet<K, V> {
 	protected HashMap<K, HashSet<V>>	map;
 
 	public HashMapSet() {
-		this.map = new HashMap<K, HashSet<V>>();
+		this.map = new HashMap<>();
 	}
 
 	public void put(K key, V value) {

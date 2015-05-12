@@ -32,9 +32,9 @@ public class Udp3 implements Layer2Listener, Udp3I {
 	public Udp3(Udp2I u) {
 		this.u = u;
 		this.u.addListener(this);
-		this.idsBigPacket = new HashMap<InetSocketAddress, Short>();
-		this.listeners = new ArrayList<Layer3Listener>();
-		this.receiveBig = new HashMap<IAddressAndId, BigPacketRec>();
+		this.idsBigPacket = new HashMap<>();
+		this.listeners = new ArrayList<>();
+		this.receiveBig = new HashMap<>();
 	}
 
 	/**
@@ -139,8 +139,8 @@ public class Udp3 implements Layer2Listener, Udp3I {
 				"Type must be between 1 and 63 (inclusive) the rest is system reserved.");
 		int size = data.length;
 		out("out t=" + type + " size=" + data.length + " to:" + to);
-		if (size <= u.getMaxPacketSize())
-			u.sendDataTo(type, data, confirmation, to);
+		if (size <= this.u.getMaxPacketSize())
+			this.u.sendDataTo(type, data, confirmation, to);
 		else
 			splitAndSendData(type, data, to);
 	}
@@ -148,7 +148,7 @@ public class Udp3 implements Layer2Listener, Udp3I {
 	private void splitAndSendData(int type, byte[] data, InetSocketAddress to)
 		throws IOException {
 		short id = getIdForNextBigPacket(to);
-		BigPacketSend big = new BigPacketSend(id, data, u.getMaxPacketSize());
+		BigPacketSend big = new BigPacketSend(id, data, this.u.getMaxPacketSize());
 		byte[][] packets = big.getPackets();
 		out("  data split into " + packets.length + " part");
 		for (byte[] packet : packets)

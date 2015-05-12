@@ -1,6 +1,5 @@
 package ch.waan.util;
 
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Consumer;
 

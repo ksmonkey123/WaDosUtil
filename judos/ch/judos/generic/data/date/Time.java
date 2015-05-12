@@ -21,7 +21,7 @@ public class Time {
 	 */
 	public static ArrayList<String> getFormatChars() {
 		String formats = "aABghGHis";
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<>();
 		for (int i = 0; i < formats.length(); i++)
 			result.add(formats.substring(i, i + 1));
 		return result;

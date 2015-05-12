@@ -63,13 +63,12 @@ public class Utils {
 		java.net.URL imgURL = Utils.class.getResource(path);
 		if (imgURL != null) {
 			return new ImageIcon(imgURL);
-		} else {
-			ImageIcon icon = new ImageIcon(path);
-			return icon;
+		} 
+		ImageIcon icon = new ImageIcon(path);
+		return icon;
 			// else {
 			// System.err.println("Couldn't find file: " + path);
 			// return null;
 			// }
-		}
 	}
 }

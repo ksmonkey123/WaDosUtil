@@ -118,18 +118,18 @@ public class CSVFileReader {
 		String line;
 		String attributeLine = reader.readLine();
 		HashMap<String, Integer> candidates = getSeparationCandidates(attributeLine);
-		ArrayList<String> entityList = new ArrayList<String>();
+		ArrayList<String> entityList = new ArrayList<>();
 		while ((line = reader.readLine()) != null) {
 			entityList.add(line);
 		}
 		removeSeparationCandidates(candidates, entityList);
 		this.separation = getSeparationCharacter(candidates);
 
-		this.attributes = CSVFile.decodeForValue(attributeLine.split(separation, -1));
-		entities = new String[entityList.size()][];
+		this.attributes = CSVFile.decodeForValue(attributeLine.split(this.separation, -1));
+		this.entities = new String[entityList.size()][];
 		int index = 0;
 		for (String entity : entityList) {
-			entities[index] = CSVFile.decodeForValue(entity.split(this.separation, -1));
+			this.entities[index] = CSVFile.decodeForValue(entity.split(this.separation, -1));
 			index++;
 		}
 		if (!muted) {
@@ -179,7 +179,7 @@ public class CSVFileReader {
 	 * @return
 	 */
 	protected HashMap<String, Integer> getSeparationCandidates(String attributes) {
-		HashMap<String, Integer> result = new HashMap<String, Integer>();
+		HashMap<String, Integer> result = new HashMap<>();
 		String s;
 		for (char c : attributes.toCharArray()) {
 			s = Character.toString(c);

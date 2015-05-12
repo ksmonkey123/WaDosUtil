@@ -19,7 +19,7 @@ public class GroundFieldChecker extends FreeFieldCheckAdapter {
 
 	@Override
 	public boolean isFree(WayPoint p) {
-		return gMap.floor[p.getX()][p.getY()] instanceof Gras && gMap.isFree(p);
+		return this.gMap.floor[p.getX()][p.getY()] instanceof Gras && this.gMap.isFree(p);
 	}
 
 }

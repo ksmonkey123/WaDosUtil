@@ -3,19 +3,16 @@
  */
 package ch.waan.io;
 
-import java.io.IOException;
-
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathFactory;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import javax.xml.validation.ValidatorHandler;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+
+import ch.waan.xml.XML;
+import ch.waan.xml.XPath;
 
 /**
  * @author Andreas Wälchli
@@ -24,28 +21,26 @@ import org.xml.sax.SAXException;
  */
 public class SourceTest {
 
-	public static void main(String[] args) throws SAXException, IOException,
-			ParserConfigurationException {
-		Source.fromFile(".classpath")
+	public static void main(String[] args) {
+
+		XML XML = Source.fromFile(".classpath")
 				.mkXML()
-				.ifPresent(SourceTest::handleXML);
+				.orNull();
 
-	}
+		if (XML == null)
+			return;
 
-	static void handleXML(Document d) {
-		try {
-			XPathFactory xPathfactory = XPathFactory.newInstance();
-			XPath xpath = xPathfactory.newXPath();
-			XPathExpression expr = xpath.compile("classpath/classpathentry");
-			XPathExpression expr2 = xpath.compile("classpath/classpathentry[@kind='src']");
-			System.out.println(expr.evaluate(d, XPathConstants.NODE));
-			NodeList l = ((NodeList) expr2.evaluate(d, XPathConstants.NODESET));
-			for (int i = 0; i < l.getLength(); i++) {
-				System.out.println(" > " + l.item(i));
-			}
+		XML.query()
+				.addNode("classpathentry")
+				.setAttribute("kind", "myKind");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		XML.query()
+				.node("classpathentry")
+				.attribute("kind")
+				.filter(r -> r.isPresent())
+				.map(r -> r.get())
+				.distinct()
+				.forEach(System.out::println);
+
 	}
 }
