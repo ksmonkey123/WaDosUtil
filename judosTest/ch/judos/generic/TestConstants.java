@@ -24,19 +24,20 @@ public class TestConstants {
 	}
 
 	public static File getTestData(long size) throws IOException {
+		long remainingSize = size;
 		File f = new File(getDir(), "testData-" + FileSize.getSizeNiceFromBytes(size) + ".temp");
-		Writer w = FileUtils.getWriterForFile(f);
-		int bufSize = 1024 * 1024; // 1MB
-		char[] data = null;
-		while (size > 0) {
-			if (size < bufSize)
-				bufSize = (int) size;
-			if (data == null || data.length != bufSize)
-				data = new char[bufSize];
-			w.write(data, 0, bufSize);
-			size -= bufSize;
+		try (Writer w = FileUtils.getWriterForFile(f)) {
+			int bufSize = 1024 * 1024; // 1MB
+			char[] data = null;
+			while (remainingSize > 0) {
+				if (remainingSize < bufSize)
+					bufSize = (int) remainingSize;
+				if (data == null || data.length != bufSize)
+					data = new char[bufSize];
+				w.write(data, 0, bufSize);
+				remainingSize -= bufSize;
+			}
 		}
-		w.close();
 		return f;
 	}
 

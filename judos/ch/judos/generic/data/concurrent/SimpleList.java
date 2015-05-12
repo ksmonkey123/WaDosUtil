@@ -15,7 +15,7 @@ import ch.judos.generic.data.DynamicList;
  * @param <T>
  *           contained in this list
  */
-public class SimpleList<T> extends DynamicList<T> {
+public class SimpleList<@Nullable T> extends DynamicList<T> {
 
 	private static final long	serialVersionUID	= -5788620750829673564L;
 
@@ -43,6 +43,7 @@ public class SimpleList<T> extends DynamicList<T> {
 
 		@Override
 		public T next() {
+			@Nullable
 			T element;
 			try {
 				element = get(this.cursor);

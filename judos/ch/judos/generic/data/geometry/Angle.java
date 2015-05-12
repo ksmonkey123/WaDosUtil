@@ -149,6 +149,7 @@ public class Angle implements RStorable2 {
 	 * @param bigger
 	 * @return true if this angle lies between the smaller and the bigger angle
 	 */
+	@SuppressWarnings("all")
 	public boolean inInterval(Angle smaller, Angle bigger) {
 		if (smaller.getRadian() > bigger.getRadian()) {
 			Angle t = smaller;

@@ -13,8 +13,8 @@ public class Udp2ResendThreadTests extends TestCase {
 
 	private static final boolean	SILENT	= true;
 
-	private int						failed;
-	private PriorityQueue<Long>		queue;
+	int									failed;
+	private PriorityQueue<Long>	queue;
 	private boolean					running;
 
 	@SuppressWarnings("unused")
@@ -54,9 +54,11 @@ public class Udp2ResendThreadTests extends TestCase {
 			public void run() {
 				try {
 					runUdp2Thread();
-				} catch (Error e) {
+				}
+				catch (Error e) {
 					Udp2ResendThreadTests.this.failed++;
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e) {
 					Udp2ResendThreadTests.this.failed++;
 				}
 			}

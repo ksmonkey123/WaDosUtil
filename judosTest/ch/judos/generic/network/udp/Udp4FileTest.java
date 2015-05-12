@@ -26,7 +26,7 @@ public class Udp4FileTest extends TestCase implements FileTransmissionHandler,
 	public static final int			PORT		= 60000;
 	private long						start;
 	private Udp4I						u;
-	private File						testFileReceive;
+	private static File				testFileReceive;
 
 	@Override
 	public int getUpdateEveryMS() {
@@ -45,6 +45,7 @@ public class Udp4FileTest extends TestCase implements FileTransmissionHandler,
 
 	@Override
 	protected void setUp() throws Exception {
+		@SuppressWarnings("resource")
 		Udp2 u2 = new Udp2(new Udp1(new Udp0Reader(new DatagramSocket(PORT))));
 		this.u = new Udp4(new Udp3(u2));
 		testFile = TestConstants.getTestData(3 * 1024 * 1024);

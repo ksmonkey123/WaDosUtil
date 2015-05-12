@@ -15,9 +15,36 @@ public class RStorableInteger2 implements RStorableWrapper {
 
 	private int	nr;
 
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + this.nr;
+		return result;
+	}
+
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		return this.nr == ((RStorableInteger2) obj).nr;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RStorableInteger2 other = (RStorableInteger2) obj;
+		if (this.nr != other.nr)
+			return false;
+		return true;
 	}
 
 	@Override

@@ -101,7 +101,7 @@ public class Path implements Cloneable, Comparable<Path> {
 	 * creates a path
 	 * 
 	 * @param way
-	 *            all waypoint that are visited by the path
+	 *           all waypoint that are visited by the path
 	 */
 	public Path(List<WayPoint> way) {
 		this.way = way;
@@ -111,7 +111,7 @@ public class Path implements Cloneable, Comparable<Path> {
 	 * creates a path
 	 * 
 	 * @param way
-	 *            all waypoints that are visited by the path
+	 *           all waypoints that are visited by the path
 	 */
 	public Path(WayPoint[] way) {
 		this.way = Arrays.asList(way);
@@ -162,9 +162,9 @@ public class Path implements Cloneable, Comparable<Path> {
 
 	/**
 	 * @param fieldChecker
-	 *            object that knows which fields are free
+	 *           object that knows which fields are free
 	 * @param transl
-	 *            coordinate Translator
+	 *           coordinate Translator
 	 * @return a shortened way to follow to be faster
 	 */
 	public Path getAirWay(FreeFieldChecker fieldChecker, CoordinateTranslator transl) {
@@ -197,7 +197,7 @@ public class Path implements Cloneable, Comparable<Path> {
 	 * @param target
 	 * @param freeCheck
 	 * @param trans
-	 *            coordinateTranslator
+	 *           coordinateTranslator
 	 * @return whether the fields are diagonally reachable
 	 */
 	public boolean isAirReachable(PointF start, PointF target, FreeFieldChecker freeCheck,
@@ -258,28 +258,29 @@ public class Path implements Cloneable, Comparable<Path> {
 	}
 
 	/**
-	 * @param way
+	 * @param foundWay
 	 * @param fieldChecker
 	 * @param transl
 	 * @return the path shortened, diagonals are used first from the target
 	 */
-	protected Path shortenBackward(List<WayPoint> way, FreeFieldChecker fieldChecker,
+	@SuppressWarnings("all")
+	protected Path shortenBackward(List<WayPoint> foundWay, FreeFieldChecker fieldChecker,
 		CoordinateTranslator transl) {
-		way = reverseList(way);
-		List<WayPoint> path = shortenForward(way, fieldChecker, transl);
+		foundWay = reverseList(foundWay);
+		List<WayPoint> path = shortenForward(foundWay, fieldChecker, transl);
 		return new Path(reverseList(path));
 	}
 
 	/**
 	 * @param path
-	 *            the path to shorten
+	 *           the path to shorten
 	 * @param fieldChecker
 	 * @param transl
-	 * @return the shortened path, diagonals are used first from initial
-	 *         starting field
+	 * @return the shortened path, diagonals are used first from initial starting
+	 *         field
 	 */
-	protected List<WayPoint> shortenForward(List<WayPoint> path,
-		FreeFieldChecker fieldChecker, CoordinateTranslator transl) {
+	protected List<WayPoint> shortenForward(List<WayPoint> path, FreeFieldChecker fieldChecker,
+		CoordinateTranslator transl) {
 		List<WayPoint> result = new ArrayList<>();
 		Iterator<WayPoint> it = path.iterator();
 		WayPoint from = it.next();

@@ -7,13 +7,7 @@ import java.util.Set;
 import ch.judos.generic.data.DynamicList;
 import ch.judos.generic.data.TripleW;
 import ch.judos.generic.data.geometry.PointF;
-import ch.judos.generic.games.pathsearch.AStarPathSearch;
-import ch.judos.generic.games.pathsearch.FreeFieldChecker;
-import ch.judos.generic.games.pathsearch.GridMap;
-import ch.judos.generic.games.pathsearch.Path;
-import ch.judos.generic.games.pathsearch.SimpleWayPoint;
-import ch.judos.generic.games.pathsearch.UnitOnMapFreeFieldChecker;
-import ch.judos.generic.games.pathsearch.WayPoint;
+import ch.judos.generic.games.pathsearch.*;
 
 /**
  * Coordinates the movement of a unit. Extend this class if you want some object
@@ -34,11 +28,11 @@ public abstract class NonReservingUnitCoordination extends Unit {
 	/**
 	 * the map to use
 	 */
-	protected GridMap				map;
+	protected GridMap					map;
 	/**
 	 * current position in pixels on the map
 	 */
-	protected PointF				pos;
+	protected PointF					pos;
 	/**
 	 * intermediate targets of the path
 	 */
@@ -46,29 +40,29 @@ public abstract class NonReservingUnitCoordination extends Unit {
 
 	/**
 	 * @param map
-	 *            the map to use
+	 *           the map to use
 	 * @param pos
-	 *            the starting field position of the unit
+	 *           the starting field position of the unit
 	 * @throws NoFreeSpaceException
-	 *             if at the starting field position there's no space
+	 *            if at the starting field position there's no space
 	 */
-	public NonReservingUnitCoordination(GridMap map, WayPoint pos)
-		throws NoFreeSpaceException {
+	public NonReservingUnitCoordination(GridMap map, WayPoint pos) throws NoFreeSpaceException {
 		this(map, pos, null);
 	}
 
 	/**
 	 * @param map
-	 *            the map to use
+	 *           the map to use
 	 * @param pos
-	 *            the starting field position of the unit
+	 *           the starting field position of the unit
 	 * @param checker
-	 *            used to check where this unit can go
+	 *           used to check where this unit can go
 	 * @throws NoFreeSpaceException
-	 *             if at the starting field position there's no space
+	 *            if at the starting field position there's no space
 	 */
-	public NonReservingUnitCoordination(GridMap map, WayPoint pos,
-		FreeFieldChecker checker) throws NoFreeSpaceException {
+	@SuppressWarnings("all")
+	public NonReservingUnitCoordination(GridMap map, WayPoint pos, FreeFieldChecker checker)
+		throws NoFreeSpaceException {
 		super();
 		if (checker == null)
 			checker = new UnitOnMapFreeFieldChecker(map, this);
@@ -82,7 +76,7 @@ public abstract class NonReservingUnitCoordination extends Unit {
 	}
 
 	private void calcNewRoute(WayPoint current, WayPoint target) {
-		notifyAllListeners(Unit.ROUTE_RECALC);
+		notifyAllListeners(Unit.UNIT_EVENT.ROUTE_RECALC);
 		AStarPathSearch ps = new AStarPathSearch();
 		Path path = ps.searchWay(current, target, this.checker);
 		if (path != null) {
@@ -91,8 +85,9 @@ public abstract class NonReservingUnitCoordination extends Unit {
 			for (WayPoint p : i)
 				this.targets.add(new SimpleWayPoint(p.getX(), p.getY()));
 
-		} else {
-			notifyAllListeners(Unit.CANT_REACH_TARGET);
+		}
+		else {
+			notifyAllListeners(Unit.UNIT_EVENT.CANT_REACH_TARGET);
 		}
 	}
 
@@ -111,7 +106,7 @@ public abstract class NonReservingUnitCoordination extends Unit {
 
 	/**
 	 * @param point
-	 *            check whether this point collides with any obstacle on the map
+	 *           check whether this point collides with any obstacle on the map
 	 * @return true if the new position for the unit is allowed
 	 */
 	protected boolean checkMovementCollidesAndAllocate(PointF point) {
@@ -135,9 +130,8 @@ public abstract class NonReservingUnitCoordination extends Unit {
 	 * assumes an object has the size of one field
 	 * 
 	 * @param point
-	 *            some point on the map
-	 * @return all waypoints that are occupied by an object the size of one
-	 *         field
+	 *           some point on the map
+	 * @return all waypoints that are occupied by an object the size of one field
 	 */
 	protected HashSet<WayPoint> getCornerFields(PointF point) {
 		int size = this.map.getGridSize();
@@ -189,9 +183,9 @@ public abstract class NonReservingUnitCoordination extends Unit {
 				this.targets.remove(0);
 			return nextPos.e2;
 		}// else {
-			this.targets.clear();
-			return 0;
-		//}
+		this.targets.clear();
+		return 0;
+		// }
 	}
 
 	/**
@@ -223,8 +217,9 @@ public abstract class NonReservingUnitCoordination extends Unit {
 			if (current.equals(this.finalTargets.get(0))
 				&& this.map.getPointFromField(current).equals(this.pos)) {
 				this.finalTargets.remove(0);
-				notifyAllListeners(Unit.TARGET_REACHED);
-			} else
+				notifyAllListeners(Unit.UNIT_EVENT.TARGET_REACHED);
+			}
+			else
 				calcNewRoute(current, this.finalTargets.get(0));
 		}
 	}

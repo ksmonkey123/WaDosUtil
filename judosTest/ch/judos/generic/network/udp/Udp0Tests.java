@@ -19,9 +19,9 @@ public class Udp0Tests extends TestCase {
 
 	@Override
 	protected void setUp() throws Exception {
-		try (DatagramSocket ds = new DatagramSocket(PORT)) {
-			this.u = new Udp0Reader(ds);
-		}
+		@SuppressWarnings("resource")
+		DatagramSocket ds = new DatagramSocket(PORT);
+		this.u = new Udp0Reader(ds);
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class Udp0Tests extends TestCase {
 			fail();
 		}
 		catch (IOException e) {
-			fail();
+			// supposed to throw this exception
 		}
 	}
 
