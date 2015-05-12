@@ -96,6 +96,7 @@ public class TripleW<T0, T1, T2> {
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString() {
 		return "[" + this.e0 + ", " + this.e1 + ", " + this.e2 + "]";
 	}

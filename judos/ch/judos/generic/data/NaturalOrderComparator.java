@@ -62,6 +62,7 @@ public class NaturalOrderComparator implements Comparator<Object> {
 	 * 
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 	 */
+	@Override
 	public int compare(Object o1, Object o2) {
 		String a = o1.toString();
 		String b = o2.toString();

@@ -33,19 +33,23 @@ public class ProgressIterable<T> implements Iterable<Progress<T>> {
 	 * 
 	 * @see java.lang.Iterable#iterator()
 	 */
+	@Override
 	public Iterator<Progress<T>> iterator() {
 		return new Iterator<Progress<T>>() {
 			int	index	= 0;
 
+			@Override
 			public boolean hasNext() {
 				return this.index < ProgressIterable.this.arr.length;
 			}
 
+			@Override
 			public Progress<T> next() {
 				float progress = (float) this.index / ProgressIterable.this.arr.length;
 				return new Progress<>(progress, ProgressIterable.this.arr[this.index++]);
 			}
 
+			@Override
 			public void remove() {
 			}
 

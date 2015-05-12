@@ -39,6 +39,7 @@ import javax.swing.filechooser.FileFilter;
 public class ImageFilter extends FileFilter {
 
 	// Accept all directories and all gif, jpg, tiff, or png files.
+	@Override
 	public boolean accept(File f) {
 		if (f.isDirectory()) {
 			return true;
@@ -59,6 +60,7 @@ public class ImageFilter extends FileFilter {
 	}
 
 	// The description of this filter
+	@Override
 	public String getDescription() {
 		return "Just Images";
 	}
