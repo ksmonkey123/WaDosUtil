@@ -127,6 +127,7 @@ public interface UIComponent {
 	 *            the position of the mouse relative to the component centre
 	 * @default no action is taken
 	 */
+	@SuppressWarnings("unused")
 	public default void mouseMoved(final @NonNull Point mouse) {
 		// default: no action
 	}
@@ -140,6 +141,7 @@ public interface UIComponent {
 	 *            the pressed button
 	 * @default no action is taken
 	 */
+	@SuppressWarnings("unused")
 	public default void mouseButtonPressed(final @NonNull MouseButton button) {
 		// default: no action
 	}
@@ -159,6 +161,7 @@ public interface UIComponent {
 	 *            the released button
 	 * @default no action is taken
 	 */
+	@SuppressWarnings("unused")
 	public default void mouseButtonReleased(final @NonNull MouseButton button) {
 		// default : no action
 	}
@@ -174,6 +177,7 @@ public interface UIComponent {
 	 *            the amount the mouse wheel was scrolled by
 	 * @default no action is taken
 	 */
+	@SuppressWarnings("unused")
 	public default void mouseWheelScrolled(final double scrollSpeed) {
 		// default : no action
 	}
@@ -187,6 +191,7 @@ public interface UIComponent {
 	 *            the parent container
 	 * @default no action is taken
 	 */
+	@SuppressWarnings("unused")
 	public default void parentUpdated(
 			final @Nullable UIContainer<? extends UIComponent> parent) {
 		// default : no action
