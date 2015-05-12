@@ -29,7 +29,7 @@ public class Rock implements Drawable {
 	public Rock(Map map, int gridx, int gridy) {
 		this.x = gridx;
 		this.y = gridy;
-		map.reserveField(new SimpleWayPoint(x, y));
+		map.reserveField(new SimpleWayPoint(this.x, this.y));
 	}
 
 	/*
@@ -40,7 +40,7 @@ public class Rock implements Drawable {
 	@Override
 	public void paint(Graphics g) {
 		g.setColor(Color.gray);
-		g.fillOval(x * 50, y * 50, 50, 50);
+		g.fillOval(this.x * 50, this.y * 50, 50, 50);
 	}
 
 }

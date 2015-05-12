@@ -35,7 +35,7 @@ public class CSVFileWriter {
 	 */
 	public CSVFileWriter(String[] attributes) {
 		this.attributes = attributes;
-		this.entries = new ArrayList<String[]>();
+		this.entries = new ArrayList<>();
 	}
 
 	/**
@@ -80,9 +80,9 @@ public class CSVFileWriter {
 		BufferedWriter wr = new BufferedWriter(output);
 		// If you get an error here you need to include
 		// "Apache commons-lang3-3.1" into your project
-		wr.write(StringUtils.join(CSVFile.encodeForFile(attributes), CSVFile.separator));
+		wr.write(StringUtils.join(CSVFile.encodeForFile(this.attributes), CSVFile.separator));
 		wr.write(CSVFile.linebreak);
-		for (String[] entry : entries) {
+		for (String[] entry : this.entries) {
 			wr.write(StringUtils.join(CSVFile.encodeForFile(entry), CSVFile.separator));
 			wr.write(CSVFile.linebreak);
 		}

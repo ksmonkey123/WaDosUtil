@@ -26,8 +26,8 @@ public class FileSender implements Runnable {
 
 	public FileSender(Udp4 u, int packetSize) {
 		this.u = u;
-		this.newFiles = new ArrayList<FileOutgoingTransmission>();
-		this.runningFileTrans = new HashMap<InetSocketAddress, FileOutgoingTransmission>();
+		this.newFiles = new ArrayList<>();
+		this.runningFileTrans = new HashMap<>();
 		this.packetSize = packetSize;
 		this.running = true;
 	}

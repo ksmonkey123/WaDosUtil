@@ -40,11 +40,11 @@ public class Map extends SpaceGridMap {
 	private void drawGrid(Graphics g) {
 		g.setColor(Color.black);
 		// draw vertical lines
-		for (int x = 0; x < gridWidth + 1; x++)
-			g.drawLine(x * 50, 0, x * 50, gridHeight * 50);
+		for (int x = 0; x < this.gridWidth + 1; x++)
+			g.drawLine(x * 50, 0, x * 50, this.gridHeight * 50);
 		// draw horizontal lines
-		for (int y = 0; y < gridHeight + 1; y++)
-			g.drawLine(0, y * 50, gridWidth * 50, y * 50);
+		for (int y = 0; y < this.gridHeight + 1; y++)
+			g.drawLine(0, y * 50, this.gridWidth * 50, y * 50);
 	}
 
 	/*
@@ -57,8 +57,8 @@ public class Map extends SpaceGridMap {
 
 	public void paint(Graphics g) {
 
-		for (int x = 0; x < gridWidth; x++) {
-			for (int y = 0; y < gridHeight; y++) {
+		for (int x = 0; x < this.gridWidth; x++) {
+			for (int y = 0; y < this.gridHeight; y++) {
 				// draw static object on floor
 				if (this.floor[x][y] != null)
 					this.floor[x][y].paint(g);
@@ -84,7 +84,7 @@ public class Map extends SpaceGridMap {
 		@Override
 		public void paint(Graphics g) {
 			g.setColor(new Color(50, 180, 80));
-			g.fillRect(x * 50, y * 50, 50, 50);
+			g.fillRect(this.x * 50, this.y * 50, 50, 50);
 		}
 	}
 
@@ -98,7 +98,7 @@ public class Map extends SpaceGridMap {
 		@Override
 		public void paint(Graphics g) {
 			g.setColor(Color.blue);
-			g.fillRect(x * 50, y * 50, 50, 50);
+			g.fillRect(this.x * 50, this.y * 50, 50, 50);
 		}
 	}
 

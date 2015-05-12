@@ -11,7 +11,7 @@ import java.util.HashMap;
  * @author Andreas Wälchli
  * @version 1.1, 2015-05-09
  */
-@SuppressWarnings({ "hiding", "javadoc" })
+@SuppressWarnings("hiding")
 public final class TagCompound implements Tag<HashMap<String, Tag<?>>> {
 
 	@Override

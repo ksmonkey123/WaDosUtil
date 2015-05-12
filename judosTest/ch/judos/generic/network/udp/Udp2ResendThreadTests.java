@@ -19,7 +19,7 @@ public class Udp2ResendThreadTests extends TestCase {
 
 	@SuppressWarnings("unused")
 	private void resend(Long x) {
-		queue.remove();
+		this.queue.remove();
 		int diff = (int) Math.abs(System.currentTimeMillis() - x);
 		if (diff > 0 && !SILENT)
 			System.out.println(diff);
@@ -29,14 +29,14 @@ public class Udp2ResendThreadTests extends TestCase {
 	protected void runUdp2Thread() throws InterruptedException {
 		while (this.running) {
 			synchronized (this.queue) {
-				if (queue.size() == 0)
-					queue.wait();
+				if (this.queue.size() == 0)
+					this.queue.wait();
 				else {
-					Long x = queue.element();
+					Long x = this.queue.element();
 					if (System.currentTimeMillis() >= x)
 						resend(x);
 					else
-						queue.wait(x - System.currentTimeMillis());
+						this.queue.wait(x - System.currentTimeMillis());
 				}
 			}
 		}
@@ -44,7 +44,7 @@ public class Udp2ResendThreadTests extends TestCase {
 
 	public void testPriorityQueue() throws InterruptedException {
 
-		this.queue = new PriorityQueue<Long>();
+		this.queue = new PriorityQueue<>();
 		this.queue.add(System.currentTimeMillis() + 20);
 		this.queue.add(System.currentTimeMillis() + 50);
 		this.running = true;
@@ -55,9 +55,9 @@ public class Udp2ResendThreadTests extends TestCase {
 				try {
 					runUdp2Thread();
 				} catch (Error e) {
-					failed++;
+					Udp2ResendThreadTests.this.failed++;
 				} catch (InterruptedException e) {
-					failed++;
+					Udp2ResendThreadTests.this.failed++;
 				}
 			}
 		}, "Udp2TestThread");
@@ -75,11 +75,11 @@ public class Udp2ResendThreadTests extends TestCase {
 			System.out.println("all elements added, waiting for queue to empty");
 		while (true) {
 			synchronized (this.queue) {
-				if (queue.size() == 0)
+				if (this.queue.size() == 0)
 					break;
 			}
 			Thread.yield();
-			assertEquals(0, failed);
+			assertEquals(0, this.failed);
 		}
 		if (!SILENT)
 			System.out.println("set running to false");

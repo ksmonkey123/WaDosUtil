@@ -36,26 +36,26 @@ public class SimpleList<T> extends DynamicList<T> {
 
 		@Override
 		public boolean hasNext() {
-			return cursor < size();
+			return this.cursor < size();
 		}
 
 		@Override
 		public T next() {
 			T element;
 			try {
-				element = get(cursor);
+				element = get(this.cursor);
 			}
 			catch (IndexOutOfBoundsException e) {
 				return null;
 			}
-			cursor++;
+			this.cursor++;
 			return element;
 		}
 
 		@Override
 		public void remove() {
 			try {
-				SimpleList.this.remove(cursor);
+				SimpleList.this.remove(this.cursor);
 			}
 			catch (IndexOutOfBoundsException ex) {
 			}

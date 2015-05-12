@@ -40,6 +40,7 @@ public class JDialogWithTaskbarEntry extends JDialog {
 	 * 
 	 * @see java.awt.Dialog#setVisible(boolean)
 	 */
+	@Override
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 		if (!visible) {

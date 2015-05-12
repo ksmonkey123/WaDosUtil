@@ -27,6 +27,7 @@ public class Swing {
 		final JScrollPane x = panel;
 		final int y = position;
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				x.getVerticalScrollBar().setValue(y);
 			}

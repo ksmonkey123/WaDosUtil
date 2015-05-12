@@ -44,18 +44,22 @@ public class ImageFileView extends FileView {
 	ImageIcon	tiffIcon	= Utils.createImageIcon("images/tiffIcon.gif");
 	ImageIcon	pngIcon		= Utils.createImageIcon("images/pngIcon.png");
 
+	@Override
 	public String getName(File f) {
 		return null; // let the L&F FileView figure this out
 	}
 
+	@Override
 	public String getDescription(File f) {
 		return null; // let the L&F FileView figure this out
 	}
 
+	@Override
 	public Boolean isTraversable(File f) {
 		return null; // let the L&F FileView figure this out
 	}
 
+	@Override
 	public String getTypeDescription(File f) {
 		String extension = Utils.getExtension(f);
 		String type = null;
@@ -74,19 +78,20 @@ public class ImageFileView extends FileView {
 		return type;
 	}
 
+	@Override
 	public Icon getIcon(File f) {
 		String extension = Utils.getExtension(f);
 		Icon icon = null;
 
 		if (extension != null) {
 			if (extension.equals(Utils.jpeg) || extension.equals(Utils.jpg)) {
-				icon = jpgIcon;
+				icon = this.jpgIcon;
 			} else if (extension.equals(Utils.gif)) {
-				icon = gifIcon;
+				icon = this.gifIcon;
 			} else if (extension.equals(Utils.tiff) || extension.equals(Utils.tif)) {
-				icon = tiffIcon;
+				icon = this.tiffIcon;
 			} else if (extension.equals(Utils.png)) {
-				icon = pngIcon;
+				icon = this.pngIcon;
 			}
 		}
 		return icon;

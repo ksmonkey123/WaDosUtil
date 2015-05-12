@@ -41,12 +41,12 @@ public class Classes {
 	 */
 	public static List<Class<?>> commonSuperClass(Class<?>... classes) {
 		// start off with set from first hierarchy
-		Set<Class<?>> rollingIntersect = new LinkedHashSet<Class<?>>(getClassesBfs(classes[0]));
+		Set<Class<?>> rollingIntersect = new LinkedHashSet<>(getClassesBfs(classes[0]));
 		// intersect with next
 		for (int i = 1; i < classes.length; i++) {
 			rollingIntersect.retainAll(getClassesBfs(classes[i]));
 		}
-		return new LinkedList<Class<?>>(rollingIntersect);
+		return new LinkedList<>(rollingIntersect);
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class Classes {
 	 * @return all classes directly in this folder, does not go down recursively
 	 */
 	public static Class<?>[] getClassesFromPackage(String packageName) {
-		List<Class<?>> classes = new ArrayList<Class<?>>();
+		List<Class<?>> classes = new ArrayList<>();
 		File dir = new File(binFolder + "/" + packageName);
 		File[] files = dir.listFiles();
 		for (File f : files) {
@@ -92,12 +92,12 @@ public class Classes {
 	 *         super-classes
 	 */
 	protected static Set<Class<?>> getClassesBfs(Class<?> clazz) {
-		Set<Class<?>> classes = new LinkedHashSet<Class<?>>();
-		Set<Class<?>> nextLevel = new LinkedHashSet<Class<?>>();
+		Set<Class<?>> classes = new LinkedHashSet<>();
+		Set<Class<?>> nextLevel = new LinkedHashSet<>();
 		nextLevel.add(clazz);
 		do {
 			classes.addAll(nextLevel);
-			Set<Class<?>> thisLevel = new LinkedHashSet<Class<?>>(nextLevel);
+			Set<Class<?>> thisLevel = new LinkedHashSet<>(nextLevel);
 			nextLevel.clear();
 			for (Class<?> each : thisLevel) {
 				Class<?> superClass = each.getSuperclass();

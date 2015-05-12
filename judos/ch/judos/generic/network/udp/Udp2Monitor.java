@@ -23,7 +23,7 @@ public class Udp2Monitor extends Thread {
 	@Override
 	public void run() {
 		try {
-			Field f = u.getClass().getField("resendPackets");
+			Field f = this.u.getClass().getField("resendPackets");
 			while (true) {
 				PriorityQueue<Packet2ResendConfirmed> x = (PriorityQueue<Packet2ResendConfirmed>) f
 					.get(this.u);

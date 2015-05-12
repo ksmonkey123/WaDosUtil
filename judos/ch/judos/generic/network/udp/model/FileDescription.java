@@ -29,28 +29,28 @@ public class FileDescription implements Serializable {
 	 * @return the description
 	 */
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
 	/**
 	 * @return the length
 	 */
 	public long getLength() {
-		return length;
+		return this.length;
 	}
 
 	/**
 	 * @return the parts
 	 */
 	public int getParts() {
-		return parts;
+		return this.parts;
 	}
 
 	/**
 	 * @return the path
 	 */
 	public String getPath() {
-		return path;
+		return this.path;
 	}
 
 }

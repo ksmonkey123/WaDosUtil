@@ -24,7 +24,7 @@ public class Udp3Tests extends TestCase {
 	}
 
 	private void emptyData() {
-		success = false;
+		this.success = false;
 		Layer3Listener listener = new Layer3Listener() {
 
 			@Override
@@ -33,7 +33,7 @@ public class Udp3Tests extends TestCase {
 				assertEquals(0, data.length);
 				assertEquals(60000, from.getPort());
 				synchronized (this) {
-					success = true;
+					Udp3Tests.this.success = true;
 					notifyAll();
 				}
 			}
@@ -53,13 +53,13 @@ public class Udp3Tests extends TestCase {
 		} catch (InterruptedException e) {
 			fail();
 		}
-		assertTrue(success);
+		assertTrue(this.success);
 		this.u.removeListener(listener);
 	}
 
 	public void excessiveData() {
 		final byte[] senddata = new byte[24000];
-		success = false;
+		this.success = false;
 		Layer3Listener listener = new Layer3Listener() {
 
 			@Override
@@ -68,7 +68,7 @@ public class Udp3Tests extends TestCase {
 				assertEquals(senddata.length, data.length);
 				assertArrayEquals(senddata, data);
 				synchronized (this) {
-					success = true;
+					Udp3Tests.this.success = true;
 					notifyAll();
 				}
 			}
@@ -88,7 +88,7 @@ public class Udp3Tests extends TestCase {
 		} catch (InterruptedException e) {
 			fail();
 		}
-		assertTrue(success);
+		assertTrue(this.success);
 		this.u.removeListener(listener);
 	}
 
@@ -103,7 +103,7 @@ public class Udp3Tests extends TestCase {
 	}
 
 	private void someConfirmedData() {
-		success = false;
+		this.success = false;
 		final byte[] senddata = new byte[]{0, 5, 100, -100, 127};
 		Layer3Listener listener = new Layer3Listener() {
 
@@ -113,7 +113,7 @@ public class Udp3Tests extends TestCase {
 				assertEquals(senddata.length, data.length);
 				assertArrayEquals(senddata, data);
 				synchronized (this) {
-					success = true;
+					Udp3Tests.this.success = true;
 					notifyAll();
 				}
 			}
@@ -133,12 +133,12 @@ public class Udp3Tests extends TestCase {
 		} catch (InterruptedException e) {
 			fail();
 		}
-		assertTrue(success);
+		assertTrue(this.success);
 		this.u.removeListener(listener);
 	}
 
 	private void someData() {
-		success = false;
+		this.success = false;
 		final byte[] senddata = new byte[]{0, 5, 100, -100, 127};
 		Layer3Listener listener = new Layer3Listener() {
 
@@ -148,7 +148,7 @@ public class Udp3Tests extends TestCase {
 				assertEquals(senddata.length, data.length);
 				assertArrayEquals(senddata, data);
 				synchronized (this) {
-					success = true;
+					Udp3Tests.this.success = true;
 					notifyAll();
 				}
 			}
@@ -168,7 +168,7 @@ public class Udp3Tests extends TestCase {
 		} catch (InterruptedException e) {
 			fail();
 		}
-		assertTrue(success);
+		assertTrue(this.success);
 		this.u.removeListener(listener);
 	}
 

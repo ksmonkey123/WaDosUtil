@@ -22,8 +22,8 @@ public class LateErrorOutput implements Runnable {
 	}
 
 	public LateErrorOutput() {
-		this.errors = new HashMap<String, Error>();
-		this.check = new PriorityQueue<Error>();
+		this.errors = new HashMap<>();
+		this.check = new PriorityQueue<>();
 		this.running = false;
 	}
 
@@ -57,7 +57,7 @@ public class LateErrorOutput implements Runnable {
 				this.check.poll();
 				if (this.check.isEmpty())
 					break;
-				else
+			//	else
 					wait = this.check.peek().getRemainingTime();
 			} else
 				wait = e.getRemainingTime();
@@ -67,6 +67,7 @@ public class LateErrorOutput implements Runnable {
 					wait(wait);
 				}
 			} catch (InterruptedException e1) {
+				// FIXME: should this interrupt really be ignored? break seams better
 			}
 		}
 		this.running = false;
@@ -84,7 +85,7 @@ public class LateErrorOutput implements Runnable {
 		}
 
 		public void dump() {
-			System.err.println(msg + " (" + count + " times)");
+			System.err.println(this.msg + " (" + this.count + " times)");
 		}
 
 		public long getDumpTime() {

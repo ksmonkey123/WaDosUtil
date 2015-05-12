@@ -26,12 +26,12 @@ public class Map {
 
 	@SafeVarargs
 	public static <T> HashMap<String, ArrayList<T>> listUp(HashMap<String, T>... maps) {
-		HashMap<String, ArrayList<T>> result = new HashMap<String, ArrayList<T>>();
+		HashMap<String, ArrayList<T>> result = new HashMap<>();
 		for (HashMap<String, T> map : maps) {
 			for (Entry<String, T> e : map.entrySet()) {
 				ArrayList<T> list = result.get(e.getKey());
 				if (list == null) {
-					list = new ArrayList<T>();
+					list = new ArrayList<>();
 					result.put(e.getKey(), list);
 				}
 				list.add(e.getValue());

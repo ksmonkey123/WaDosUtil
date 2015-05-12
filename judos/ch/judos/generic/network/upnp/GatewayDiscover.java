@@ -31,9 +31,9 @@ import java.net.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.parsers.ParserConfigurationException;
+//import javax.xml.parsers.ParserConfigurationException;
 
-import org.xml.sax.SAXException;
+//import org.xml.sax.SAXException;
 
 /**
  * Handles the discovery of GatewayDevices, via the {@link #discover()} method.
@@ -55,7 +55,7 @@ public class GatewayDiscover {
 	 * A map of the GatewayDevices discovered so far. The assumption is that a
 	 * machine is connected to up to a Gateway Device per InetAddress
 	 */
-	private Map<InetAddress, GatewayDevice>	devices	= new HashMap<InetAddress, GatewayDevice>();
+	private Map<InetAddress, GatewayDevice>	devices	= new HashMap<>();
 
 	/**
 	 * The default constructor
@@ -81,7 +81,8 @@ public class GatewayDiscover {
 	 * @throws ParserConfigurationException
 	 */
 	public Map<InetAddress, GatewayDevice> discover() throws SocketException,
-		UnknownHostException, IOException, SAXException, ParserConfigurationException {
+		UnknownHostException, IOException//, SAXException, ParserConfigurationException {
+		{
 		DatagramSocket ssdp = new DatagramSocket();
 		int port = ssdp.getLocalPort();
 		final String searchMessage = "M-SEARCH * HTTP/1.1\r\n" + "HOST: " + IP + ":" + port
@@ -110,13 +111,13 @@ public class GatewayDiscover {
 					InetAddress localAddress = getOutboundAddress(receivePacket
 						.getSocketAddress());
 					d.setLocalAddress(localAddress);
-					devices.put(localAddress, d);
+					this.devices.put(localAddress, d);
 				}
 				catch (SocketTimeoutException ste) {
 					waitingPacket = false;
 				}
 			}
-			for (GatewayDevice device : devices.values()) {
+			for (GatewayDevice device : this.devices.values()) {
 				try {
 					device.loadDescription();
 				}
@@ -127,7 +128,7 @@ public class GatewayDiscover {
 		finally {
 			ssdp.close();
 		}
-		return devices;
+		return this.devices;
 	}
 
 	/**
@@ -165,7 +166,7 @@ public class GatewayDiscover {
 	 *         null if nost present
 	 */
 	public GatewayDevice getValidGateway() {
-		for (GatewayDevice device : devices.values()) {
+		for (GatewayDevice device : this.devices.values()) {
 			try {
 				if (device.isConnected()) {
 					return device;
