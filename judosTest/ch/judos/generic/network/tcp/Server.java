@@ -43,16 +43,16 @@ public class Server implements Runnable {
 		try {
 			boolean run = true;
 			while (run) {
-				String msg = in.readLine();
+				String msg = this.in.readLine();
 				System.out.println("received: " + msg);
 				if (msg.equals("hello"))
-					out.write("re hello!");
+					this.out.write("re hello!");
 				if (msg.equals("bye")) {
-					out.write("byebye!");
+					this.out.write("byebye!");
 					run = false;
 				}
-				out.newLine();
-				out.flush();
+				this.out.newLine();
+				this.out.flush();
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

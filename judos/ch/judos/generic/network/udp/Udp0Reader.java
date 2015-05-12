@@ -19,7 +19,7 @@ public class Udp0Reader extends Udp0Sender implements Runnable {
 
 	public Udp0Reader(DatagramSocket ds) throws SocketException {
 		super(ds);
-		this.listeners = new ArrayList<Layer0Listener>();
+		this.listeners = new ArrayList<>();
 		this.reader = new Thread(this, "(UdpLayer0Reader)");
 		this.reader.setDaemon(false);
 		this.reader.start();

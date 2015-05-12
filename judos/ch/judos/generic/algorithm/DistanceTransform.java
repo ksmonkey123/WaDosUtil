@@ -98,7 +98,7 @@ public class DistanceTransform {
 	 */
 	public static void buildHistogram(ArrayList<Double> al) {
 		histogramArray = new String[width * height];
-		histogramArrayCountMap = new HashMap<Double, Double>();
+		histogramArrayCountMap = new HashMap<>();
 		initArray(histogramArray);
 		for (int i = 0; i < al.size(); ++i) {
 			pixelValue = al.get(i);
@@ -123,14 +123,12 @@ public class DistanceTransform {
 	public static double calculateThresholdFromAvg(ArrayList<Double> al) {
 		double sum = 0.0;
 		// double avg = 0.0;
-		if (al.isEmpty()) {
+		if (al.isEmpty())
 			return 0.0;
-		} else {
-			for (int i = 0; i < al.size(); ++i) {
-				sum += al.get(i);
-			}
-			return sum / al.size();
+		for (int i = 0; i < al.size(); ++i) {
+			sum += al.get(i);
 		}
+		return sum / al.size();
 	}
 
 	/**
@@ -155,7 +153,7 @@ public class DistanceTransform {
 	 * @return ArrayList
 	 */
 	public static ArrayList<Double> convert2DimentoArrayList(double[][] _Image) {
-		ArrayList<Double> al = new ArrayList<Double>();
+		ArrayList<Double> al = new ArrayList<>();
 		for (int i = 0; i < _Image.length; ++i) {
 			for (int j = 0; j < _Image.length; ++j) {
 				al.add(_Image[i][j]);
@@ -179,8 +177,8 @@ public class DistanceTransform {
 	 */
 	public static double[][] convertLabelToCount(double[][] image,
 		Map<Integer, ArrayList<Double>> map) {
-		Map<Integer, Integer> countMap = new HashMap<Integer, Integer>();
-		labelAl = new ArrayList<Double>();
+		Map<Integer, Integer> countMap = new HashMap<>();
+		labelAl = new ArrayList<>();
 		for (int i : map.keySet()) {
 			countMap.put(i, map.get(i).get(7).intValue());
 			labelAl.add(map.get(i).get(7));
@@ -267,10 +265,7 @@ public class DistanceTransform {
 	 * @return
 	 */
 	public static int findLarger(int a, int b) {
-		if (a > b)
-			return a;
-		else
-			return b;
+		return a > b ? a : b;
 	}
 
 	/**
@@ -284,26 +279,23 @@ public class DistanceTransform {
 	 * @return
 	 */
 	public static int findLesser(int a, int b) {
-		if (a < b)
-			return a;
-		else
-			return b;
+		return a < b ? a : b;
 	}
 
 	/**
 	 * 
-	 * This method traverse a neighbor list and return the minimum value.
+	 * This method traverse a neighbour list and return the minimum value.
 	 * 
-	 * @param neighborArray
+	 * @param neighbours
 	 * 
 	 * @return int minimum value
 	 */
-	public static int findMin(ArrayList<Integer> neighborArray) {
+	public static int findMin(ArrayList<Integer> neighbours) {
 		int min = 0;
-		Collections.sort(neighborArray);
-		for (int i = 0; i < neighborArray.size(); ++i) {
-			if (neighborArray.get(i) != 0) {
-				min = neighborArray.get(i);
+		Collections.sort(neighbours);
+		for (int i = 0; i < neighbours.size(); ++i) {
+			if (neighbours.get(i) != 0) {
+				min = neighbours.get(i);
 				break;
 			}
 		}
@@ -312,16 +304,16 @@ public class DistanceTransform {
 
 	/**
 	 * 
-	 * This method traverse a neighbor list and return the minimum value.
+	 * This method traverse a neighbour list and return the minimum value.
 	 * 
 	 * @param neighborArray
 	 * 
 	 * @return int minimum value
 	 */
-	public static int findMinDT(ArrayList<Integer> neighborArray) {
+	public static int findMinDT(ArrayList<Integer> neighbours) {
 		int min = 0;
-		Collections.sort(neighborArray);
-		min = neighborArray.get(0);
+		Collections.sort(neighbours);
+		min = neighbours.get(0);
 		return min;
 	}
 
@@ -382,11 +374,11 @@ public class DistanceTransform {
 	 * @return double[][]image
 	 */
 	public static double[][] firstPass(double[][] _image) {
-		eqList = new ArrayList<ArrayList<Integer>>();
+		eqList = new ArrayList<>();
 		int nw, n, ne, w, c = 0;
 		for (int i = 0; i < _image.length; ++i) {
 			for (int j = 0; j < _image[0].length; ++j) {
-				neighborArray = new ArrayList<Integer>();
+				neighborArray = new ArrayList<>();
 				try {
 					nw = (int) _image[i - 1][j - 1];
 					neighborArray.add(nw);
@@ -416,7 +408,7 @@ public class DistanceTransform {
 					if (nw == 0 && n == 0 && ne == 0 && w == 0)// case 1 : all
 																// are zeros
 					{
-						ArrayList<Integer> al = new ArrayList<Integer>();
+						ArrayList<Integer> al = new ArrayList<>();
 						al.add(++currentLabel);
 						eqList.add(al);
 						_image[i][j] = currentLabel;
@@ -482,11 +474,11 @@ public class DistanceTransform {
 	 * @return double[][]image
 	 */
 	public static double[][] firstPassDT(double[][] _image) {
-		eqList = new ArrayList<ArrayList<Integer>>();
+		eqList = new ArrayList<>();
 		int nw, n, ne, w, x = 0;
 		for (int i = 0; i < _image.length; ++i) {
 			for (int j = 0; j < _image[0].length; ++j) {
-				neighborArray = new ArrayList<Integer>();
+				neighborArray = new ArrayList<>();
 				try {
 					nw = (int) _image[i - 1][j - 1];
 					neighborArray.add(nw);
@@ -535,8 +527,8 @@ public class DistanceTransform {
 	 * @param _tresholdValue
 	 */
 	public static void getAboveAndBelowList(ArrayList<Double> al, double _tresholdValue) {
-		aboveThresholdAl = new ArrayList<Double>();
-		belowThresholdAl = new ArrayList<Double>();
+		aboveThresholdAl = new ArrayList<>();
+		belowThresholdAl = new ArrayList<>();
 		for (int i = 0; i < al.size(); ++i) {
 			if (al.get(i) > _tresholdValue) {
 				aboveThresholdAl.add(al.get(i));
@@ -632,7 +624,7 @@ public class DistanceTransform {
 	}
 
 	public static ArrayList<Double> getTopFromList(int top, ArrayList<Double> al) {
-		ArrayList<Double> tempAl = new ArrayList<Double>();
+		ArrayList<Double> tempAl = new ArrayList<>();
 		for (int i = 0; i < al.size(); ++i) {
 			if (i < top) {
 				tempAl.add(al.get(i));
@@ -660,10 +652,10 @@ public class DistanceTransform {
 	 */
 	public static ArrayList<Double> listTopCandidate(int NoOfTop,
 		Map<Double, Double> histogramArrayCountMap) {
-		ArrayList<Double> valueList = new ArrayList<Double>();
+		ArrayList<Double> valueList = new ArrayList<>();
 		valueList.addAll(histogramArrayCountMap.values());
 		Collections.sort(valueList, Collections.reverseOrder());
-		ArrayList<Double> candidateList = new ArrayList<Double>();
+		ArrayList<Double> candidateList = new ArrayList<>();
 		int count = 0;
 		for (int i = 0; i < valueList.size(); ++i) {
 			for (double s : histogramArrayCountMap.keySet()) {
@@ -737,7 +729,7 @@ public class DistanceTransform {
 			image = filteringOp.medianFilteringOperation(enlargeImage, image, 3);
 			// print2DimensionArray(image);
 			print2DimensionArrayInt(image);
-			ArrayList<Double> al = new ArrayList<Double>();
+			ArrayList<Double> al = new ArrayList<>();
 			al = convert2DimentoArrayList(image);
 			// build histogram from an enhance image
 			buildHistogram(al);
@@ -745,7 +737,7 @@ public class DistanceTransform {
 			print("Histogram : ");
 			printHistogram(histogramArray, (int) filteringOp.max);
 			// calculate threshold values
-			ArrayList<Double> possibleThresholdAl = new ArrayList<Double>();
+			ArrayList<Double> possibleThresholdAl = new ArrayList<>();
 			possibleThresholdAl = listTopCandidate(11, histogramArrayCountMap);
 			print("");
 			print("Top 11 highest values : ");
@@ -901,7 +893,7 @@ public class DistanceTransform {
 	public static void printMap(Map<Integer, ArrayList<Double>> map) {
 		print("label     minRow    maxRow      minCol    maxCol       width        height      noOfPixel         CR         CC         RC            R2           C2            Vr        Vc     ");
 		for (int i : map.keySet()) {
-			ArrayList<Double> al = new ArrayList<Double>();
+			ArrayList<Double> al = new ArrayList<>();
 			al = map.get(i);
 			// System.out.print(i + " : ") ;
 			printPropertyArrayList(al);
@@ -937,7 +929,7 @@ public class DistanceTransform {
 	 * @param fileName
 	 */
 	public static void readFromFile(String fileName) {
-		alPixelOri = new ArrayList<Integer>();
+		alPixelOri = new ArrayList<>();
 		try {
 			fReader = new FileReader(fileName);
 			bReader = new BufferedReader(fReader);
@@ -992,7 +984,7 @@ public class DistanceTransform {
 	 * @param fileName
 	 */
 	public static void readFromFileEachInt(String fileName) {
-		alPixelOri = new ArrayList<Integer>();
+		alPixelOri = new ArrayList<>();
 		try {
 			fReader = new FileReader(fileName);
 			bReader = new BufferedReader(fReader);
@@ -1075,11 +1067,11 @@ public class DistanceTransform {
 	 * @return double[][] image
 	 */
 	public static double[][] secondPass(double[][] _image) {
-		eqList = new ArrayList<ArrayList<Integer>>();
+		eqList = new ArrayList<>();
 		int ea, sw, s, se, c = 0;
 		for (int i = _image.length - 1; i > 0; --i) {
 			for (int j = _image[0].length - 1; j > 0; --j) {
-				neighborArray = new ArrayList<Integer>();
+				neighborArray = new ArrayList<>();
 				try {
 					ea = (int) _image[i][j + 1];
 					neighborArray.add(ea);
@@ -1162,11 +1154,11 @@ public class DistanceTransform {
 	 * @return double[][] image
 	 */
 	public static double[][] secondPassDT(double[][] _image) {
-		eqList = new ArrayList<ArrayList<Integer>>();
+		eqList = new ArrayList<>();
 		int ea, sw, s, se, x = 0;
 		for (int i = _image.length - 1; i > 0; --i) {
 			for (int j = _image[0].length - 1; j > 0; --j) {
-				neighborArray = new ArrayList<Integer>();
+				neighborArray = new ArrayList<>();
 				try {
 					ea = (int) _image[i][j + 1];
 					neighborArray.add(ea);
@@ -1233,10 +1225,10 @@ public class DistanceTransform {
 		int cc_width = 0;
 		int cc_height = 0;
 		boolean first = true;
-		pixelCountMap = new HashMap<Integer, Integer>();
-		pixelMap = new HashMap<Integer, ArrayList<pixel>>();
+		pixelCountMap = new HashMap<>();
+		pixelMap = new HashMap<>();
 		ArrayList<pixel> pixelArrayList;
-		propertiesMap = new HashMap<Integer, ArrayList<Double>>();
+		propertiesMap = new HashMap<>();
 		for (int i = 0; i < image.length; ++i) {
 			for (int j = 0; j < image[1].length; ++j) {
 				label = (int) image[i][j];
@@ -1250,7 +1242,7 @@ public class DistanceTransform {
 					if (!pixelMap.containsKey(label)) // does not contain this
 														// label
 					{
-						pixelArrayList = new ArrayList<pixel>();
+						pixelArrayList = new ArrayList<>();
 						pixelMap.put(label, pixelArrayList);
 					}
 					pixel p = new pixel(i, j); // offset height row
@@ -1260,7 +1252,7 @@ public class DistanceTransform {
 		}
 		// each label list, do operation
 		for (int l : pixelMap.keySet()) {
-			ArrayList<pixel> al = new ArrayList<pixel>();
+			ArrayList<pixel> al = new ArrayList<>();
 			al = pixelMap.get(l);
 			first = true;
 			for (int i = 0; i < al.size(); ++i) {
@@ -1279,7 +1271,7 @@ public class DistanceTransform {
 					maxCol = findLarger(p.row, maxCol);
 				}
 			}
-			labelAl = new ArrayList<Double>();
+			labelAl = new ArrayList<>();
 			labelAl.add((double) l);
 			labelAl.add((double) minRow);
 			labelAl.add((double) maxRow);
@@ -1377,7 +1369,7 @@ public class DistanceTransform {
 			myFile.delete();
 			bWriter = new BufferedWriter(new FileWriter(fileName, true));
 			for (int i : map.keySet()) {
-				ArrayList<Integer> al = new ArrayList<Integer>();
+				ArrayList<Integer> al = new ArrayList<>();
 				al = map.get(i);
 				String oneLine = "";
 				for (int j = 0; j < al.size(); ++j) {
@@ -1405,12 +1397,12 @@ class pixel {
 	int	row;
 
 	public pixel() {
-		row = 0;
-		col = 0;
+		this.row = 0;
+		this.col = 0;
 	}
 
 	public pixel(int r, int c) {
-		row = r;
-		col = c;
+		this.row = r;
+		this.col = c;
 	}
 }

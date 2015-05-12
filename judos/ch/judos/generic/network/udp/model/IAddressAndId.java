@@ -29,7 +29,7 @@ public class IAddressAndId {
 
 	@Override
 	public int hashCode() {
-		return Arrays.hashCode(new Object[]{id, address});
+		return Arrays.hashCode(new Object[]{this.id, this.address});
 	}
 
 }

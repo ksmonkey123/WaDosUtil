@@ -26,6 +26,7 @@ public class Packet2ResendConfirmed extends Packet2A {
 		return this.sendCount >= UdpConfig.RESEND_COUNT_BEFORE_REPORTING_CONNECTION_ISSUE;
 	}
 
+	@Override
 	public void wasResentNow() {
 		resendIn(UdpConfig.RESEND_TIMEOUT_MS);
 		this.sendCount++;

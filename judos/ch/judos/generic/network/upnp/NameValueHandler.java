@@ -86,7 +86,7 @@ public class NameValueHandler extends DefaultHandler {
 	public void
 		startElement(String uri, String localName, String qName, Attributes attributes)
 			throws SAXException {
-		currentElement = localName;
+		this.currentElement = localName;
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class NameValueHandler extends DefaultHandler {
 	 */
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		currentElement = null;
+		this.currentElement = null;
 	}
 
 	/**
@@ -134,11 +134,11 @@ public class NameValueHandler extends DefaultHandler {
 	 */
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
-		if (currentElement != null) {
+		if (this.currentElement != null) {
 			String value = new String(ch, start, length);
-			String old = nameValue.put(currentElement, value);
+			String old = this.nameValue.put(this.currentElement, value);
 			if (old != null) {
-				nameValue.put(currentElement, old + value);
+				this.nameValue.put(this.currentElement, old + value);
 			}
 		}
 	}

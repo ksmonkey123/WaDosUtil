@@ -38,8 +38,8 @@ public class Main extends KeyAdapter implements MouseListener, MovementListener 
 
 	public Main() {
 		this.map = new Map(15, 10);
-		this.units = new ArrayList<Unit>();
-		this.unitmode = new HashMap<Unit, Integer>();
+		this.units = new ArrayList<>();
+		this.unitmode = new HashMap<>();
 		SimpleUnit u = new SimpleUnit(this.map, 0, 0);
 		this.units.add(u);
 		u.commandTo(new SimpleWayPoint(0, 0));

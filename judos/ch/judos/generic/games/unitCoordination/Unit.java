@@ -37,7 +37,7 @@ public abstract class Unit extends Obstacle {
 	 */
 	public Unit() {
 		super();
-		this.listener = new ArrayList<MovementListener>();
+		this.listener = new ArrayList<>();
 	}
 
 	/**

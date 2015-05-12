@@ -22,10 +22,10 @@ public class DynamicTag extends Tag {
 			if (objectTracker.isMappedAlready(object))
 				return new Tag(Optional.empty(), false, true, objectTracker
 					.getIndexForObject(object));
-			else {
+			//else {
 				objectNr = objectTracker.mapObjectAndGetIndex(object);
 				isObjReferenced = () -> (objectTracker.getUsageForObject(object) > 0);
-			}
+			//}
 		}
 		Optional<String> type = Optional.empty();
 		if (storeType)
@@ -43,7 +43,7 @@ public class DynamicTag extends Tag {
 
 	@Override
 	public String toString() {
-		this.hasSetReference = setRefDynamic.get();
+		this.hasSetReference = this.setRefDynamic.get();
 		return super.toString();
 	}
 }

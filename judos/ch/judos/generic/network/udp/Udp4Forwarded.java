@@ -26,7 +26,7 @@ public class Udp4Forwarded extends Udp4 {
 	 * @return the externalPort according to the port mapping that was made
 	 */
 	public int getExternalPort() {
-		return externalPort;
+		return this.externalPort;
 	}
 
 }

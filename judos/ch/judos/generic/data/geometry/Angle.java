@@ -167,8 +167,7 @@ public class Angle implements RStorable2 {
 	public boolean inIntervalUncapped(Angle startAngle, Angle endAngle) {
 		if (startAngle.radian < endAngle.radian)
 			return startAngle.radian <= this.radian && this.radian <= endAngle.radian;
-		else
-			return this.radian >= startAngle.radian || this.radian <= endAngle.radian;
+		return this.radian >= startAngle.radian || this.radian <= endAngle.radian;
 	}
 
 	public double getCos() {

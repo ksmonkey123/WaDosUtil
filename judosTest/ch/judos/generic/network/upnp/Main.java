@@ -109,7 +109,7 @@ public class Main {
 					break;
 				}
 				pmCount++;
-			} while (portMapping != null);
+			} while (true);//(portMapping != null);
 		} else {
 			if (activeGW.getGenericPortMappingEntry(0, portMapping))
 				addLogLine("Portmapping #0 successfully retrieved ("
@@ -130,23 +130,22 @@ public class Main {
 		if (activeGW.getSpecificPortMappingEntry(SAMPLE_PORT, "TCP", portMapping)) {
 			addLogLine("Port " + SAMPLE_PORT + " is already mapped. Aborting test.");
 			return;
-		} else {
+		} 
 			addLogLine("Mapping free. Sending port mapping request for port "
 				+ SAMPLE_PORT);
-			// test static lease duration mapping
-			if (activeGW.addPortMapping(SAMPLE_PORT, SAMPLE_PORT, use.getHostAddress(),
-				"TCP", "test")) {
-				addLogLine("Mapping SUCCESSFUL. Waiting " + WAIT_TIME
-					+ " seconds before removing mapping...");
-				Thread.sleep(1000 * WAIT_TIME);
-				if (activeGW.deletePortMapping(SAMPLE_PORT, "TCP")) {
-					addLogLine("Port mapping removed, test SUCCESSFUL");
-				} else {
-					addLogLine("Port mapping removal FAILED");
-				}
-			} else
-				System.err.println("PortMapping couldn't be added");
-		}
+		// test static lease duration mapping
+		if (activeGW.addPortMapping(SAMPLE_PORT, SAMPLE_PORT, use.getHostAddress(),
+			"TCP", "test")) {
+			addLogLine("Mapping SUCCESSFUL. Waiting " + WAIT_TIME
+				+ " seconds before removing mapping...");
+			Thread.sleep(1000 * WAIT_TIME);
+			if (activeGW.deletePortMapping(SAMPLE_PORT, "TCP")) {
+				addLogLine("Port mapping removed, test SUCCESSFUL");
+			} else {
+				addLogLine("Port mapping removal FAILED");
+			}
+		} else
+			System.err.println("PortMapping couldn't be added");
 		addLogLine("Stopping weupnp");
 	}
 

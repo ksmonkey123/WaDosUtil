@@ -21,7 +21,7 @@ public abstract class Listenable {
 	/**
 	 * the list of listeners for the object
 	 */
-	protected List<Listener>	listener	= new ArrayList<Listener>();
+	protected List<Listener>	listener	= new ArrayList<>();
 
 	/**
 	 * @param l

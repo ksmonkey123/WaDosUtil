@@ -516,7 +516,7 @@ public class MutableInteger extends Number implements Comparable<Integer> {
 	 */
 	@Override
 	public byte byteValue() {
-		return (byte) value;
+		return (byte) this.value;
 	}
 
 	/**
@@ -524,7 +524,7 @@ public class MutableInteger extends Number implements Comparable<Integer> {
 	 */
 	@Override
 	public short shortValue() {
-		return (short) value;
+		return (short) this.value;
 	}
 
 	/**
@@ -532,7 +532,7 @@ public class MutableInteger extends Number implements Comparable<Integer> {
 	 */
 	@Override
 	public int intValue() {
-		return value;
+		return this.value;
 	}
 
 	/**
@@ -540,7 +540,7 @@ public class MutableInteger extends Number implements Comparable<Integer> {
 	 */
 	@Override
 	public long longValue() {
-		return (long) value;
+		return this.value;
 	}
 
 	/**
@@ -548,7 +548,7 @@ public class MutableInteger extends Number implements Comparable<Integer> {
 	 */
 	@Override
 	public float floatValue() {
-		return (float) value;
+		return this.value;
 	}
 
 	/**
@@ -556,7 +556,7 @@ public class MutableInteger extends Number implements Comparable<Integer> {
 	 */
 	@Override
 	public double doubleValue() {
-		return (double) value;
+		return this.value;
 	}
 
 	/**
@@ -570,7 +570,7 @@ public class MutableInteger extends Number implements Comparable<Integer> {
 	 */
 	@Override
 	public String toString() {
-		return toString(value);
+		return toString(this.value);
 	}
 
 	/**
@@ -581,7 +581,7 @@ public class MutableInteger extends Number implements Comparable<Integer> {
 	 */
 	@Override
 	public int hashCode() {
-		return value;
+		return this.value;
 	}
 
 	/**
@@ -597,7 +597,7 @@ public class MutableInteger extends Number implements Comparable<Integer> {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Integer) {
-			return value == ((Integer) obj).intValue();
+			return this.value == ((Integer) obj).intValue();
 		}
 		return false;
 	}

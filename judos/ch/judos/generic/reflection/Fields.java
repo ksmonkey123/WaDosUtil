@@ -20,7 +20,7 @@ public class Fields {
 	 * @return all public fields for the given class
 	 */
 	public static DynamicList<Field> getPublicFieldsOfClass(Class<?> c) {
-		DynamicList<Field> r = new DynamicList<Field>();
+		DynamicList<Field> r = new DynamicList<>();
 		for (Field f : c.getFields()) {
 			if (Modifier.isPublic(f.getModifiers()))
 				r.add(f);
@@ -34,7 +34,7 @@ public class Fields {
 	 * @return all values for the given object and fields in the same order
 	 */
 	public static DynamicList<Object> getValuesForFields(Object obj, List<Field> fields) {
-		DynamicList<Object> r = new DynamicList<Object>();
+		DynamicList<Object> r = new DynamicList<>();
 		for (Field f : fields) {
 			try {
 				r.add(f.get(obj));
@@ -59,7 +59,7 @@ public class Fields {
 	}
 
 	public static DynamicList<Field> getAllFieldsAndInherited(Class<?> c) {
-		DynamicList<Field> r = new DynamicList<Field>();
+		DynamicList<Field> r = new DynamicList<>();
 		while (c != null) {
 			r.addAll(c.getDeclaredFields());
 			c = c.getSuperclass();

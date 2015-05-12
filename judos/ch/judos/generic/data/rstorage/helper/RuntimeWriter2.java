@@ -17,7 +17,7 @@ public class RuntimeWriter2 extends Writer {
 
 	public RuntimeWriter2(BufferedWriter redirectTo) {
 		this.redirectTo = redirectTo;
-		this.content = new ArrayList<Object>();
+		this.content = new ArrayList<>();
 		this.escaped = false;
 	}
 
