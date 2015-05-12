@@ -5,10 +5,10 @@ import java.io.StringReader;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 import ch.waan.util.Result;
+import ch.waan.xml.XML;
 
 /**
  * Source Data interaction Helper
@@ -93,13 +93,14 @@ public abstract class Source {
 	 * 
 	 * @return a result holding the XML
 	 */
-	public Result<Document> mkXML() {
+	public Result<XML> mkXML() {
 		return this.mkString()
 				.map(StringReader::new)
 				.map(InputSource::new)
 				.map(reader -> DocumentBuilderFactory.newInstance()
 						.newDocumentBuilder()
-						.parse(reader));
+						.parse(reader))
+				.map(XML::new);
 
 	}
 }

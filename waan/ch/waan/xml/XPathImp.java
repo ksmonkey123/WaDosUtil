@@ -76,10 +76,10 @@ class XPathImp implements XPath {
 	}
 
 	@Override
-	public XPath indexRange(int from, int to) {
+	public XPath indexRange(int from, int amount) {
 		return new XPathImp(this.elements.sequential()
 				.skip(from)
-				.limit(to - from));
+				.limit(amount));
 	}
 
 	@Override

@@ -3,8 +3,15 @@
  */
 package ch.waan.io;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import javax.xml.validation.ValidatorHandler;
+
 import org.w3c.dom.Document;
 
+import ch.waan.xml.XML;
 import ch.waan.xml.XPath;
 
 /**
@@ -16,17 +23,19 @@ public class SourceTest {
 
 	public static void main(String[] args) {
 
-		Document XML = Source.fromFile(".classpath")
+		XML XML = Source.fromFile(".classpath")
 				.mkXML()
 				.orNull();
 
-		XPath.of(XML)
+		if (XML == null)
+			return;
+
+		XML.query()
 				.addNode("classpathentry")
 				.setAttribute("kind", "myKind");
 
-		XPath.of(XML)
+		XML.query()
 				.node("classpathentry")
-				.indexRange(2, 6)
 				.attribute("kind")
 				.filter(r -> r.isPresent())
 				.map(r -> r.get())
