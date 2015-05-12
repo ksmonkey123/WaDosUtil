@@ -284,7 +284,7 @@ public class DistanceTransform {
 
 	/**
 	 * 
-	 * This method traverse a neighbor list and return the minimum value.
+	 * This method traverse a neighbour list and return the minimum value.
 	 * 
 	 * @param neighbours
 	 * 
@@ -304,7 +304,7 @@ public class DistanceTransform {
 
 	/**
 	 * 
-	 * This method traverse a neighbou list and return the minimum value.
+	 * This method traverse a neighbour list and return the minimum value.
 	 * 
 	 * @param neighborArray
 	 * 
