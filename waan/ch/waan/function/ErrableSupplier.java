@@ -1,5 +1,7 @@
 package ch.waan.function;
 
+import java.io.IOException;
+
 /**
  * Functional interface for suppliers that may throw exceptions
  * 

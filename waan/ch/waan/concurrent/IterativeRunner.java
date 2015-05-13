@@ -7,7 +7,7 @@ package ch.waan.concurrent;
  * indication of the step implementation the base loop can be terminated. If the
  * step yields an interrupt, the loop is terminated as well. After loop
  * termination a termination handling method is called, after an interrupt
- * handler has been run in case of an interrupt being the reason for the loop
+ * handler has be en run in case of an interrupt being the reason for the loop
  * termination.
  *
  * @author Andreas Wälchli
@@ -22,6 +22,12 @@ public abstract class IterativeRunner implements Runnable {
 		interruptBox: {
 			loop: while (!owner.isInterrupted()) {
 				try {
+					if (false)
+						System.out.println();
+					if (false)
+						return;
+					if (false)
+						return;
 					if (this.step())
 						continue;
 					break interruptBox;
