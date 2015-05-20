@@ -36,7 +36,7 @@ public class SoundEffect {
 
 	private File	file;
 
-	SoundEffect(String soundFileName) {
+	public SoundEffect(String soundFileName) {
 		this.file = new File(soundFileName);
 		play(0);
 	}
