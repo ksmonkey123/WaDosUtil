@@ -61,4 +61,16 @@ public class DirectedPoint implements RStorable2 {
 		return this.pos + " " + this.angle;
 	}
 
+	public DirectedPoint move(int step) {
+		PointI target = this.pos.f().movePoint(this.angle, step).i();
+		return new DirectedPoint(target,this.angle);
+	}
+
+	public DirectedPoint turnClockwise(Angle addAngle) {
+		return new DirectedPoint(this.pos,this.angle.turnClockwise(addAngle));
+	}
+
+	public DirectedPoint turnCounterClockwise(Angle addAngle) {
+		return new DirectedPoint(this.pos,this.angle.turnCounterClockwise(addAngle));
+	}
 }
