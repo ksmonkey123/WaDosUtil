@@ -78,4 +78,13 @@ public class RandomJS {
 		init();
 		return r.nextInt(max + 1);
 	}
+
+	/**
+	 * not exact, but good for values between 1% and 99%
+	 * @param percentage
+	 * @return
+	 */
+	public static boolean getTrueWithProb(int percentage) {
+		return getDouble(100) <=percentage;
+	}
 }

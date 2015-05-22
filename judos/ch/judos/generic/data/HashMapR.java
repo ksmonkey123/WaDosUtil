@@ -1,6 +1,7 @@
 package ch.judos.generic.data;
 
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * a hashmap working in both directions
@@ -87,5 +88,13 @@ public class HashMapR<K, V> {
 		K key = getFromValue(value);
 		this.key2value.remove(key);
 		this.value2key.remove(value);
+	}
+
+	public Set<V> getValueSet() {
+		return this.value2key.keySet();
+	}
+	
+	public Set<K> getKeySet() {
+		return this.key2value.keySet();
 	}
 }
