@@ -3,7 +3,6 @@ package ch.judos.generic.games.pathsearch;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
-
 import ch.judos.generic.data.HashMap2;
 
 /**
@@ -26,7 +25,6 @@ public class AStarPathSearch {
 	 * @return a list consisting of the waypoints with the shortest path from
 	 *         start to end
 	 */
-	@SuppressWarnings({"null"})
 	public Path searchWay(WayPoint start, WayPoint target, FreeFieldChecker fieldChecker) {
 		// FreeFieldChecker fieldChecker = new UnitOnMapFreeFieldChecker(map,
 		// this.unit);
