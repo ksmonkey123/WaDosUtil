@@ -22,6 +22,12 @@ public abstract class IterativeRunner implements Runnable {
 		interruptBox: {
 			loop: while (!owner.isInterrupted()) {
 				try {
+					if (false)
+						System.out.println();
+					if (false)
+						return;
+					if (false)
+						return;
 					if (this.step())
 						continue;
 					break interruptBox;
