@@ -3,7 +3,6 @@ package ch.judos.generic.games.pathsearch;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
-
 import ch.judos.generic.data.HashMap2;
 
 /**
@@ -22,13 +21,16 @@ public class AStarPathSearch {
 	 * @param start
 	 * @param target
 	 * @param fieldChecker
-	 *            checking for occupied fields
+	 *           checking for occupied fields
 	 * @return a list consisting of the waypoints with the shortest path from
 	 *         start to end
 	 */
 	public Path searchWay(WayPoint start, WayPoint target, FreeFieldChecker fieldChecker) {
 		// FreeFieldChecker fieldChecker = new UnitOnMapFreeFieldChecker(map,
 		// this.unit);
+
+		if (target == null)
+			throw new NullPointerException("target can not be null");
 
 		boolean debugWaySearch = false;
 
@@ -72,7 +74,8 @@ public class AStarPathSearch {
 						searchOn.clear();
 						break;
 					}
-				} else if (debugWaySearch)
+				}
+				else if (debugWaySearch)
 					System.out.println("not free or already checked. :"
 						+ fieldChecker.isFreeAndInsideMap(w));
 			}

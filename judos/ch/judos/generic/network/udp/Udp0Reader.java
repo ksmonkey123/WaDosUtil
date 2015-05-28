@@ -5,7 +5,6 @@ import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
-
 import ch.judos.generic.network.udp.interfaces.Layer0Listener;
 
 /**
@@ -16,10 +15,12 @@ public class Udp0Reader extends Udp0Sender implements Runnable {
 
 	protected ArrayList<Layer0Listener>	listeners;
 	protected Thread							reader;
+	protected boolean							readingRunning;
 
 	public Udp0Reader(DatagramSocket ds) throws SocketException {
 		super(ds);
 		this.listeners = new ArrayList<>();
+		this.readingRunning = true;
 		this.reader = new Thread(this, "(UdpLayer0Reader)");
 		this.reader.setDaemon(false);
 		this.reader.start();
@@ -34,6 +35,7 @@ public class Udp0Reader extends Udp0Sender implements Runnable {
 
 	@SuppressWarnings("deprecation")
 	protected void checkDisposed() {
+		this.readingRunning = false;
 		// close socket, causes SocketException in reader
 		this.ds.close();
 		// check that reader has stopped
@@ -58,12 +60,7 @@ public class Udp0Reader extends Udp0Sender implements Runnable {
 	 * asynchronous shutdown of udp connection
 	 */
 	public void dispose() {
-		Runnable r = new Runnable() {
-			@Override
-			public void run() {
-				checkDisposed();
-			}
-		};
+		Runnable r = () -> checkDisposed();
 		Thread t = new Thread(r, "Shutdown Udp0");
 		t.start();
 	}
@@ -84,9 +81,9 @@ public class Udp0Reader extends Udp0Sender implements Runnable {
 
 	@Override
 	public void run() {
-		DatagramPacket packet = new DatagramPacket(new byte[UdpConfig.PACKET_SIZE_BYTES],
-			UdpConfig.PACKET_SIZE_BYTES);
-		while (true) {
+		DatagramPacket packet =
+			new DatagramPacket(new byte[UdpConfig.PACKET_SIZE_BYTES], UdpConfig.PACKET_SIZE_BYTES);
+		while (this.readingRunning) {
 			try {
 				this.ds.receive(packet);
 				byte[] data = new byte[packet.getLength()];
@@ -94,6 +91,8 @@ public class Udp0Reader extends Udp0Sender implements Runnable {
 				received((InetSocketAddress) packet.getSocketAddress(), data);
 			}
 			catch (Exception e) {
+				if (!this.readingRunning)
+					break;
 				e.printStackTrace();
 			}
 			packet.setData(new byte[UdpConfig.PACKET_SIZE_BYTES]);

@@ -17,7 +17,7 @@ import ch.judos.generic.reflection.Classes;
  * @param <T>
  *           any object to be in the list
  */
-public class DynamicList<@Nullable T> extends ArrayList<T> {
+public class DynamicList<T> extends ArrayList<T> {
 
 	/**
 	 * create an empty list
@@ -174,6 +174,7 @@ public class DynamicList<@Nullable T> extends ArrayList<T> {
 		return new Iterator2(list);
 	}
 
+	@SuppressWarnings("null")
 	public T getOrNull(int index) {
 		if (this.size() > index)
 			return get(index);
@@ -187,7 +188,8 @@ public class DynamicList<@Nullable T> extends ArrayList<T> {
 	 *           the string to look for in the toString() of the objects
 	 * @return the object that is found - null if none is found
 	 */
-	public static <@Nullable Type> Type searchExact(List<Type> list, String search) {
+	@SuppressWarnings("null")
+	public static <Type> Type searchExact(List<Type> list, String search) {
 		for (Type o : list) {
 			String s = "null";
 			if (o != null)
@@ -320,6 +322,7 @@ public class DynamicList<@Nullable T> extends ArrayList<T> {
 
 	}
 
+	@SuppressWarnings("null")
 	public <K> T searchExactFirst(K search, Mapper<T, K> mapper) {
 		Iterator<T> it = iterator();
 		while (it.hasNext()) {
@@ -347,7 +350,7 @@ public class DynamicList<@Nullable T> extends ArrayList<T> {
 	 * @return
 	 * @throws ClassCastException
 	 */
-	@SuppressWarnings({"unchecked", "null"})
+	@SuppressWarnings({"unchecked"})
 	public static <T1, T2 extends T1> DynamicList<T2> castUp(List<T1> l, Class<T2> class1)
 		throws ClassCastException {
 		DynamicList<T2> result = new DynamicList<>(l.size());

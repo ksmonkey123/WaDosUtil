@@ -3,11 +3,9 @@ package ch.judos.generic.data.geometry;
 import ch.judos.generic.data.rstorage.interfaces.RStorable2;
 
 /**
+ * an immutable representation of an angle
+ * 
  * @since 09.02.2015
- * @author Julian Schelker
- */
-/**
- * @since 08.03.2015
  * @author Julian Schelker
  */
 public class Angle implements RStorable2 {
@@ -54,14 +52,6 @@ public class Angle implements RStorable2 {
 		return a;
 	}
 
-	/**
-	 * used for RStorage
-	 */
-	@SuppressWarnings("unused")
-	private Angle() {
-		this.radian = 0;
-	}
-
 	protected double	radian;
 
 	protected Angle(double radian) {
@@ -85,10 +75,11 @@ public class Angle implements RStorable2 {
 	}
 
 	protected void norm() {
+		while (this.radian < 0) {
+			this.radian += (2 * Math.PI);
+		}
 		this.radian = this.radian % (2 * Math.PI);
 		// in case the original value was negative
-		if (this.radian < 0)
-			this.radian += (2 * Math.PI);
 	}
 
 	/**
@@ -113,27 +104,27 @@ public class Angle implements RStorable2 {
 	}
 
 	public Angle turnCounterClockwise(double angleInRadian) {
-		this.radian -= angleInRadian;
-		norm();
-		return this;
+		return Angle.fromRadian(this.radian - angleInRadian);
+	}
+	
+
+	public Angle turnCounterClockwise(Angle angle) {
+		return this.sub(angle);
 	}
 
+
 	public Angle turnClockwise(double angleInRadian) {
-		this.radian += angleInRadian;
-		norm();
-		return this;
+		return Angle.fromRadian(this.radian + angleInRadian);
 	}
 
 	public Angle turnClockwise(Angle angle) {
-		this.radian += angle.getRadian();
-		norm();
-		return this;
+		return this.add(angle);
 	}
 
 	public Angle setIfHigherTo(double angle) {
 		if (this.radian > angle)
-			this.radian = angle;
-		return this;
+			return Angle.fromRadian(angle);
+		return Angle.fromRadian(this.radian);
 	}
 
 	@Override
